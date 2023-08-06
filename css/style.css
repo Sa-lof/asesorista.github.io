@@ -7712,7 +7712,7 @@ li.mm-listitem:focus {
   width: auto;
   right: 0;
   left: 0;
-  bottom: 0;
+  bottom: 50px;
 }
 
 .mm-panel_has-navbar .mm-navbar {
@@ -10405,11 +10405,11 @@ input:focus-visible {
 }
 
 .main-logo{
-  max-width: 50%;
+  max-width: 70%;
 }
 
 .logos{
-  max-width: 25%;
+  max-width: 20%;
 }
 
 .logo-footer{
