@@ -672,8 +672,7 @@ h2 {
 }
 
 .dashboard__main {
-  margin-top: 90px;
-  padding-left: 300px;
+  margin-top: 110px;
   width: 100%;
 }
 @media (max-width: 991.98px) {
