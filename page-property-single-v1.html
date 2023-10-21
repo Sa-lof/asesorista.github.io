@@ -248,37 +248,37 @@
           const pPaisElement = document.querySelector('.ppais');
           pPaisElement.textContent = property.pais || "pais";
 
-          const features = [];  // Lista para almacenar las características en true
+          const features = [];  
 
-// Verificando cuáles características están en true y agregándolas a la lista
-if (property.atico) {
-    features.push("Ático");
-}
-if (property.estacionamiento) {
-    features.push("Estacionamiento");
-}
-if (property.terraza) {
-    features.push("Terraza");
-}
-// (Puedes agregar más características aquí)
+          if (property.atico) {
+              features.push("Ático");
+          }
+          if (property.garage) {
+              features.push("Garage");
+          }
+          if (property.estacionamiento) {
+              features.push("Estacionamiento");
+          }
+          if (property.terraza) {
+              features.push("Terraza");
+          }
+          if (property.cuarto_lavado) {
+              features.push("Cuarto de lavado");
+          }
+          if (property.areas_verdes) {
+              features.push("Áreas verdes");
+          }
 
-// Ahora vamos a actualizar el DOM para mostrar estas características.
-// Asumo que tienes un contenedor específico donde quieras mostrar estas características.
-// En este caso, estoy asumiendo que tienes un div con una clase llamada "features-list"
-const featuresContainer = document.querySelector('.features-list');
+          const featuresContainer = document.querySelector('.features-list');
 
-// Limpiar el contenedor actual
-featuresContainer.innerHTML = '';
+          featuresContainer.innerHTML = '';
 
-// Agregar las características a nuestro contenedor
-features.forEach(feature => {
-    const pElement = document.createElement('p');
-    pElement.classList.add('text', 'mb10');
-    pElement.innerHTML = `<i class="fas fa-circle fz6 align-middle pe-2"></i>${feature}`;
-    featuresContainer.appendChild(pElement);
-});
-          
-          
+          features.forEach(feature => {
+              const pElement = document.createElement('p');
+              pElement.classList.add('text', 'mb10');
+              pElement.innerHTML = `<i class="fas fa-circle fz6 align-middle pe-2"></i>${feature}`;
+              featuresContainer.appendChild(pElement);
+          }); 
       }
   </script>
   <div class="body_content pt-5">

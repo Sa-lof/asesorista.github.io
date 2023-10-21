@@ -18,6 +18,7 @@
 <link rel="stylesheet" href="css/animate.css">
 <link rel="stylesheet" href="css/jquery-ui.min.css">
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/slider.css" />
 <!-- Responsive stylesheet -->
 <link rel="stylesheet" href="css/responsive.css">
 <!-- Title -->
@@ -43,73 +44,65 @@
   <div class="preloader"></div>
   
   <!-- Main Header Nav -->
-  <header class="header-nav nav-homepage-style stricky main-menu" style="background-color: white;">
-    <!-- Ace Responsive Menu -->
-    <nav class="posr">
-      <div class="container posr menu_bdrt1">
-        <div class="row align-items-center justify-content-between">
-          <div class="col-auto">
-            <div class="d-flex align-items-center justify-content-between">
-              <div class="logos">
-                <a class="header-logo logo1" href="index.html"
-                  ><img
+      <header class="header-nav nav-homepage-style stricky main-menu" style="background-color: white;">
+        <!-- Ace Responsive Menu -->
+        <nav class="posr">
+          <div class="container posr menu_bdrt1">
+            <div class="row align-items-center justify-content-between">
+              <div class="col-auto">
+                <div class="d-flex align-items-center justify-content-between">
+                  <img
                     class="main-logo"
-                    src="images/logo.png"
+                    src="images/footer-logo.png"
                     alt="Header Logo"
-                /></a>
-                <a class="header-logo logo2" href="index.html"
-                  ><img
-                    class="main-logo"
-                    src="images/logo.png"
-                    alt="Header Logo"
-                /></a>
+                  />
+
+                  <!-- Responsive Menu Structure-->
+                  <ul
+                    id="respMenu"
+                    class="ace-responsive-menu"
+                    data-menu-style="horizontal"
+                    style="width: 33.125rem"
+                  >
+                    <li class="visible_list">
+                      <a class="list-item" href="index.html"
+                        ><span class="title" style="color: black;">Inicio</span></a
+                      >
+                    </li>
+                    <li class="megamenu_style">
+                      <a class="list-item" href="#"
+                        ><span class="title" style="color: black;">Nosotros</span></a
+                      >
+                    </li>
+                    <li class="visible_list">
+                      <a class="list-item" href="page-property-3-col.html"
+                        ><span class="title" style="color: black;">Comprar</span></a
+                      >
+                    </li>
+                    <li class="visible_list">
+                      <a class="list-item" href="credito.html"
+                        ><span class="title" style="color: black;">Crédito</span></a
+                      >
+                    </li>
+                    <li class="visible_list">
+                      <a class="list-item" href="page-contact.html"
+                        ><span class="title" style="color: black;">Contacto</span></a
+                      >
+                    </li>
+                  </ul>
+                  <span>
+                    <a
+                      class="ud-btn add-property menu-btn bdrs60 mx-2 mx-xl-4"
+                      href="venta.html"
+                      style="color: black; border-color: black;">Vende con Asesorista</a
+                    >
+                  </span>
+                </div>
               </div>
-              <!-- Responsive Menu Structure-->
-              <ul
-                id="respMenu"
-                class="ace-responsive-menu"
-                data-menu-style="horizontal"
-                style="width: 40.125rem"
-              >
-                <li class="visible_list">
-                  <a class="list-item" href="index.html"
-                    ><span class="title" style="color: black;">Inicio</span></a
-                  >
-                </li>
-                <li class="megamenu_style">
-                  <a class="list-item" href="page-about.html"
-                    ><span class="title" style="color: black;">Nosotros</span></a
-                  >
-                </li>
-                <li class="visible_list">
-                  <a class="list-item" href="page-property-3-col.html"
-                    ><span class="title" style="color: black;">Comprar</span></a
-                  >
-                </li>
-                <li class="visible_list">
-                  <a class="list-item" href="credito.html"
-                    ><span class="title" style="color: black;">Crédito</span></a
-                  >
-                </li>
-                <li class="visible_list">
-                  <a class="list-item" href="page-contact.html"
-                    ><span class="title" style="color: black;">Contacto</span></a
-                  >
-                </li>
-              </ul>
-              <span>
-                <a
-                  class="ud-btn add-property menu-btn bdrs60 mx-2 mx-xl-4"
-                  href="venta.html"
-                  style="color: black; border-color: black;">Vende con Asesorista</a
-                >
-              </span>
             </div>
           </div>
-        </div>
-      </div>
-    </nav>
-  </header>
+        </nav>
+      </header>
 
   <div class="hiddenbar-body-ovelay"></div>
 
@@ -173,96 +166,120 @@
           <div class="col-lg-12">
             <div class="breadcumb-style1">
               <h2 class="title">Propiedades en venta</h2>
-              <a href="" class="filter-btn-left mobile-filter-btn d-block d-lg-none"><span class="flaticon-settings"></span> Filter</a>
+              <a href="#" class="mobile-filter-btn d-block d-lg-none" data-bs-toggle="modal" data-bs-target="#menuModal">
+                <span class="flaticon-settings"></span> Filter
+              </a>
             </div>
           </div>
         </div>
       </div>
     </section>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const filterButton = document.querySelector(".mobile-filter-btn");
+        const filterSection = document.getElementById("filterSection");
 
+        filterButton.addEventListener("click", function() {
+            if (filterSection.style.display === "none") {
+                filterSection.style.display = "block";
+            } else {
+                filterSection.style.display = "none";
+            }
+        });
+      });
+    </script>
+    <style>
+      #filterSection {
+          display: none;
+      }
+
+      @media (min-width: 992px) {
+          #filterSection {
+              display: block !important;
+          }
+      }
+    </style>
     <!-- Property All Lists -->
     <section class="pt0 pb90 bgc-f7">
       <div class="container">
-        <div class="row">
-          <div class="col-xl-9 d-none d-lg-block">
+        <div id="filterSection" class="row">
+          <div class="col-xl-9 d-lg-block">
             <div class="dropdown-lists">
               <ul class="p-0 text-center text-xl-start">
                 <li class="list-inline-item position-relative">
-                  <button type="button" class="open-btn mb15 dropdown-toggle" data-bs-toggle="dropdown">Zona<i class="fa fa-angle-down ms-2"></i></button>
-                  <div class="dropdown-menu">
-                    <div class="widget-wrapper bdrb1 pb25 mb0 pl20">
-                      <h6 class="list-title">Listing Status</h6>
-                      <div class="radio-element">
-                        <div class="form-check d-flex align-items-center mb10">
-                          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                          <label class="form-check-label" for="flexRadioDefault1">Buy</label>
-                        </div>
-                        <div class="form-check d-flex align-items-center mb10">
-                          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked="checked">
-                          <label class="form-check-label" for="flexRadioDefault2">Rent</label>
-                        </div>
-                        <div class="form-check d-flex align-items-center">
-                          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3">
-                          <label class="form-check-label" for="flexRadioDefault3">Sold</label>
+                  <button type="button" class="open-btn mb15 dropdown-toggle" data-bs-toggle="dropdown">Zona <i class="fa fa-angle-down ms-2"></i></button>
+                  <div class="dropdown-menu dd3">
+                    <div class="widget-wrapper bdrb1 pb25 mb0 pl20 pr20">
+                      <h6 class="list-title">Zona a buscar</h6>
+                      <div class="range-slider-style1">
+                        <div class="range-wrapper">
+                          <div class="slider-range mt30 mb20"></div>
+                          <div class="text-center">
+                            <input type="text" class="amount zonabuscar" style="width: 100%; max-width: 100%;" placeholder="Zona, lugar, direccion...">
+                          </div>
                         </div>
                       </div>
                     </div>
                     <div class="text-end mt10 pr10">
-                      <button type="button" class="done-btn ud-btn btn-thm drop_btn">Done</button>
+                      <button type="button" class="done-btn ud-btn btn-thm drop_btn3 aplicarzona">Aplicar</button>
                     </div>
                   </div>
                 </li>
                 <li class="list-inline-item position-relative">
                   <button type="button" class="open-btn mb15 dropdown-toggle" data-bs-toggle="dropdown">Tipo de inmueble <i class="fa fa-angle-down ms-2"></i></button>
                   <div class="dropdown-menu">
+                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                     <div class="widget-wrapper bdrb1 pb25 mb0 pl20">
-                      <h6 class="list-title">Property Type</h6>
+                      <h6 class="list-title">Tipo de inmueble</h6>
                       <div class="checkbox-style1">
-                        <label class="custom_checkbox">Houses
-                          <input type="checkbox">
+                        <label class="custom_checkbox">Casa
+                          <input type="checkbox" value="Casa">
                           <span class="checkmark"></span>
                         </label>
-                        <label class="custom_checkbox">Apartments
-                          <input type="checkbox" checked="checked">
+                        <label class="custom_checkbox">Apartamento
+                          <input type="checkbox" value="Apartamento">
                           <span class="checkmark"></span>
                         </label>
-                        <label class="custom_checkbox">Office
-                          <input type="checkbox">
+                        <label class="custom_checkbox">Oficina
+                          <input type="checkbox" value="Oficina">
                           <span class="checkmark"></span>
                         </label>
-                        <label class="custom_checkbox">Villa
-                          <input type="checkbox">
+                        <label class="custom_checkbox">Local
+                          <input type="checkbox" value="Local">
                           <span class="checkmark"></span>
                         </label>
-                        <label class="custom_checkbox">Townhome
-                          <input type="checkbox">
+                        <label class="custom_checkbox">Otro
+                          <input type="checkbox" value="Otro">
                           <span class="checkmark"></span>
                         </label>
                       </div>
                     </div>
                     <div class="text-end mt10 pr10">
-                      <button type="button" class="done-btn ud-btn btn-thm dropdown-toggle">Done</button>
+                      <button type="button" class="done-btn ud-btn btn-thm dropdown-toggle aplicartipo">Aplicar</button>
                     </div>
                   </div>
                 </li>
+                <script>
+
+                </script>
                 <li class="list-inline-item position-relative">
                   <button type="button" class="open-btn mb15 dropdown-toggle" data-bs-toggle="dropdown">Precio <i class="fa fa-angle-down ms-2"></i></button>
                   <div class="dropdown-menu dd3">
                     <div class="widget-wrapper bdrb1 pb25 mb0 pl20 pr20">
-                      <h6 class="list-title">Price Range</h6>
+                      <h6 class="list-title">Rango del precio</h6>
                       <!-- Range Slider Desktop Version -->
                       <div class="range-slider-style1">
                         <div class="range-wrapper">
                           <div class="slider-range mt30 mb20"></div>
                           <div class="text-center">
-                            <input type="text" class="amount" placeholder="$20"><span class="fa-sharp fa-solid fa-minus mx-1 dark-color"></span>
-                            <input type="text" class="amount2" placeholder="$70987">
+                            <input type="text" class="amount rango1" placeholder="$20"><span class="fa-sharp fa-solid fa-minus mx-1 dark-color"></span>
+                            <input type="text" class="amount2 rango2" placeholder="$70987">
                           </div>
                         </div>
                       </div>
                     </div>
                     <div class="text-end mt10 pr10">
-                      <button type="button" class="done-btn ud-btn btn-thm drop_btn3">Done</button>
+                      <button type="button" class="done-btn ud-btn btn-thm drop_btn3" name="aplicarprecio">Aplicar</button>
                     </div>
                   </div>
                 </li>
@@ -270,7 +287,7 @@
                   <button type="button" class="open-btn mb15 dropdown-toggle" data-bs-toggle="dropdown">Baños/Habitaciones <i class="fa fa-angle-down ms-2"></i></button>
                   <div class="dropdown-menu dd4 pb20">
                     <div class="widget-wrapper pl20 pr20">
-                      <h6 class="list-title">Bedrooms</h6>
+                      <h6 class="list-title">Habitaciones</h6>
                       <div class="d-flex">
                         <div class="selection">
                           <input id="any" name="beds" type="radio" checked>
@@ -299,7 +316,7 @@
                       </div>
                     </div>
                     <div class="widget-wrapper bdrb1 pb25 mb0 pl20 pr20">
-                      <h6 class="list-title">Bathrooms</h6>
+                      <h6 class="list-title">Baños</h6>
                       <div class="d-flex">
                         <div class="selection">
                           <input id="baany" name="bath" type="radio" checked>
@@ -328,13 +345,12 @@
                       </div>
                     </div>
                     <div class="text-end mt10 pr10">
-                      <button type="button" class="done-btn ud-btn btn-thm drop_btn4">Done</button>
+                      <button type="button" class="done-btn ud-btn btn-thm drop_btn4"  name="aplicarhabitaciones">Aplicar</button>
                     </div>
                   </div>
                 </li>
-                <li class="list-inline-item">
-                  <!-- Advance Features modal trigger -->
-                  <button type="button" class="open-btn mb15" data-bs-toggle="modal" data-bs-target="#exampleModal"> <i class="fa-solid fa-filter"></i> Más filtros</button>
+                <li class="list-inline-item position-relative">
+                  <button type="button" style="background-color: #F76B51; color: white; font-weight: bold;" class="open-btn mb15 dropdown-toggle restaurarbtn">Restaurar</button>
                 </li>
               </ul>
             </div>
@@ -343,58 +359,10 @@
         <div class="row">
           <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.22.2"></script>
           <div id="propertiesContainer" class="row"></div>
-          <script>
-            const SUPABASE_URL = 'https://fhowgaxtehxvtcpiziyy.supabase.co'
-            const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZob3dnYXh0ZWh4dnRjcGl6aXl5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTA2OTA1NjQsImV4cCI6MjAwNjI2NjU2NH0.ZOc7XrEmDevg35_FT-s0HUQgA4uvq900D80j31G7R20'
-            
-            const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-
-            function createPropertyDiv(propiedad) {
-                const templateDiv = document.getElementById('propertyTemplate');
-                const clonedDiv = templateDiv.cloneNode(true); 
-
-                clonedDiv.querySelector('.list-title a').textContent = propiedad.nombre || "Nombre de Propiedad";
-                const propertyLink = clonedDiv.querySelector('.list-title a');
-                propertyLink.href = `page-property-single-v1.html?id=${propiedad.id}`;
-                propertyLink.textContent = propiedad.nombre || "Nombre de Propiedad";
-                clonedDiv.querySelector('.list-price').textContent = `$${propiedad.precio} / `;
-                const span = document.createElement('span');
-                span.textContent = 'mo';
-                clonedDiv.querySelector('.list-price').appendChild(span);
-                clonedDiv.querySelector('.list-title a').href = `page-property-single-v1.html?id=${propiedad.id}`;
-                clonedDiv.querySelector('.list-text').textContent = `${propiedad.ciudad}, ${propiedad.estado}, ${propiedad.pais}`;
-                clonedDiv.querySelector('.list-meta a:nth-child(1)').textContent = `${propiedad.habitaciones} habitaciones`;
-                clonedDiv.querySelector('.list-meta a:nth-child(2)').textContent = `${propiedad.banos} baños`;
-                clonedDiv.querySelector('.list-meta a:nth-child(3)').textContent = `${propiedad.metros_construccion} mts`;
-
-                clonedDiv.style.display = "block";
-
-                return clonedDiv;
-            }
-
-            async function loadData() {
-                const { data, error } = await _supabase.from('propiedades').select('*');
-
-                if (error) {
-                    console.error('Error al consultar la base de datos:', error);
-                    return;
-                }
-
-                const container = document.getElementById('propertiesContainer');
-                data.forEach(propiedad => {
-                    const propertyDiv = createPropertyDiv(propiedad);
-                    container.appendChild(propertyDiv);
-                });
-            }
-
-            document.addEventListener('DOMContentLoaded', loadData);
-
-          </script>
           <div class="col-sm-6 col-lg-4" style="display: none;" id="propertyTemplate">
             <div class="listing-style1">
               <div class="list-thumb">
                 <img class="w-100" src="images/listings/g3-1.jpg" alt="">
-                <div class="list-tag fz12"><span class="flaticon-electricity me-2"></span>FEATURED</div>
                 <div class="list-price">$14,000 / <span>mo</span></div>
               </div>
               <div class="list-content">
@@ -409,19 +377,19 @@
                 <div class="list-meta2 d-flex justify-content-between align-items-center">
                   <span class="for-what">En venta</span>
                   <style>
-                    /* CSS for the orange button */
                     .orange-button {
                       display: inline-flex;
-                      align-items: center; /* Center the text vertically */
-                      justify-content: center; /* Center the text horizontally */
-                      padding: 5px 20px; /* Reduce padding to make it more compact */
+                      align-items: center;
+                      justify-content: center; 
+                      padding: 5px 20px; 
                       background-color: #F76B51;
                       color: white;
                       border: none;
-                      border-radius: 50px; /* Increase the border-radius value for a more oval shape */
-                      font-size: 14px; /* Reduce font size to make it more compact */
+                      border-radius: 50px; 
+                      font-size: 14px; 
                       text-decoration: none;
                       height: 30px; 
+                      font-weight: bold;
                     }
                   </style>
                   <div class="icons d-flex align-items-center">
@@ -431,224 +399,16 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-6 col-lg-4" style="display: none;" id="propertyTemplate">
-            <div class="listing-style1">
-              <div class="list-thumb">
-                <img class="w-100" src="images/listings/g3-2.jpg" alt="">
-                <div class="list-price">$82,000 / <span>mo</span></div>
-              </div>
-              <div class="list-content">
-                <h6 class="list-title"><a href="page-property-single-v1.html">Luxury villa in Rego Park</a></h6>
-                <p class="list-text">California City, CA, USA</p>
-                <div class="list-meta d-flex align-items-center">
-                  <a href=""><i class="fa-solid fa-bed"></i>3 bed</a>
-                  <a href=""><i class="fa-solid fa-bath"></i>4 bath</a>
-                  <a href=""><i class="fa-solid fa-square-rss"></i>1200 sqft</a>
-                </div>
-                <hr class="mt-2 mb-2">
-                <div class="list-meta2 d-flex justify-content-between align-items-center">
-                  <span class="for-what">En venta</span>
-                  <div class="icons d-flex align-items-center">
-                     <button class="orange-button">Cotizar</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-6 col-lg-4" style="display: none;" id="propertyTemplate">
-            <div class="listing-style1">
-              <div class="list-thumb">
-                <img class="w-100" src="images/listings/g3-3.jpg" alt="">
-                <div class="list-price">$63,000 / <span>mo</span></div>
-              </div>
-              <div class="list-content">
-                <h6 class="list-title"><a href="page-property-single-v1.html">Villa on Hollywood Boulevard</a></h6>
-                <p class="list-text">California City, CA, USA</p>
-                <div class="list-meta d-flex align-items-center">
-                  <a href=""><i class="fa-solid fa-bed"></i>3 bed</a>
-                  <a href=""><i class="fa-solid fa-bath"></i>4 bath</a>
-                  <a href=""><i class="fa-solid fa-square-rss"></i>1200 sqft</a>
-                </div>
-                <hr class="mt-2 mb-2">
-                <div class="list-meta2 d-flex justify-content-between align-items-center">
-                  <span class="for-what">En venta</span>
-                  <div class="icons d-flex align-items-center">
-                     <button class="orange-button">Cotizar</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-6 col-lg-4" style="display: none;" id="propertyTemplate">
-            <div class="listing-style1">
-              <div class="list-thumb">
-                <img class="w-100" src="images/listings/g3-4.jpg" alt="">
-                <div class="list-price">$63,000 / <span>mo</span></div>
-              </div>
-              <div class="list-content">
-                <h6 class="list-title"><a href="page-property-single-v1.html">House on the Northridge</a></h6>
-                <p class="list-text">California City, CA, USA</p>
-                <div class="list-meta d-flex align-items-center">
-                  <a href=""><i class="fa-solid fa-bed"></i>3 bed</a>
-                  <a href=""><i class="fa-solid fa-bath"></i>4 bath</a>
-                  <a href=""><i class="fa-solid fa-square-rss"></i>1200 sqft</a>
-                </div>
-                <hr class="mt-2 mb-2">
-                <div class="list-meta2 d-flex justify-content-between align-items-center">
-                  <span class="for-what">En venta</span>
-                  <div class="icons d-flex align-items-center">
-                     <button class="orange-button">Cotizar</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-6 col-lg-4" style="display: none;" id="propertyTemplate">
-            <div class="listing-style1">
-              <div class="list-thumb">
-                <img class="w-100" src="images/listings/g3-5.jpg" alt="">
-                <div class="list-price">$14,000 / <span>mo</span></div>
-              </div>
-              <div class="list-content">
-                <h6 class="list-title"><a href="page-property-single-v1.html">Equestrian Family Home</a></h6>
-                <p class="list-text">California City, CA, USA</p>
-                <div class="list-meta d-flex align-items-center">
-                  <a href=""><i class="fa-solid fa-bed"></i>3 bed</a>
-                  <a href=""><i class="fa-solid fa-bath"></i>4 bath</a>
-                  <a href=""><i class="fa-solid fa-square-rss"></i>1200 sqft</a>
-                </div>
-                <hr class="mt-2 mb-2">
-                <div class="list-meta2 d-flex justify-content-between align-items-center">
-                  <span class="for-what">En venta</span>
-                  <div class="icons d-flex align-items-center">
-                     <button class="orange-button">Cotizar</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-6 col-lg-4" style="display: none;" id="propertyTemplate">
-            <div class="listing-style1">
-              <div class="list-thumb">
-                <img class="w-100" src="images/listings/g3-6.jpg" alt="">
-                <div class="list-price">$82,000 / <span>mo</span></div>
-              </div>
-              <div class="list-content">
-                <h6 class="list-title"><a href="page-property-single-v1.html">Villa called Archangel</a></h6>
-                <p class="list-text">California City, CA, USA</p>
-                <div class="list-meta d-flex align-items-center">
-                  <a href=""><i class="fa-solid fa-bed"></i>3 bed</a>
-                  <a href=""><i class="fa-solid fa-bath"></i>4 bath</a>
-                  <a href=""><i class="fa-solid fa-square-rss"></i>1200 sqft</a>
-                </div>
-                <hr class="mt-2 mb-2">
-                <div class="list-meta2 d-flex justify-content-between align-items-center">
-                  <span class="for-what">En venta</span>
-                  <div class="icons d-flex align-items-center">
-                     <button class="orange-button">Cotizar</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-6 col-lg-4" style="display: none;" id="propertyTemplate">
-            <div class="listing-style1">
-              <div class="list-thumb">
-                <img class="w-100" src="images/listings/g3-7.jpg" alt="">
-                <div class="list-price">$63,000 / <span>mo</span></div>
-              </div>
-              <div class="list-content">
-                <h6 class="list-title"><a href="page-property-single-v1.html">House In Foxhall Ave, Kingston</a></h6>
-                <p class="list-text">California City, CA, USA</p>
-                <div class="list-meta d-flex align-items-center">
-                  <a href=""><i class="fa-solid fa-bed"></i>3 bed</a>
-                  <a href=""><i class="fa-solid fa-bath"></i>4 bath</a>
-                  <a href=""><i class="fa-solid fa-square-rss"></i>1200 sqft</a>
-                </div>
-                <hr class="mt-2 mb-2">
-                <div class="list-meta2 d-flex justify-content-between align-items-center">
-                  <span class="for-what">En venta</span>
-                  <div class="icons d-flex align-items-center">
-                     <button class="orange-button">Cotizar</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-6 col-lg-4" style="display: none;" id="propertyTemplate">
-            <div class="listing-style1">
-              <div class="list-thumb">
-                <img class="w-100" src="images/listings/g3-8.jpg" alt="">
-                <div class="list-price">$63,000 / <span>mo</span></div>
-              </div>
-              <div class="list-content">
-                <h6 class="list-title"><a href="page-property-single-v1.html">Store in Woodside, New York</a></h6>
-                <p class="list-text">California City, CA, USA</p>
-                <div class="list-meta d-flex align-items-center">
-                  <a href=""><i class="fa-solid fa-bed"></i>3 bed</a>
-                  <a href=""><i class="fa-solid fa-bath"></i>4 bath</a>
-                  <a href=""><i class="fa-solid fa-square-rss"></i>1200 sqft</a>
-                </div>
-                <hr class="mt-2 mb-2">
-                <div class="list-meta2 d-flex justify-content-between align-items-center">
-                  <span class="for-what">En venta</span>
-                  <div class="icons d-flex align-items-center">
-                     <button class="orange-button">Cotizar</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-6 col-lg-4" style="display: none;" id="propertyTemplate">
-            <div class="listing-style1">
-              <div class="list-thumb">
-                <img class="w-100" src="images/listings/g3-9.jpg" alt="">
-                <div class="list-price">$82,000 / <span>mo</span></div>
-              </div>
-              <div class="list-content">
-                <h6 class="list-title"><a href="page-property-single-v1.html">Luxury Villa In Los Angeles</a></h6>
-                <p class="list-text">California City, CA, USA</p>
-                <div class="list-meta d-flex align-items-center">
-                  <a href=""><i class="fa-solid fa-bed"></i>3 bed</a>
-                  <a href=""><i class="fa-solid fa-bath"></i>4 bath</a>
-                  <a href=""><i class="fa-solid fa-square-rss"></i>1200 sqft</a>
-                </div>
-                <hr class="mt-2 mb-2">
-                <div class="list-meta2 d-flex justify-content-between align-items-center">
-                  <span class="for-what">En venta</span>
-                  <div class="icons d-flex align-items-center">
-                     <button class="orange-button">Cotizar</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
         <div class="row">
           <div class="mbp_pagination text-center">
-            <ul class="page_navigation">
-              <li class="page-item">
-                <a class="page-link" href="#"> <span class="fas fa-angle-left"></span></a>
-              </li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item active" aria-current="page">
-                <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-              </li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#">4</a></li>
-              <li class="page-item"><a class="page-link" href="#">5</a></li>
-              <li class="page-item"><a class="page-link" href="#">...</a></li>
-              <li class="page-item"><a class="page-link" href="#">20</a></li>
-              <li class="page-item">
-                <a class="page-link" href="#"><span class="fas fa-angle-right"></span></a>
-              </li>
-            </ul>
+              <ul class="page_navigation">
+              </ul>
           </div>
-        </div>
+      </div>
       </div>
     </section>
 
-    <!-- Our Footer --> 
     <!-- Our Footer -->
     <section class="footer-style1 at-home4 pt60 pb-0">
       <div class="container">
@@ -813,5 +573,6 @@
 <script src="js/pricing-slider.js"></script>
 <!-- Custom script for all pages --> 
 <script src="js/script.js"></script>
+<script src="js/catalogo.js"></script>
 </body>
 </html>
