@@ -341,7 +341,56 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-6 col-lg-4">
+          <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.22.2"></script>
+          <div id="propertiesContainer" class="row"></div>
+          <script>
+            const SUPABASE_URL = 'https://fhowgaxtehxvtcpiziyy.supabase.co'
+            const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZob3dnYXh0ZWh4dnRjcGl6aXl5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTA2OTA1NjQsImV4cCI6MjAwNjI2NjU2NH0.ZOc7XrEmDevg35_FT-s0HUQgA4uvq900D80j31G7R20'
+            
+            const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+
+            function createPropertyDiv(propiedad) {
+                const templateDiv = document.getElementById('propertyTemplate');
+                const clonedDiv = templateDiv.cloneNode(true); 
+
+                clonedDiv.querySelector('.list-title a').textContent = propiedad.nombre || "Nombre de Propiedad";
+                const propertyLink = clonedDiv.querySelector('.list-title a');
+                propertyLink.href = `page-property-single-v1.html?id=${propiedad.id}`;
+                propertyLink.textContent = propiedad.nombre || "Nombre de Propiedad";
+                clonedDiv.querySelector('.list-price').textContent = `$${propiedad.precio} / `;
+                const span = document.createElement('span');
+                span.textContent = 'mo';
+                clonedDiv.querySelector('.list-price').appendChild(span);
+                clonedDiv.querySelector('.list-title a').href = `page-property-single-v1.html?id=${propiedad.id}`;
+                clonedDiv.querySelector('.list-text').textContent = `${propiedad.ciudad}, ${propiedad.estado}, ${propiedad.pais}`;
+                clonedDiv.querySelector('.list-meta a:nth-child(1)').textContent = `${propiedad.habitaciones} habitaciones`;
+                clonedDiv.querySelector('.list-meta a:nth-child(2)').textContent = `${propiedad.banos} baños`;
+                clonedDiv.querySelector('.list-meta a:nth-child(3)').textContent = `${propiedad.metros_construccion} mts`;
+
+                clonedDiv.style.display = "block";
+
+                return clonedDiv;
+            }
+
+            async function loadData() {
+                const { data, error } = await _supabase.from('propiedades').select('*');
+
+                if (error) {
+                    console.error('Error al consultar la base de datos:', error);
+                    return;
+                }
+
+                const container = document.getElementById('propertiesContainer');
+                data.forEach(propiedad => {
+                    const propertyDiv = createPropertyDiv(propiedad);
+                    container.appendChild(propertyDiv);
+                });
+            }
+
+            document.addEventListener('DOMContentLoaded', loadData);
+
+          </script>
+          <div class="col-sm-6 col-lg-4" style="display: none;" id="propertyTemplate">
             <div class="listing-style1">
               <div class="list-thumb">
                 <img class="w-100" src="images/listings/g3-1.jpg" alt="">
@@ -382,7 +431,7 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-6 col-lg-4">
+          <div class="col-sm-6 col-lg-4" style="display: none;" id="propertyTemplate">
             <div class="listing-style1">
               <div class="list-thumb">
                 <img class="w-100" src="images/listings/g3-2.jpg" alt="">
@@ -406,7 +455,7 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-6 col-lg-4">
+          <div class="col-sm-6 col-lg-4" style="display: none;" id="propertyTemplate">
             <div class="listing-style1">
               <div class="list-thumb">
                 <img class="w-100" src="images/listings/g3-3.jpg" alt="">
@@ -430,7 +479,7 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-6 col-lg-4">
+          <div class="col-sm-6 col-lg-4" style="display: none;" id="propertyTemplate">
             <div class="listing-style1">
               <div class="list-thumb">
                 <img class="w-100" src="images/listings/g3-4.jpg" alt="">
@@ -454,7 +503,7 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-6 col-lg-4">
+          <div class="col-sm-6 col-lg-4" style="display: none;" id="propertyTemplate">
             <div class="listing-style1">
               <div class="list-thumb">
                 <img class="w-100" src="images/listings/g3-5.jpg" alt="">
@@ -478,7 +527,7 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-6 col-lg-4">
+          <div class="col-sm-6 col-lg-4" style="display: none;" id="propertyTemplate">
             <div class="listing-style1">
               <div class="list-thumb">
                 <img class="w-100" src="images/listings/g3-6.jpg" alt="">
@@ -502,7 +551,7 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-6 col-lg-4">
+          <div class="col-sm-6 col-lg-4" style="display: none;" id="propertyTemplate">
             <div class="listing-style1">
               <div class="list-thumb">
                 <img class="w-100" src="images/listings/g3-7.jpg" alt="">
@@ -526,7 +575,7 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-6 col-lg-4">
+          <div class="col-sm-6 col-lg-4" style="display: none;" id="propertyTemplate">
             <div class="listing-style1">
               <div class="list-thumb">
                 <img class="w-100" src="images/listings/g3-8.jpg" alt="">
@@ -550,7 +599,7 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-6 col-lg-4">
+          <div class="col-sm-6 col-lg-4" style="display: none;" id="propertyTemplate">
             <div class="listing-style1">
               <div class="list-thumb">
                 <img class="w-100" src="images/listings/g3-9.jpg" alt="">
