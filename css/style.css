@@ -672,6 +672,8 @@ h2 {
 }
 
 .dashboard__main {
+  margin-top: 90px;
+  padding-left: 300px;
   margin-top: 110px;
   width: 100%;
 }
@@ -2588,8 +2590,23 @@ h2 {
   right: 30px;
   top: 30px;
 }
+
+.listing-style13 .list-content .ud-btn2 {
+  border-radius: 0;
+  position: absolute;
+  right: 30px;
+  top: 30px;
+}
 @media (max-width: 767.98px) {
   .listing-style13 .list-content .ud-btn {
+    position: relative;
+    right: auto;
+    top: 15px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .listing-style13 .list-content .ud-btn2 {
     position: relative;
     right: auto;
     top: 15px;
@@ -4791,6 +4808,16 @@ section {
   }
 }
 
+@media (max-width: 575.98px) {
+  .cta-btns-style1 .ud-btn2 {
+    width: 100%;
+  }
+  .cta-btns-style1 .ud-btn2:first-child {
+    margin-bottom: 12px;
+  }
+}
+
+
 .our-cta2 {
   margin-bottom: -150px;
   z-index: 1;
@@ -6564,7 +6591,32 @@ textarea:focus {
   -o-transition: all 0.4s ease;
   transition: all 0.4s ease;
 }
+
+.ud-btn2 {
+  border-radius: 12px;
+  display: inline-block;
+  font-family: var(--title-font-family);
+  font-weight: 600;
+  font-size: 15px;
+  font-style: normal;
+  letter-spacing: 0em;
+  padding: 13px 30px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  z-index: 0;
+  -webkit-transition: all 0.4s ease;
+  -moz-transition: all 0.4s ease;
+  -ms-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+}
 .ud-btn i {
+  margin-left: 10px;
+  font-size: 16px;
+}
+
+.ud-btn2 i {
   margin-left: 10px;
   font-size: 16px;
 }
@@ -6574,6 +6626,9 @@ textarea:focus {
 }
 @media (max-width: 339px) {
   .ud-btn {
+    padding: 13px 25px;
+  }
+  .ud-btn2 {
     padding: 13px 25px;
   }
 }
