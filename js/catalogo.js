@@ -132,7 +132,6 @@ function createPropertyDiv(propiedad) {
 
 async function loadData(page = 1, selectedProperties = [], selectedRooms = -1, selectedBaths = -1, priceMin = null, priceMax = null, searchedZone = "") {
     currentPage = page;
-    console.log("banos seleccionadas:", priceMax);
     
     const start = (currentPage - 1) * propertiesPerPage;
     const end = start + propertiesPerPage - 1;
