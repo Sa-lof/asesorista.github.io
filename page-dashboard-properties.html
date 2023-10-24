@@ -286,7 +286,25 @@
             </div>
           </div>
         </div>
-        
+        <!-- Modal -->
+        <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="confirmationModalLabel">Confirmar eliminación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                ¿Está seguro de que desea eliminar esta propiedad? Esta acción es irreversible.
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="color: white;">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="confirmDelete" style="color: white;">Eliminar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.22.2"></script>
         <script>
           const SUPABASE_URL = 'https://fhowgaxtehxvtcpiziyy.supabase.co'
@@ -410,7 +428,7 @@
               tdAcciones.innerHTML = `
                   <td class="vam">
                     <div class="d-flex">
-                      <a href="#" class="icon" data-id="${propiedad.id}" onclick="editarPropiedad(event)" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
+                      <a href="page-dashboard-properties-edited.html?id=${propiedad.id}"" class="icon" data-id="${propiedad.id}" onclick="editarPropiedad(event)" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
                         <span class="fas fa-pen fa"></span>
                       </a>
                       <a href="#" class="icon" data-id="${propiedad.id}" onclick="eliminarPropiedad(event)" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
@@ -431,7 +449,36 @@
               tbody.appendChild(tr);
             });
           }
+          async function eliminarPropiedad(event) {
+              event.preventDefault(); 
+              const id = event.currentTarget.getAttribute('data-id'); 
 
+              if (!id) {
+                  console.error('ID no proporcionado. No se puede eliminar la propiedad.');
+                  return;
+              }
+
+              // Muestra el modal
+              const confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+              confirmationModal.show();
+
+              // Establecer el comportamiento cuando se haga clic en el botón de eliminar en el modal
+              document.getElementById('confirmDelete').onclick = async function() {
+                  // Llamada a Supabase para eliminar la propiedad
+                  const { data, error } = await _supabase.from('propiedades').delete().eq('id', id);
+
+                  if (error) {
+                      console.error('Error eliminando propiedad:', error);
+                      return;
+                  }
+
+                  // Llamar a llenarTabla para actualizar el DOM después de eliminar
+                  await llenarTabla(paginaActual);
+
+                  // Ocultar el modal
+                  confirmationModal.hide();
+              }
+          }
           let paginaActual = 1;
 
           function actualizarPaginacion(totalPropiedades) {
