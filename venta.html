@@ -94,9 +94,8 @@
               <span>
                 <a
                   class="ud-btn add-property menu-btn bdrs60 mx-2 mx-xl-4"
-                  href="venta.html"
-                  style="color: black; border-color: black;"
-                  >Vende con Asesorista</a
+                  href="#"
+                  style="color: black; border-color: black;">Vende con Asesorista</a
                 >
               </span>
             </div>
@@ -177,10 +176,15 @@
           </div>
         </a>
       </div>
-
-  </section>
+    </section>
+    <style>
+      .dashboard__main1 {
+        margin-top: 110px;
+        width: 100%;
+      }
+    </style>
     <div class="dashboard dashboard_wrapper pr30 pr0-md">
-      <div class="dashboard__main pl0-md">
+      <div class="dashboard__main1 pl0-md">
         <div class="dashboard__content property-page bgc-f7">
           <div class="row align-items-center pb40">
             <div class="col-lg-12">
@@ -203,6 +207,32 @@
                       <button class="nav-link fw600" id="nav-item5-tab" data-bs-toggle="tab" data-bs-target="#nav-item5" type="button" role="tab" aria-controls="nav-item5" aria-selected="false">5. Detalles</button>
                     </div>
                   </nav>
+                  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+                  <script>
+                    $(document).ready(function() {
+                      $(".ud-btn").click(function(e) {
+                          e.preventDefault();
+
+                          var currentTab = $(".tab-pane.active");
+                          var nextTab, tabLink;
+
+                          if ($(this).data("nav") === "prev") {
+                              nextTab = currentTab.prev('.tab-pane');
+                              if (!nextTab.length) return;
+                              tabLink = $('#nav-item' + nextTab.attr('id').slice(-1) + '-tab');
+                          } else {
+                              nextTab = currentTab.next('.tab-pane');
+                              if (!nextTab.length) return;
+                              tabLink = $('#nav-item' + nextTab.attr('id').slice(-1) + '-tab');
+                          }
+
+                          tabLink.tab('show');
+                      });
+                    });
+
+                  </script>
                   <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-item1" role="tabpanel" aria-labelledby="nav-item1-tab">
                       <div class="ps-widget bgc-white bdrs12 p30 overflow-hidden position-relative">
@@ -212,9 +242,17 @@
                             <a href="" class="tag-del" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Delete Image" aria-label="Delete Item"><span class="fas fa-trash-can"></span></a>
                           </div>
                           <div class="profile-content ml30 ml0-sm">
-                            <a href="" class="ud-btn btn-white2 mb30">Carga tu foto de perfil<i class="fal fa-arrow-right-long"></i></a>
+                            <!-- Hidden file input -->
+                            <input type="file" id="profilePhoto" accept="image/jpeg, image/png" style="display: none;" />
+                        
+                            <!-- Styled label to act as the button -->
+                            <label for="profilePhoto" class="ud-btn2 btn-white2 mb30">
+                                Carga tu foto de perfil<i class="fal fa-arrow-right-long"></i>
+                            </label>
+                        
                             <p class="text">Las fotos deben de estar en formato JPEG o PNG y al menos 2048x768</p>
-                          </div>
+                        </div>
+                        
                         </div>
                         <form class="form-style1">
                           <div class="row">
@@ -250,8 +288,7 @@
                             </div>
                             <div class="col-md-12">
                               <div class="d-sm-flex justify-content-between">
-                                <a class="ud-btn btn-white" href="">Paso previo<i class="fal fa-arrow-right-long"></i></a>
-                                <a class="ud-btn btn-dark" href="">Siguiente paso<i class="fal fa-arrow-right-long"></i></a>
+                                <a class="ud-btn btn-dark" href="" data-nav="next">Siguiente paso<i class="fal fa-arrow-right-long"></i></a>
                               </div>
                             </div>
                           </div>
@@ -296,8 +333,8 @@
                           <div class="row">
                             <div class="col-md-12">
                               <div class="d-sm-flex justify-content-between">
-                                <a class="ud-btn btn-white" href="">Paso previo<i class="fal fa-arrow-right-long"></i></a>
-                                <a class="ud-btn btn-dark" href="">Siguiente paso<i class="fal fa-arrow-right-long"></i></a>
+                                <a class="ud-btn btn-white" href="" data-nav="prev">Paso previo<i class="fal fa-arrow-right-long"></i></a>
+                                <a class="ud-btn btn-dark" href="" data-nav="next">Siguiente paso<i class="fal fa-arrow-right-long"></i></a>
                               </div>
                             </div>
                           </div>
@@ -328,8 +365,8 @@
                         </div>
                         <div class="col-md-12">
                           <div class="d-sm-flex justify-content-between">
-                            <a class="ud-btn btn-white" href="">Paso previo<i class="fal fa-arrow-right-long"></i></a>
-                            <a class="ud-btn btn-dark" href="">Siguiente paso<i class="fal fa-arrow-right-long"></i></a>
+                            <a class="ud-btn btn-white" href="" data-nav="prev">Paso previo<i class="fal fa-arrow-right-long"></i></a>
+                            <a class="ud-btn btn-dark" href="" data-nav="next">Siguiente paso<i class="fal fa-arrow-right-long"></i></a>
                           </div>
                         </div>
                       </div>
@@ -378,8 +415,8 @@
                           <div class="row">
                             <div class="col-md-12">
                               <div class="d-sm-flex justify-content-between">
-                                <a class="ud-btn btn-white" href="">Paso previo<i class="fal fa-arrow-right-long"></i></a>
-                                <a class="ud-btn btn-dark" href="">Siguiente paso<i class="fal fa-arrow-right-long"></i></a>
+                                <a class="ud-btn btn-white" href="" data-nav="prev">Paso previo<i class="fal fa-arrow-right-long"></i></a>
+                                <a class="ud-btn btn-dark" href="" data-nav="next">Siguiente paso<i class="fal fa-arrow-right-long"></i></a>
                               </div>
                             </div>
                           </div>
@@ -461,8 +498,8 @@
                             </div>
                             <div class="col-md-12 mt30">
                               <div class="d-sm-flex justify-content-between">
-                                <a class="ud-btn btn-white" href="">Paso previo<i class="fal fa-arrow-right-long"></i></a>
-                                <a class="ud-btn btn-thm" href="">Siguiente paso<i class="fal fa-arrow-right-long"></i></a>
+                                <a class="ud-btn btn-white" href="" data-nav="prev">Paso previo<i class="fal fa-arrow-right-long"></i></a>
+                                <a class="ud-btn btn-thm" href="" data-nav="next">Enviar<i class="fal fa-arrow-right-long"></i></a>
                               </div>
                             </div>
                           </div>
@@ -475,22 +512,6 @@
             </div>
           </div>
         </div>
-        <footer class="dashboard_footer pt30 pb10">
-          <div class="container">
-            <div class="row items-center justify-content-center justify-content-md-between">
-              <div class="col-auto">
-                <div class="copyright-widget">
-                  <p class="text">© Homez - All rights reserved</p>
-                </div>
-              </div>
-              <div class="col-auto">
-                <div class="footer_bottom_right_widgets text-center text-lg-end">
-                  <p><a href="#">Privacy</a>  ·  <a href="#">Terms</a>  ·  <a href="#">Sitemap</a></p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </footer>
       </div>
     </div>
   </div>
@@ -654,6 +675,8 @@
 <script src="js/ace-responsive-menu.js"></script>
 <script src="js/jquery-scrolltofixed-min.js"></script>
 <script src="js/dashboard-script.js"></script>
+<script src="js/wow.min.js"></script> 
+<script src="js/pricing-slider.js"></script>
 <!-- Custom script for all pages --> 
 <script src="js/script.js"></script>
 </body>
