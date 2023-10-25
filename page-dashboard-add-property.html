@@ -379,21 +379,287 @@
                             <div class="icon mb30"><span class="flaticon-upload"></span></div>
                             <h4 class="title fz17 mb10">Sube fotos de tu propiedad</h4>
                             <p class="text mb25">Las fotos deben de estar en formato JPEG o PNG y al menos 2048x768</p>
-                            <a class="ud-btn btn-white" href="">Busqueda de archivos<i class="fal fa-arrow-right-long"></i></a>
+                            <!-- Hidden file input -->
+                            <input type="file" id="profilePhoto" accept="image/jpeg, image/png" style="display: none;" />
+                        
+                            <!-- Styled label to act as the button -->
+                            <label for="profilePhoto" class="ud-btn2 btn-white2 mb30">
+                                Carga una imagen<i class="fal fa-arrow-right-long"></i>
+                            </label>
                           </div>
                         </div>
-                        <div class="col-lg-5">
-                          <div class="profile-box position-relative d-md-flex align-items-end mb50">
-                            <div class="profile-img position-relative overflow-hidden bdrs12 mb20-sm">
-                              <img class="w-100" src="images/listings/profile-1.jpg" alt="">
-                              <a href="" class="tag-del" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Delete Image" aria-label="Delete Item"><span class="fas fa-trash-can"></span></a>
-                            </div>
-                            <div class="profile-img position-relative overflow-hidden bdrs12 ml20 ml0-sm">
-                              <img class="w-100" src="images/listings/profile-2.jpg" alt="">
-                              <a href="" class="tag-del" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Delete Image" aria-label="Delete Item"><span class="fas fa-trash-can"></span></a>
-                            </div>
-                          </div>
+                        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.22.2"></script>
+
+                        <script>
+                          const SUPABASE_URL = 'https://fhowgaxtehxvtcpiziyy.supabase.co'
+                          const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZob3dnYXh0ZWh4dnRjcGl6aXl5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTA2OTA1NjQsImV4cCI6MjAwNjI2NjU2NH0.ZOc7XrEmDevg35_FT-s0HUQgA4uvq900D80j31G7R20'
+
+                          const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+                        </script>
+                        <script>
+                           let id_imagenes = 0;
+                          async function addVendedor2() {
+
+const nombre = document.querySelector('[name="nombre"]').value;
+const apellidoMaterno = document.querySelector('[name="apellido_materno"]').value;
+const apellidoPaterno = document.querySelector('[name="apellido_paterno"]').value;
+const correo = document.querySelector('[name="correo_electronico"]').value;
+const telefono = document.querySelector('[name="telefono"]').value;
+const puesto = document.querySelector('[name="puesto"]').value;
+
+const { data: dataVendedor, error: errorVendedor } = await _supabase
+    .from('vendedores')
+    .insert([
+        {
+            nombre: nombre,
+            apellido_materno: apellidoMaterno,
+            apellido_paterno: apellidoPaterno,
+            correo_electronico: correo,
+            telefono: telefono,
+            puesto: puesto,
+        }
+]);
+
+if (errorVendedor) {
+    console.error('Error inserting vendedor:', errorVendedor);
+    return;
+} else {
+    console.log('Inserted vendedor:', dataVendedor);
+    if (dataVendedor && dataVendedor.length > 0) {
+        const newVendedorId = dataVendedor[0].id;
+        if (!newVendedorId) {
+            console.error('Unable to extract vendedor ID. Check the structure of the response.');
+            return;
+        }
+    } else {
+        console.error('No data returned after inserting vendedor.');
+        return;
+    }
+}
+
+// Selección de los checkboxes
+const garageCheckbox = document.getElementById('garageCheckbox');
+const aticoCheckbox = document.getElementById('aticoCheckbox');
+const estacionamientoCheckbox = document.getElementById('estacionamientoCheckbox');
+const terrazaCheckbox = document.getElementById('terrazaCheckbox');
+const lavadoCheckbox = document.getElementById('lavadoCheckbox');
+const areaCheckbox = document.getElementById('areaCheckbox');
+
+
+
+// Obtener el valor true o false de los checkboxes
+let garageChecked = garageCheckbox.checked; // Será true si está marcado, false si no lo está.
+let aticoChecked = aticoCheckbox.checked;   // Será true si está marcado, false si no lo está.
+let estacionamientoChecked = estacionamientoCheckbox.checked; // Será true si está marcado, false si no lo está.
+let terrazaChecked = terrazaCheckbox.checked;
+let lavadoChecked = lavadoCheckbox.checked; // Será true si está marcado, false si no lo está.
+let areaChecked = areaCheckbox.checked;
+
+// Si quieres reaccionar cuando los checkboxes cambian de estado, puedes usar un event listener:
+garageCheckbox.addEventListener('change', function() {
+    garageChecked = garageCheckbox.checked;
+    console.log('Garage:', garageChecked);  // Puedes ver el estado en la consola
+});
+
+aticoCheckbox.addEventListener('change', function() {
+    aticoChecked = aticoCheckbox.checked;
+    console.log('Atico:', aticoChecked);    // Puedes ver el estado en la consola
+});
+
+// Si quieres reaccionar cuando los checkboxes cambian de estado, puedes usar un event listener:
+estacionamientoCheckbox.addEventListener('change', function() {
+    estacionamientoChecked = estacionamientoCheckbox.checked;
+    console.log('Estacionamiento:', estacionamientoChecked);  // Puedes ver el estado en la consola
+});
+
+terrazaCheckbox.addEventListener('change', function() {
+    terrazaChecked = terrazaCheckbox.checked;
+    console.log('terraza:', terrazaChecked);    // Puedes ver el estado en la consola
+});
+
+// Si quieres reaccionar cuando los checkboxes cambian de estado, puedes usar un event listener:
+lavadoCheckbox.addEventListener('change', function() {
+    lavadoChecked = lavadoCheckbox.checked;
+    console.log('Estacionamiento:', lavadoChecked);  // Puedes ver el estado en la consola
+});
+
+areaCheckbox.addEventListener('change', function() {
+    areaChecked = areaCheckbox.checked;
+    console.log('terraza:', areaChecked);    // Puedes ver el estado en la consola
+});
+
+const nombrePropiedad = document.querySelector('[name="nombre_propiedad_in"]').value;
+const descrip = document.querySelector('[name="description_in"]').value;
+const tipoPropiedad = document.querySelector('[name="tipo_propiedad_in"]').value;
+const precioIn = document.querySelector('[name="precio_in"]').value;
+const antiguedadIn = document.querySelector('[name="anos_antiguedad_in"]').value;
+const direccionIn = document.querySelector('[name="direccion_in"]').value;
+const ciudadIn = document.querySelector('[name="ciudad_in"]').value;
+const estadoIn = document.querySelector('[name="estado_in"]').value;
+const paisIn = document.querySelector('[name="pais_in"]').value;
+const codigoIn = document.querySelector('[name="codigo_in"]').value;
+const mapsIn = document.querySelector('[name="maps_url_in"]').value;
+const habitacionesIn = document.querySelector('[name="habitaciones_in"]').value;
+const banosIn = document.querySelector('[name="banos_in"]').value;
+const construccionIn = document.querySelector('[name="construccion_in"]').value;
+const pisosIn = document.querySelector('[name="pisos_in"]').value;
+const terrenoIn = document.querySelector('[name="terreno_in"]').value;
+
+
+const { data: dataPropiedad, error: errorPropiedad } = await _supabase
+    .from('propiedades')
+    .insert([
+        {
+            nombre: nombrePropiedad,
+            descripcion: descrip,
+            tipo_propiedad: tipoPropiedad,
+            precio: precioIn,
+            antiguedad: antiguedadIn,
+            direccion: direccionIn,
+            ciudad: ciudadIn,
+            estado: estadoIn,
+            pais: paisIn,
+            codigo_postal: codigoIn,
+            url_maps: mapsIn,
+            habitaciones: habitacionesIn,
+            banos: banosIn,
+            pisos: pisosIn,
+            metros_construccion: construccionIn,
+            metros_terreno: terrenoIn,
+            garage: garageChecked,
+            atico: aticoChecked,
+            estacionamiento: estacionamientoChecked,
+            terraza: terrazaChecked,
+            cuarto_lavado: lavadoChecked,
+            areas_verdes: areaChecked,
+            vendedor_id: dataVendedor[0].id,
+        }
+    ]);
+    async function uploadSelectedImages(propiedadId) {
+                                // Borra las imágenes existentes en el contenedor "imageContainer2"
+                                $('#imageContainer2').empty();
+
+                                for (let i = 0; i < selectedImages.length; i++) {
+                                  const file = selectedImages[i];
+                                  const filePath = `uploads/${propiedadId}/${file.name}`;
+
+                                  // Usa Supabase para subir el archivo
+                                  const { error } = await _supabase.storage.from('Images_propiedades').upload(filePath, file);
+
+                                  if (error) {
+                                    console.error("Error al subir la imagen:", error);
+                                  } else {
+                                    console.log("Imagen subida exitosamente");
+                                  }
+                                }
+                                // Una vez que se han subido todas las imágenes, puedes limpiar la variable.
+                                selectedImages = [];
+                              }
+
+                              if (errorPropiedad) {
+                                  console.error('Error inserting propiedad:', errorPropiedad);
+                              } else {
+                                  console.log('Inserted propiedad:', dataPropiedad);
+                                  const propiedadId = dataPropiedad[0].id; // Accede al ID de la propiedad
+
+                              // Luego, puedes realizar otras operaciones con la propiedad, como subir imágenes
+                              await uploadSelectedImages(propiedadId);
+                                  location.reload()
+                              }
+}
+                          let selectedImages = [];
+
+                          $(document).ready(async function() {
+                            $('#profilePhoto').change(async function() {
+                              if (this.files && this.files[0]) {
+                                selectedImages.push(this.files[0]);
+                                  const reader = new FileReader();
+                                  reader.onload = async function(e) {
+                                          const newImageDiv = `
+                                              <div class="col-lg-3">
+                                                  <div class="profile-box position-relative d-md-flex align-items-end mb50">
+                                                      <div class="profile-img position-relative overflow-hidden bdrs12 mb20-sm">
+                                                          <img class="w-100" src="${e.target.result}" alt="Uploaded Image">
+                                                          <a href="#" class="tag-del" data-bs-toggle="tooltip" data-bs-placement="top" title="" aria-label="Delete Item"><span class="fas fa-trash-can"></span></a>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          `;
+                                          $('#imageContainer').append(newImageDiv);
+                                          // Iniciar tooltips (si estás usando Bootstrap)
+                                          $('[data-bs-toggle="tooltip"]').tooltip();
+                                      }
+                                      reader.readAsDataURL(this.files[0]);
+                                  }
+                              });
+
+                              
+
+                              // Para manejar la eliminación de la imagen
+                              $(document).on('click', '.tag-del', function(e) {
+                                e.preventDefault();
+                                const imageIndex = $(this).closest('.col-lg-3').index();
+                                selectedImages.splice(imageIndex, 1); // Elimina la imagen del arreglo
+                                $(this).closest('.col-lg-3').remove();
+                              });
+
+
+
+                              $('[data-bs-toggle="tooltip"]').tooltip();
+                              $(document).on('click', '.tag-del', function(e) {
+                                  e.preventDefault();
+                                  $(this).closest('.col-lg-3').remove();
+                              });
+
+                              $(document).ready(function() {
+                                $('#uploadButton').click(function() {
+                                  uploadSelectedImages(propiedadId);
+                                });
+                              });
+
+                          });
+
+                          async function fetchAndDisplayImages() {
+                          // Consultar Supabase para obtener la lista de imágenes
+                          const { data, error } = await _supabase.storage.from('Images_propiedades').list('uploads/');
+
+                          if (error) {
+                              console.error("Error al obtener la lista de imágenes:", error);
+                              return;
+                          }
+
+                          if (data && data.length) {
+                              // Iterar sobre cada imagen y generar el HTML
+                              data.forEach(async (image) => {
+                                  const imageUrl = await _supabase.storage.from('Images_propiedades').getPublicUrl('uploads/' + image.name);
+
+                                  const newImageDiv = `
+                                      <div class="col-lg-3">
+                                          <div class="profile-box position-relative d-md-flex align-items-end mb50">
+                                              <div class="profile-img position-relative overflow-hidden bdrs12 mb20-sm">
+                                                  <img class="w-100" src="${imageUrl.publicURL}" alt="Image">
+                                                  <a href="#" class="tag-del" data-bs-toggle="tooltip" data-bs-placement="top" title="" aria-label="Delete Item"><span class="fas fa-trash-can"></span></a>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  `;
+
+                                  $('#imageContainer2').append(newImageDiv);
+                                  $('[data-bs-toggle="tooltip"]').tooltip();
+                              });
+                          }
+                      }
+                      $(document).ready(function() {
+                          fetchAndDisplayImages();
+                      });
+
+                      </script>
+                        
+                        <div class="row" id="imageContainer">
                         </div>
+                        <!--
+                        <div class="row" id="imageContainer2">
+                        </div>-->
                         <div class="col-md-12">
                           <div class="d-sm-flex justify-content-between">
                             <a class="ud-btn btn-white" href="" data-nav="prev">Paso previo<i class="fal fa-arrow-right-long"></i></a>
@@ -530,7 +796,7 @@
                             <div class="col-md-12 mt30">
                               <div class="d-sm-flex justify-content-between">
                                 <a class="ud-btn btn-white" href="" data-nav="prev">Paso previo<i class="fal fa-arrow-right-long"></i></a>
-                                <button class="ud-btn btn-dark" type="submit" onclick="addVendedor2()">Enviar<i class="fal fa-arrow-right-long"></i></button>
+                                <button class="ud-btn btn-dark" type="submit" onclick="addVendedor2()" id="uploadButton">Enviar<i class="fal fa-arrow-right-long"></i></button>
                               </div>
                             </div>
                           </div>
@@ -583,6 +849,5 @@
 <script src="js/dashboard-script.js"></script>
 <!-- Custom script for all pages --> 
 <script src="js/script.js"></script>
-<script src="js/addproperty.js"></script>
 </body>
 </html>
