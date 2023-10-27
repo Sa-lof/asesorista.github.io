@@ -359,6 +359,20 @@
         <div class="row">
           <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.22.2"></script>
           <div id="propertiesContainer" class="row"></div>
+          <style>
+            .list-thumb {
+                position: relative; 
+                overflow: hidden; /* Esto recorta cualquier parte de la imagen que exceda el contenedor */
+                height: 220px; /* Ajusta este valor según lo que necesites */
+            }
+
+            .list-thumb img {
+                height: 100%; 
+                width: 100%; 
+                object-fit: cover; /* Esto hace que la imagen cubra todo el espacio disponible, recortándola si es necesario */
+                display: block;
+            }
+          </style>
           <div class="col-sm-6 col-lg-4" style="display: none;" id="propertyTemplate">
             <div class="listing-style1">
               <div class="list-thumb">

@@ -171,6 +171,8 @@
             loadPropertyDetails(propertyId);
         }
       });
+
+
       async function loadPropertyDetails(id) {
           const { data, error } = await _supabase
               .from('propiedades')
@@ -271,7 +273,48 @@
               pElement.innerHTML = `<i class="fas fa-circle fz6 align-middle pe-2"></i>${feature}`;
               featuresContainer.appendChild(pElement);
           }); 
+
+          async function fetchAndDisplayImages() {
+              const urlParams = new URLSearchParams(window.location.search);
+              const propertyId = urlParams.get('id');
+              
+              const { data, error } = await _supabase.storage.from('Images_propiedades').list('uploads/' + propertyId + '/');
+              if (error) {
+                  console.error("Error al obtener la lista de imágenes:", error);
+                  return;
+              }
+
+              if (data && data.length) {
+                  for (let i = 0; i < data.length; i++) {
+                      const image = data[i];
+                      const { publicURL, error } = await _supabase.storage.from('Images_propiedades').getPublicUrl('uploads/' + propertyId + '/' + image.name);
+                      if (error) {
+                          console.error("Error al obtener la URL pública:", error);
+                          continue;
+                      }
+                      
+                      // Actualizar la imagen y el enlace en el HTML de acuerdo al índice
+                      const imgIndex = i + 1; // para que vaya de 1 a 5
+                      
+                      const imgElement = document.querySelector(`img[alt="${imgIndex}.jpg"]`);
+                      const linkElement = document.querySelector(`a.preview-img-${imgIndex}.sp-img`);
+                      
+                      if (imgElement && linkElement) {
+                          imgElement.src = publicURL;
+                          linkElement.href = publicURL;
+                      }
+                  }
+              }
+          }
+
+
+
+          $(document).ready(function() {
+              fetchAndDisplayImages();
+          });
+
       }
+      
   </script>
   <div class="body_content pt100">
     <!-- Property All Lists -->
@@ -302,42 +345,41 @@
           </div>
         </div>
         <div class="row mb30 mt30 wow fadeInUp" data-wow-delay="300ms">
-          <div class="col-sm-6">
-            <div class="sp-img-content mb15-md">
+          <div class="col-sm-6 d-flex flex-column">
+            <div class="sp-img-content mb15-md flex-grow-1">
               <a class="popup-img preview-img-1 sp-img" href="images/listings/listing-single-1.jpg">
                 <img class="w-100" src="images/listings/listing-single-1.jpg" alt="1.jpg">
               </a>
             </div>
           </div>
-          <div class="col-sm-6">
-            <div class="row">
-              <div class="col-6 ps-sm-0">
-                <div class="sp-img-content">
-                  <a class="popup-img preview-img-2 sp-img mb10" href="images/listings/listing-single-2.jpg">
-                    <img class="w-100" src="images/listings/listing-single-2.jpg" alt="2.jpg">
+          <div class="col-sm-6 d-flex flex-column">
+            <div class="row flex-grow-1">
+              <div class="col-6 ps-sm-0 d-flex mb-3">
+                <div class="sp-img-content flex-grow-1"  style="width: 100%; height: 100%;">
+                  <a class="popup-img preview-img-2 sp-img mb10" href="images/listings/listing-single-2.jpg" style="display: block; width: 100%; height: 100%;">
+                    <img class="w-100" src="images/listings/listing-single-2.jpg" alt="2.jpg" style="object-fit: cover; width: 100%; height: 100%;">
                   </a>
                 </div>
               </div>
-              <div class="col-6 ps-sm-0">
-                <div class="sp-img-content">
-                  <a class="popup-img preview-img-3 sp-img mb10" href="images/listings/listing-single-3.jpg">
-                    <img class="w-100" src="images/listings/listing-single-3.jpg" alt="3.jpg">
+              <div class="col-6 ps-sm-0 d-flex mb-3">
+                <div class="sp-img-content flex-grow-1" style="width: 100%; height: 100%;">
+                  <a class="popup-img preview-img-3 sp-img mb10" href="images/listings/listing-single-3.jpg" style="display: block; width: 100%; height: 100%;">
+                    <img class="w-100" src="images/listings/listing-single-3.jpg" alt="3.jpg" style="object-fit: cover; width: 100%; height: 100%;">
                   </a>
                 </div>
               </div>
-              <div class="col-6 ps-sm-0">
-                <div class="sp-img-content">
-                  <a class="popup-img preview-img-4 sp-img" href="images/listings/listing-single-4.jpg">
-                    <img class="w-100" src="images/listings/listing-single-4.jpg" alt="4.jpg">
+              <div class="col-6 ps-sm-0 d-flex">
+                <div class="sp-img-content flex-grow-1" style="width: 100%; height: 100%;">
+                  <a class="popup-img preview-img-4 sp-img" href="images/listings/listing-single-4.jpg" style="display: block; width: 100%; height: 100%;">
+                    <img class="w-100" src="images/listings/listing-single-4.jpg" alt="4.jpg" style="object-fit: cover; width: 100%; height: 100%;">
                   </a>
                 </div>
               </div>
-              <div class="col-6 ps-sm-0">
-                <div class="sp-img-content">
-                  <a class="popup-img preview-img-5 sp-img" href="images/listings/listing-single-5.jpg">
-                    <img class="w-100" src="images/listings/listing-single-5.jpg" alt="5.jpg">
+              <div class="col-6 ps-sm-0 d-flex">
+                <div class="sp-img-content flex-grow-1" style="width: 100%; height: 100%;">
+                  <a class="popup-img preview-img-5 sp-img" href="images/listings/listing-single-5.jpg" style="display: block; width: 100%; height: 100%;">
+                    <img class="w-100" src="images/listings/listing-single-5.jpg" alt="5.jpg" style="object-fit: cover; width: 100%; height: 100%;">
                   </a>
-                  <a href="images/listings/listing-single-5.jpg" class="all-tag popup-img">See All 74 Photos</a>
                 </div>
               </div>
             </div>

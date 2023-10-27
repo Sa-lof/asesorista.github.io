@@ -107,10 +107,35 @@ const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 let currentPage = 1;
 const propertiesPerPage = 9;
 
+async function getFirstImageURL(propertyId) {
+    const { data, error } = await _supabase.storage.from('Images_propiedades').list('uploads/' + propertyId + '/');
+    if (error) {
+        console.error("Error al obtener la lista de imágenes:", error);
+        return "images/listings/g3-1.jpg";  // URL por defecto si hay un error
+    }
+
+    if (data && data.length) {
+        const image = data[0];
+        const { publicURL, error } = await _supabase.storage.from('Images_propiedades').getPublicUrl('uploads/' + propertyId + '/' + image.name);
+        if (error) {
+            console.error("Error al obtener la URL pública:", error);
+            return "images/listings/g3-1.jpg";  // URL por defecto si hay un error
+        }
+        
+        return publicURL;
+    }
+    return "images/listings/g3-1.jpg";  // URL por defecto si no hay imagen
+}
+
+
 function createPropertyDiv(propiedad) {
     const templateDiv = document.getElementById('propertyTemplate');
     const clonedDiv = templateDiv.cloneNode(true); 
-
+    //clonedDiv.querySelector('.list-thumb img').src = imagePath;
+    // Aquí es donde añades el código para establecer la imagen principal
+    getFirstImageURL(propiedad.id).then(url => {
+        clonedDiv.querySelector('.list-thumb img').src = url;
+    });
     clonedDiv.querySelector('.list-title a').textContent = propiedad.nombre || "Nombre de Propiedad";
     const propertyLink = clonedDiv.querySelector('.list-title a');
     propertyLink.href = `page-property-single-v1.html?id=${propiedad.id}`;

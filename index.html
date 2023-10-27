@@ -573,248 +573,100 @@
                 </div>
               </div>
             </div>
+            <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.22.2"></script>
+
+                        <script>
+                          const SUPABASE_URL = 'https://fhowgaxtehxvtcpiziyy.supabase.co'
+                          const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZob3dnYXh0ZWh4dnRjcGl6aXl5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTA2OTA1NjQsImV4cCI6MjAwNjI2NjU2NH0.ZOc7XrEmDevg35_FT-s0HUQgA4uvq900D80j31G7R20'
+
+                          const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+                        </script>
+                        <script>
+                          async function getFirstImageURL(propertyId) {
+                              const { data, error } = await _supabase.storage.from('Images_propiedades').list('uploads/' + propertyId + '/');
+                              if (error) {
+                                  console.error("Error al obtener la lista de imágenes:", error);
+                                  return "images/listings/g3-1.jpg";  // URL por defecto si hay un error
+                              }
+
+                              if (data && data.length) {
+                                  const image = data[0];
+                                  const { publicURL, error } = await _supabase.storage.from('Images_propiedades').getPublicUrl('uploads/' + propertyId + '/' + image.name);
+                                  if (error) {
+                                      console.error("Error al obtener la URL pública:", error);
+                                      return "images/listings/g3-1.jpg";  // URL por defecto si hay un error
+                                  }
+                                  
+                                  return publicURL;
+                              }
+                              return "images/listings/g3-1.jpg";  // URL por defecto si no hay imagen
+                          }
+
+                          function createPropertyDiv(propiedad) {
+                          const templateDiv = document.getElementById('propertyTemplate');
+                          const clonedDiv = templateDiv.cloneNode(true); 
+
+                          // Actualizar la imagen principal
+                          getFirstImageURL(propiedad.id).then(url => {
+                              clonedDiv.querySelector('.list-thumb img').src = url;
+                          });
+
+                          // Actualizar el precio
+                          clonedDiv.querySelector('.list-price').textContent = `$${propiedad.precio} / `;
+                          const span = document.createElement('span');
+                          span.textContent = 'mo';
+                          clonedDiv.querySelector('.list-price').appendChild(span);
+
+                          // Actualizar el título y el enlace de la propiedad
+                          const propertyLink = clonedDiv.querySelector('.list-title a');
+                          propertyLink.href = `page-property-single-v1.html?id=${propiedad.id}`;
+                          propertyLink.textContent = propiedad.nombre || "Nombre de Propiedad";
+
+                          // Actualizar la ubicación
+                          clonedDiv.querySelector('.list-text').textContent = `${propiedad.ciudad}, ${propiedad.estado}, ${propiedad.pais}`;
+
+                          // Actualizar metadatos de la propiedad
+                          const metadataElements = clonedDiv.querySelectorAll('.list-meta a');
+                          metadataElements[0].innerHTML = `<span><i class="fal fa-bed" style="font-size: 15px"></i></span>${propiedad.habitaciones} camas`;
+                          metadataElements[1].innerHTML = `<span><i class="fal fa-bath" style="font-size: 15px"></i></span>${propiedad.banos} baños`;
+                          metadataElements[2].innerHTML = `<span><i class="fal fa-expand-arrows" style="font-size: 15px"></i></span>${propiedad.metros_construccion} m²`;
+
+                          // Mostrar el div clonado
+                          clonedDiv.style.display = "block";
+
+                          return clonedDiv;
+                      }
+
+                      async function loadProperties() {
+                        // Consulta las primeras 6 propiedades desde Supabase
+                        const { data: propiedades, error } = await _supabase
+                            .from('propiedades')
+                            .select('*')
+                            .limit(6);
+
+                        if (error) {
+                            console.error('Error fetching properties:', error);
+                            return;
+                        }
+
+                        // Encuentra el contenedor donde deseas insertar las propiedades (p.ej., el owl-carousel)
+                        const container = document.querySelector('.owl-carousel');
+                        // Por cada propiedad, crea un div y agrégalo al contenedor
+                        propiedades.forEach(propiedad => {
+                            const propertyDiv = createPropertyDiv(propiedad);
+                            container.appendChild(propertyDiv);
+                            $('.owl-carousel').trigger('add.owl.carousel', [propertyDiv]).trigger('refresh.owl.carousel');
+                        });
+                      }
+
+                      document.addEventListener('DOMContentLoaded', () => loadProperties());
+                    </script>
             <div class="row">
               <div class="col-lg-12 wow fadeInUp" data-wow-delay="300ms">
                 <div
                   class="feature-listing-slider navi_pagi_bottom_center slider-dib-sm slider-3-grid owl-carousel owl-theme"
                 >
-                  <div class="item">
-                    <div class="listing-style1">
-                      <div class="list-thumb">
-                        <img
-                          class="w-100"
-                          src="images/listings/g1-1.jpg"
-                          alt=""
-                        />
-                        <div class="list-price">$14,000 / <span>mo</span></div>
-                      </div>
-                      <div class="list-content">
-                        <h6 class="list-title">
-                          <a href="page-property-single-v1.html"
-                            >Equestrian Family Home</a
-                          >
-                        </h6>
-                        <p class="list-text">California City, CA, USA</p>
-                        <div class="list-meta d-flex align-items-center">
-                          <a
-                            ><span
-                              ><i
-                                class="fal fa-bed"
-                                style="font-size: 15px"
-                              ></i></span
-                            >3 camas</a
-                          >
-                          <a
-                            ><span
-                              ><i
-                                class="fal fa-bath"
-                                style="font-size: 15px"
-                              ></i></span
-                            >3 baños</a
-                          >
-                          <a
-                            ><span
-                              ><i
-                                class="fal fa-expand-arrows"
-                                style="font-size: 15px"
-                              ></i></span
-                            >3 m²</a
-                          >
-                        </div>
-                        <hr class="mt-2 mb-2" />
-                        <div
-                          class="list-meta2 d-flex justify-content-between align-items-center"
-                        >
-                          <span class="for-what">En venta</span>
-                          <div class="icons d-flex align-items-center">
-                            <a
-                              href="page-property-single-v1.html"
-                              class="ud-btn btn-dark"
-                              >Cotizar ahora</a
-                            >
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="item">
-                    <div class="listing-style1">
-                      <div class="list-thumb">
-                        <img
-                          class="w-100"
-                          src="images/listings/g1-1.jpg"
-                          alt=""
-                        />
-                        <div class="list-price">$14,000 / <span>mo</span></div>
-                      </div>
-                      <div class="list-content">
-                        <h6 class="list-title">
-                          <a href="page-property-single-v1.html"
-                            >Equestrian Family Home</a
-                          >
-                        </h6>
-                        <p class="list-text">California City, CA, USA</p>
-                        <div class="list-meta d-flex align-items-center">
-                          <a
-                            ><span
-                              ><i
-                                class="fal fa-bed"
-                                style="font-size: 15px"
-                              ></i></span
-                            >3 camas</a
-                          >
-                          <a
-                            ><span
-                              ><i
-                                class="fal fa-bath"
-                                style="font-size: 15px"
-                              ></i></span
-                            >3 baños</a
-                          >
-                          <a
-                            ><span
-                              ><i
-                                class="fal fa-expand-arrows"
-                                style="font-size: 15px"
-                              ></i></span
-                            >3 m²</a
-                          >
-                        </div>
-                        <hr class="mt-2 mb-2" />
-                        <div
-                          class="list-meta2 d-flex justify-content-between align-items-center"
-                        >
-                          <span class="for-what">En venta</span>
-                          <div class="icons d-flex align-items-center">
-                            <a
-                              href="page-property-single-v1.html"
-                              class="ud-btn btn-dark"
-                              >Cotizar ahora</a
-                            >
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="item">
-                    <div class="listing-style1">
-                      <div class="list-thumb">
-                        <img
-                          class="w-100"
-                          src="images/listings/g1-1.jpg"
-                          alt=""
-                        />
-                        <div class="list-price">$14,000 / <span>mo</span></div>
-                      </div>
-                      <div class="list-content">
-                        <h6 class="list-title">
-                          <a href="page-property-single-v1.html"
-                            >Equestrian Family Home</a
-                          >
-                        </h6>
-                        <p class="list-text">California City, CA, USA</p>
-                        <div class="list-meta d-flex align-items-center">
-                          <a
-                            ><span
-                              ><i
-                                class="fal fa-bed"
-                                style="font-size: 15px"
-                              ></i></span
-                            >3 camas</a
-                          >
-                          <a
-                            ><span
-                              ><i
-                                class="fal fa-bath"
-                                style="font-size: 15px"
-                              ></i></span
-                            >3 baños</a
-                          >
-                          <a
-                            ><span
-                              ><i
-                                class="fal fa-expand-arrows"
-                                style="font-size: 15px"
-                              ></i></span
-                            >3 m²</a
-                          >
-                        </div>
-                        <hr class="mt-2 mb-2" />
-                        <div
-                          class="list-meta2 d-flex justify-content-between align-items-center"
-                        >
-                          <span class="for-what">En venta</span>
-                          <div class="icons d-flex align-items-center">
-                            <a
-                              href="page-property-single-v1.html"
-                              class="ud-btn btn-dark"
-                              >Cotizar ahora</a
-                            >
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="item">
-                    <div class="listing-style1">
-                      <div class="list-thumb">
-                        <img
-                          class="w-100"
-                          src="images/listings/g1-1.jpg"
-                          alt=""
-                        />
-                        <div class="list-price">$14,000 / <span>mo</span></div>
-                      </div>
-                      <div class="list-content">
-                        <h6 class="list-title">
-                          <a href="page-property-single-v1.html"
-                            >Equestrian Family Home</a
-                          >
-                        </h6>
-                        <p class="list-text">California City, CA, USA</p>
-                        <div class="list-meta d-flex align-items-center">
-                          <a
-                            ><span
-                              ><i
-                                class="fal fa-bed"
-                                style="font-size: 15px"
-                              ></i></span
-                            >3 camas</a
-                          >
-                          <a
-                            ><span
-                              ><i
-                                class="fal fa-bath"
-                                style="font-size: 15px"
-                              ></i></span
-                            >3 baños</a
-                          >
-                          <a
-                            ><span
-                              ><i
-                                class="fal fa-expand-arrows"
-                                style="font-size: 15px"
-                              ></i></span
-                            >3 m²</a
-                          >
-                        </div>
-                        <hr class="mt-2 mb-2" />
-                        <div
-                          class="list-meta2 d-flex justify-content-between align-items-center"
-                        >
-                          <span class="for-what">En venta</span>
-                          <div class="icons d-flex align-items-center">
-                            <a
-                              href="page-property-single-v1.html"
-                              class="ud-btn btn-dark"
-                              >Cotizar ahora</a
-                            >
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="item">
+                  <div class="item" id="propertyTemplate" style="display:none">
                     <div class="listing-style1">
                       <div class="list-thumb">
                         <img

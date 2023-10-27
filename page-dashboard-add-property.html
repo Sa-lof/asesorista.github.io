@@ -275,8 +275,7 @@
                             </label>
                         
                             <p class="text">Las fotos deben de estar en formato JPEG o PNG y al menos 2048x768</p>
-                        </div>
-                        
+                          </div>
                         </div>
                         <form class="form-style1" id="vendedorForm">
                           <div class="row">
@@ -344,8 +343,18 @@
                             </div>
                             <div class="col-sm-4">
                               <div class="mb20">
-                                <label class="heading-color ff-heading fw600 mb10">Tipo de propiedad</label>
-                                <input type="text" class="form-control" name="tipo_propiedad_in" placeholder="">
+                                <div class="form-style1">
+                                  <label class="form-label fw600 dark-color">Tipo de propiedad</label>
+                                  <div class="bootselect-multiselect">
+                                    <select class="selectpicker" id="tipo-propiedad-select" data-live-search="true" data-width="100%" name="tipo_propiedad_in">
+                                      <option data-tokens="Casa">Casa</option>
+                                      <option data-tokens="Apartamento">Apartamento</option>
+                                      <option data-tokens="Oficina">Oficina</option>
+                                      <option data-tokens="Local">Local</option>
+                                      <option data-tokens="Otro">Otro</option>
+                                    </select>
+                                  </div>
+                                </div>
                               </div>
                             </div>
                             <div class="col-sm-4">
@@ -380,10 +389,10 @@
                             <h4 class="title fz17 mb10">Sube fotos de tu propiedad</h4>
                             <p class="text mb25">Las fotos deben de estar en formato JPEG o PNG y al menos 2048x768</p>
                             <!-- Hidden file input -->
-                            <input type="file" id="profilePhoto" accept="image/jpeg, image/png" style="display: none;" />
+                            <input type="file" id="imagenesPropiedad" accept="image/jpeg, image/png" style="display: none;" />
                         
                             <!-- Styled label to act as the button -->
-                            <label for="profilePhoto" class="ud-btn2 btn-white2 mb30">
+                            <label for="imagenesPropiedad" class="ud-btn2 btn-white2 mb30">
                                 Carga una imagen<i class="fal fa-arrow-right-long"></i>
                             </label>
                           </div>
@@ -397,145 +406,145 @@
                           const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
                         </script>
                         <script>
-                           let id_imagenes = 0;
+                          let id_imagenes = 0;
                           async function addVendedor2() {
 
-const nombre = document.querySelector('[name="nombre"]').value;
-const apellidoMaterno = document.querySelector('[name="apellido_materno"]').value;
-const apellidoPaterno = document.querySelector('[name="apellido_paterno"]').value;
-const correo = document.querySelector('[name="correo_electronico"]').value;
-const telefono = document.querySelector('[name="telefono"]').value;
-const puesto = document.querySelector('[name="puesto"]').value;
+                          const nombre = document.querySelector('[name="nombre"]').value;
+                          const apellidoMaterno = document.querySelector('[name="apellido_materno"]').value;
+                          const apellidoPaterno = document.querySelector('[name="apellido_paterno"]').value;
+                          const correo = document.querySelector('[name="correo_electronico"]').value;
+                          const telefono = document.querySelector('[name="telefono"]').value;
+                          const puesto = document.querySelector('[name="puesto"]').value;
 
-const { data: dataVendedor, error: errorVendedor } = await _supabase
-    .from('vendedores')
-    .insert([
-        {
-            nombre: nombre,
-            apellido_materno: apellidoMaterno,
-            apellido_paterno: apellidoPaterno,
-            correo_electronico: correo,
-            telefono: telefono,
-            puesto: puesto,
-        }
-]);
+                          const { data: dataVendedor, error: errorVendedor } = await _supabase
+                              .from('vendedores')
+                              .insert([
+                                  {
+                                      nombre: nombre,
+                                      apellido_materno: apellidoMaterno,
+                                      apellido_paterno: apellidoPaterno,
+                                      correo_electronico: correo,
+                                      telefono: telefono,
+                                      puesto: puesto,
+                                  }
+                          ]);
 
-if (errorVendedor) {
-    console.error('Error inserting vendedor:', errorVendedor);
-    return;
-} else {
-    console.log('Inserted vendedor:', dataVendedor);
-    if (dataVendedor && dataVendedor.length > 0) {
-        const newVendedorId = dataVendedor[0].id;
-        if (!newVendedorId) {
-            console.error('Unable to extract vendedor ID. Check the structure of the response.');
-            return;
-        }
-    } else {
-        console.error('No data returned after inserting vendedor.');
-        return;
-    }
-}
+                          if (errorVendedor) {
+                              console.error('Error inserting vendedor:', errorVendedor);
+                              return;
+                          } else {
+                              console.log('Inserted vendedor:', dataVendedor);
+                              if (dataVendedor && dataVendedor.length > 0) {
+                                  const newVendedorId = dataVendedor[0].id;
+                                  if (!newVendedorId) {
+                                      console.error('Unable to extract vendedor ID. Check the structure of the response.');
+                                      return;
+                                  }
+                              } else {
+                                  console.error('No data returned after inserting vendedor.');
+                                  return;
+                              }
+                          }
 
-// Selección de los checkboxes
-const garageCheckbox = document.getElementById('garageCheckbox');
-const aticoCheckbox = document.getElementById('aticoCheckbox');
-const estacionamientoCheckbox = document.getElementById('estacionamientoCheckbox');
-const terrazaCheckbox = document.getElementById('terrazaCheckbox');
-const lavadoCheckbox = document.getElementById('lavadoCheckbox');
-const areaCheckbox = document.getElementById('areaCheckbox');
-
-
-
-// Obtener el valor true o false de los checkboxes
-let garageChecked = garageCheckbox.checked; // Será true si está marcado, false si no lo está.
-let aticoChecked = aticoCheckbox.checked;   // Será true si está marcado, false si no lo está.
-let estacionamientoChecked = estacionamientoCheckbox.checked; // Será true si está marcado, false si no lo está.
-let terrazaChecked = terrazaCheckbox.checked;
-let lavadoChecked = lavadoCheckbox.checked; // Será true si está marcado, false si no lo está.
-let areaChecked = areaCheckbox.checked;
-
-// Si quieres reaccionar cuando los checkboxes cambian de estado, puedes usar un event listener:
-garageCheckbox.addEventListener('change', function() {
-    garageChecked = garageCheckbox.checked;
-    console.log('Garage:', garageChecked);  // Puedes ver el estado en la consola
-});
-
-aticoCheckbox.addEventListener('change', function() {
-    aticoChecked = aticoCheckbox.checked;
-    console.log('Atico:', aticoChecked);    // Puedes ver el estado en la consola
-});
-
-// Si quieres reaccionar cuando los checkboxes cambian de estado, puedes usar un event listener:
-estacionamientoCheckbox.addEventListener('change', function() {
-    estacionamientoChecked = estacionamientoCheckbox.checked;
-    console.log('Estacionamiento:', estacionamientoChecked);  // Puedes ver el estado en la consola
-});
-
-terrazaCheckbox.addEventListener('change', function() {
-    terrazaChecked = terrazaCheckbox.checked;
-    console.log('terraza:', terrazaChecked);    // Puedes ver el estado en la consola
-});
-
-// Si quieres reaccionar cuando los checkboxes cambian de estado, puedes usar un event listener:
-lavadoCheckbox.addEventListener('change', function() {
-    lavadoChecked = lavadoCheckbox.checked;
-    console.log('Estacionamiento:', lavadoChecked);  // Puedes ver el estado en la consola
-});
-
-areaCheckbox.addEventListener('change', function() {
-    areaChecked = areaCheckbox.checked;
-    console.log('terraza:', areaChecked);    // Puedes ver el estado en la consola
-});
-
-const nombrePropiedad = document.querySelector('[name="nombre_propiedad_in"]').value;
-const descrip = document.querySelector('[name="description_in"]').value;
-const tipoPropiedad = document.querySelector('[name="tipo_propiedad_in"]').value;
-const precioIn = document.querySelector('[name="precio_in"]').value;
-const antiguedadIn = document.querySelector('[name="anos_antiguedad_in"]').value;
-const direccionIn = document.querySelector('[name="direccion_in"]').value;
-const ciudadIn = document.querySelector('[name="ciudad_in"]').value;
-const estadoIn = document.querySelector('[name="estado_in"]').value;
-const paisIn = document.querySelector('[name="pais_in"]').value;
-const codigoIn = document.querySelector('[name="codigo_in"]').value;
-const mapsIn = document.querySelector('[name="maps_url_in"]').value;
-const habitacionesIn = document.querySelector('[name="habitaciones_in"]').value;
-const banosIn = document.querySelector('[name="banos_in"]').value;
-const construccionIn = document.querySelector('[name="construccion_in"]').value;
-const pisosIn = document.querySelector('[name="pisos_in"]').value;
-const terrenoIn = document.querySelector('[name="terreno_in"]').value;
+                          // Selección de los checkboxes
+                          const garageCheckbox = document.getElementById('garageCheckbox');
+                          const aticoCheckbox = document.getElementById('aticoCheckbox');
+                          const estacionamientoCheckbox = document.getElementById('estacionamientoCheckbox');
+                          const terrazaCheckbox = document.getElementById('terrazaCheckbox');
+                          const lavadoCheckbox = document.getElementById('lavadoCheckbox');
+                          const areaCheckbox = document.getElementById('areaCheckbox');
 
 
-const { data: dataPropiedad, error: errorPropiedad } = await _supabase
-    .from('propiedades')
-    .insert([
-        {
-            nombre: nombrePropiedad,
-            descripcion: descrip,
-            tipo_propiedad: tipoPropiedad,
-            precio: precioIn,
-            antiguedad: antiguedadIn,
-            direccion: direccionIn,
-            ciudad: ciudadIn,
-            estado: estadoIn,
-            pais: paisIn,
-            codigo_postal: codigoIn,
-            url_maps: mapsIn,
-            habitaciones: habitacionesIn,
-            banos: banosIn,
-            pisos: pisosIn,
-            metros_construccion: construccionIn,
-            metros_terreno: terrenoIn,
-            garage: garageChecked,
-            atico: aticoChecked,
-            estacionamiento: estacionamientoChecked,
-            terraza: terrazaChecked,
-            cuarto_lavado: lavadoChecked,
-            areas_verdes: areaChecked,
-            vendedor_id: dataVendedor[0].id,
-        }
-    ]);
-    async function uploadSelectedImages(propiedadId) {
+
+                          // Obtener el valor true o false de los checkboxes
+                          let garageChecked = garageCheckbox.checked; // Será true si está marcado, false si no lo está.
+                          let aticoChecked = aticoCheckbox.checked;   // Será true si está marcado, false si no lo está.
+                          let estacionamientoChecked = estacionamientoCheckbox.checked; // Será true si está marcado, false si no lo está.
+                          let terrazaChecked = terrazaCheckbox.checked;
+                          let lavadoChecked = lavadoCheckbox.checked; // Será true si está marcado, false si no lo está.
+                          let areaChecked = areaCheckbox.checked;
+
+                          // Si quieres reaccionar cuando los checkboxes cambian de estado, puedes usar un event listener:
+                          garageCheckbox.addEventListener('change', function() {
+                              garageChecked = garageCheckbox.checked;
+                              console.log('Garage:', garageChecked);  // Puedes ver el estado en la consola
+                          });
+
+                          aticoCheckbox.addEventListener('change', function() {
+                              aticoChecked = aticoCheckbox.checked;
+                              console.log('Atico:', aticoChecked);    // Puedes ver el estado en la consola
+                          });
+
+                          // Si quieres reaccionar cuando los checkboxes cambian de estado, puedes usar un event listener:
+                          estacionamientoCheckbox.addEventListener('change', function() {
+                              estacionamientoChecked = estacionamientoCheckbox.checked;
+                              console.log('Estacionamiento:', estacionamientoChecked);  // Puedes ver el estado en la consola
+                          });
+
+                          terrazaCheckbox.addEventListener('change', function() {
+                              terrazaChecked = terrazaCheckbox.checked;
+                              console.log('terraza:', terrazaChecked);    // Puedes ver el estado en la consola
+                          });
+
+                          // Si quieres reaccionar cuando los checkboxes cambian de estado, puedes usar un event listener:
+                          lavadoCheckbox.addEventListener('change', function() {
+                              lavadoChecked = lavadoCheckbox.checked;
+                              console.log('Estacionamiento:', lavadoChecked);  // Puedes ver el estado en la consola
+                          });
+
+                          areaCheckbox.addEventListener('change', function() {
+                              areaChecked = areaCheckbox.checked;
+                              console.log('terraza:', areaChecked);    // Puedes ver el estado en la consola
+                          });
+
+                          const nombrePropiedad = document.querySelector('[name="nombre_propiedad_in"]').value;
+                          const descrip = document.querySelector('[name="description_in"]').value;
+                          const tipoPropiedad = document.querySelector('[name="tipo_propiedad_in"]').value;
+                          const precioIn = document.querySelector('[name="precio_in"]').value;
+                          const antiguedadIn = document.querySelector('[name="anos_antiguedad_in"]').value;
+                          const direccionIn = document.querySelector('[name="direccion_in"]').value;
+                          const ciudadIn = document.querySelector('[name="ciudad_in"]').value;
+                          const estadoIn = document.querySelector('[name="estado_in"]').value;
+                          const paisIn = document.querySelector('[name="pais_in"]').value;
+                          const codigoIn = document.querySelector('[name="codigo_in"]').value;
+                          const mapsIn = document.querySelector('[name="maps_url_in"]').value;
+                          const habitacionesIn = document.querySelector('[name="habitaciones_in"]').value;
+                          const banosIn = document.querySelector('[name="banos_in"]').value;
+                          const construccionIn = document.querySelector('[name="construccion_in"]').value;
+                          const pisosIn = document.querySelector('[name="pisos_in"]').value;
+                          const terrenoIn = document.querySelector('[name="terreno_in"]').value;
+
+
+                          const { data: dataPropiedad, error: errorPropiedad } = await _supabase
+                              .from('propiedades')
+                              .insert([
+                                  {
+                                      nombre: nombrePropiedad,
+                                      descripcion: descrip,
+                                      tipo_propiedad: tipoPropiedad,
+                                      precio: precioIn,
+                                      antiguedad: antiguedadIn,
+                                      direccion: direccionIn,
+                                      ciudad: ciudadIn,
+                                      estado: estadoIn,
+                                      pais: paisIn,
+                                      codigo_postal: codigoIn,
+                                      url_maps: mapsIn,
+                                      habitaciones: habitacionesIn,
+                                      banos: banosIn,
+                                      pisos: pisosIn,
+                                      metros_construccion: construccionIn,
+                                      metros_terreno: terrenoIn,
+                                      garage: garageChecked,
+                                      atico: aticoChecked,
+                                      estacionamiento: estacionamientoChecked,
+                                      terraza: terrazaChecked,
+                                      cuarto_lavado: lavadoChecked,
+                                      areas_verdes: areaChecked,
+                                      vendedor_id: dataVendedor[0].id,
+                                  }
+                              ]);
+                              async function uploadSelectedImages(propiedadId) {
                                 // Borra las imágenes existentes en el contenedor "imageContainer2"
                                 $('#imageContainer2').empty();
 
@@ -570,7 +579,7 @@ const { data: dataPropiedad, error: errorPropiedad } = await _supabase
                           let selectedImages = [];
 
                           $(document).ready(async function() {
-                            $('#profilePhoto').change(async function() {
+                            $('#imagenesPropiedad').change(async function() {
                               if (this.files && this.files[0]) {
                                 selectedImages.push(this.files[0]);
                                   const reader = new FileReader();
