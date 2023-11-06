@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "nodemailer": "^6.9.7",
+    "nodemailer-mandrill-transport": "^1.2.0"
+  }
+}
