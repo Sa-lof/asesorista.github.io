@@ -166,39 +166,109 @@
         <div class="col-lg-12 position-relative">
           <div class="home8-contact-form default-box-shadow1 bdrs12 bdr1 p30 mb30-md bgc-white">
             <h4 class="form-title mb25">¿Tienes alguna pregunta?</h4>
-            <form class="form-style1">
+            
+            <form method="post" id="contact_form" class="form-style1">
               <div class="row">
                 <div class="col-lg-12">
                   <div class="mb20">
                     <label class="heading-color ff-heading fw600 mb10">Nombre</label>
-                    <input type="text" class="form-control" placeholder="Nombre">
+                    <input type="text" id="nombre_contacto" class="form-control" placeholder="Nombre">
                   </div>
                 </div>
                 <div class="col-md-12">
                   <div class="mb20">
                     <label class="heading-color ff-heading fw600 mb10">Correo</label>
-                    <input type="email" class="form-control" placeholder="Correo electrónico">
+                    <input type="email" id="correo_contacto" class="form-control" placeholder="Correo electrónico">
                   </div>
                 </div>
                 <div class="col-md-12">
                   <div class="mb20">
                     <label class="heading-color ff-heading fw600 mb10">Celular</label>
-                    <input type="phone" class="form-control" placeholder="Celular">
+                    <input type="phone" id="celular_contacto" class="form-control" placeholder="Celular">
                   </div>
                 </div>
                 <div class="col-md-12">
                   <div class="mb10">
                     <label class="heading-color ff-heading fw600 mb10">Mensaje</label>
-                    <textarea cols="30" rows="4" placeholder="Mensaje"></textarea>
+                    <textarea cols="30" id="mensaje_contacto" rows="4" placeholder="Mensaje"></textarea>
                   </div>
                 </div>
                 <div class="col-md-12">
                   <div class="d-grid">
-                    <a class="ud-btn btn-thm" href="page-contact.html">Enviar</a>
+                    <button class="ud-btn btn-thm" type="submit" onclick="sendEmailContacForm()">Enviar</button>
                   </div>
                 </div>
               </div>
             </form>
+            <script src="https://smtpjs.com/v3/smtp.js"></script>
+                                    <script>
+                                        function sendEmailContacForm() {
+                                            event.preventDefault();
+                                            const nombre = document.getElementById("nombre_contacto").value;
+                                            const email = document.getElementById("correo_contacto").value;
+                                            const celular = document.getElementById("celular_contacto").value;
+                                            const mensaje = document.getElementById("mensaje_contacto").value;
+
+                                            
+                                            // Estilos CSS en línea
+                                            const style = `
+                                                padding: 20px;
+                                                border: 1px solid #ccc;
+                                                border-radius: 8px;
+                                                background-color: #f0f0f0;
+                                                font-family: Arial, sans-serif;
+                                                background-color: #15374C;
+                                                color: white;
+                                            `
+                                            const thstyle = `
+                                                background-color: #EF502E;
+                                                color: white;
+                                                font-weight: bold;
+                                                padding: 8px;
+                                                text-align: left;
+                                            `
+
+                                            const tdstyle = `
+                                                border: 1px solid #ccc;
+                                                padding: 8px;
+                                            `
+
+                                            const btnstyle = `
+                                                display: inline-block;
+                                                background-color: #EF502E;
+                                                color: white;
+                                                padding: 8px 16px;
+                                                text-decoration: none;
+                                                border-radius: 4px;
+                                                margin-top: 20px;
+                                            `
+
+                                            Email.send({
+                                                SecureToken: "930b93e0-1c4b-4721-aeb1-7cec58708874",
+                                                To: 'trabajosof17@gmail.com',
+                                                From: "sof.db@outlook.com",
+                                                Subject: "Contacto",
+                                                Body: `
+                                                    <div style="${style}">
+                                                        <h1 style="color: #EF502E;">Nuevo contacto</h1>
+                                                        <h2>Datos del cliente</h2>
+                                                        <p><strong>Nombre:</strong> ${nombre}</p>
+                                                        <p><strong>Email:</strong> ${email}</p>
+                                                        <p><strong>Celular:</strong> ${celular}</p>
+                                                        <p><strong>Mensaje:</strong> ${mensaje}</p>
+                                                    </div>
+                                                    <a style="${btnstyle}" href="mailto:${email}?subject=Respuesta%20contacto%20-%20${nombre}&body=Estimado%20Cliente,%0D%0A%0D%0ANos%20ponemos%20en%20contacto%20con%20usted%20debido%20al%20siguiente%20mensaje%20recibido:%0D%0A%0D%0A${mensaje}%0D%0A%0D%0AAtentamente,%0D%0AAsesorista%0D%0A%0D%0A">Responder contacto</a>
+                                                `
+                                            }).then(message => {
+                                                var modalBody = document.querySelector('.modal-body');
+                                                $('#emailModal').modal('show');
+                                                document.getElementById("nombre_contacto").value = "";
+                                                document.getElementById("correo_contacto").value = "";
+                                                document.getElementById("celular_contacto").value = "";
+                                                document.getElementById("mensaje_contacto").value = "";
+                                            });
+                                        }
+                                    </script>
           </div>
         </div>
       </div>

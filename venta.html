@@ -259,31 +259,37 @@
                             <div class="col-sm-4">
                               <div class="mb20">
                                 <label class="heading-color ff-heading fw600 mb10">Nombre vendedor</label>
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" name="nombre_vendedor" placeholder="" required>
                               </div>
                             </div>
                             <div class="col-sm-4">
                               <div class="mb20">
                                 <label class="heading-color ff-heading fw600 mb10">Apellido materno</label>
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" name="apellido_materno" placeholder="" required>
                               </div>
                             </div>
                             <div class="col-sm-4">
                               <div class="mb20">
                                 <label class="heading-color ff-heading fw600 mb10">Apellido paterno</label>
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" name="apellido_paterno"placeholder="" required>
                               </div>
                             </div>
                             <div class="col-sm-4">
                               <div class="mb20">
                                 <label class="heading-color ff-heading fw600 mb10">Teléfono</label>
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" name="telefono_vendedor" placeholder="" required>
                               </div>
                             </div>
                             <div class="col-sm-4">
                               <div class="mb20">
                                 <label class="heading-color ff-heading fw600 mb10">Puesto</label>
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" name="puesto_vendedor" placeholder="" required>
+                              </div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div class="mb20">
+                                <label class="heading-color ff-heading fw600 mb10">Correo electrónico</label>
+                                <input type="text" class="form-control" name="correo_vendedor" placeholder="" required>
                               </div>
                             </div>
                             <div class="col-md-12">
@@ -302,31 +308,41 @@
                             <div class="col-sm-12">
                               <div class="mb20">
                                 <label class="heading-color ff-heading fw600 mb10">Nombre de la propiedad</label>
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" name="nombre_propiedad" placeholder="">
                               </div>
                             </div>
                             <div class="col-sm-12">
                               <div class="mb20">
                                 <label class="heading-color ff-heading fw600 mb10">Description</label>
-                                <textarea cols="30" rows="5" placeholder="There are many variations of passages."></textarea>
+                                <textarea cols="30" rows="5" name="descripcion_propiedad" placeholder="There are many variations of passages."></textarea>
                               </div>
                             </div>
                             <div class="col-sm-4">
                               <div class="mb20">
-                                <label class="heading-color ff-heading fw600 mb10">Tipo de propiedad</label>
-                                <input type="text" class="form-control" placeholder="">
+                                <div class="form-style1">
+                                  <label class="form-label fw600 dark-color">Tipo de propiedad</label>
+                                  <div class="bootselect-multiselect">
+                                    <select class="selectpicker" id="tipo-propiedad-select" data-live-search="true" data-width="100%" name="tipo_propiedad_in">
+                                      <option data-tokens="Casa" value="Casa">Casa</option>
+                                      <option data-tokens="Apartamento" value="Apartamento">Apartamento</option>
+                                      <option data-tokens="Oficina" value="Oficina">Oficina</option>
+                                      <option data-tokens="Local" value="Local">Local</option>
+                                      <option data-tokens="Otro" value="Otro">Otro</option>
+                                    </select>
+                                  </div>
+                                </div>
                               </div>
                             </div>
                             <div class="col-sm-4">
                               <div class="mb20">
                                 <label class="heading-color ff-heading fw600 mb10">Precio</label>
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" name="precio_propiedad" placeholder="">
                               </div>
                             </div>
                             <div class="col-sm-4">
                               <div class="mb20">
                                 <label class="heading-color ff-heading fw600 mb10">Años de antiguedad</label>
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" name="antiguedad_propiedad" placeholder="">
                               </div>
                             </div>
                           </div>
@@ -348,21 +364,88 @@
                             <div class="icon mb30"><span class="flaticon-upload"></span></div>
                             <h4 class="title fz17 mb10">Sube fotos de tu propiedad</h4>
                             <p class="text mb25">Las fotos deben de estar en formato JPEG o PNG y al menos 2048x768</p>
-                            <a class="ud-btn btn-white" href="">Busqueda de archivos<i class="fal fa-arrow-right-long"></i></a>
+                            <!-- Hidden file input -->
+                            <input type="file" id="fileInput" accept="image/jpeg, image/png" style="display: none;" />
+                        
+                            <!-- Styled label to act as the button -->
+                            <label for="fileInput" class="ud-btn2 btn-white2 mb30">
+                                Sube las imagenes de tu propiedad<i class="fal fa-arrow-right-long"></i>
+                            </label>
                           </div>
                         </div>
-                        <div class="col-lg-5">
-                          <div class="profile-box position-relative d-md-flex align-items-end mb50">
-                            <div class="profile-img position-relative overflow-hidden bdrs12 mb20-sm">
-                              <img class="w-100" src="images/listings/profile-1.jpg" alt="">
-                              <a href="" class="tag-del" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Delete Image" aria-label="Delete Item"><span class="fas fa-trash-can"></span></a>
-                            </div>
-                            <div class="profile-img position-relative overflow-hidden bdrs12 ml20 ml0-sm">
-                              <img class="w-100" src="images/listings/profile-2.jpg" alt="">
-                              <a href="" class="tag-del" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Delete Image" aria-label="Delete Item"><span class="fas fa-trash-can"></span></a>
-                            </div>
+                        <style>
+                          .propiedadimagen {
+                              width: 125px;  /* Ajusta al ancho deseado */
+                              height: 125px; /* Ajusta al alto deseado */
+                              object-fit: cover; /* Esto asegura que la imagen cubra el espacio sin distorsionarse */
+                          }
+                        </style>
+                        <div class="col-lg-12">
+                          <div class="profile-box position-relative d-md-flex align-items-end mb50" id="imageContainer">
                           </div>
                         </div>
+                        <script>
+                          document.addEventListener("DOMContentLoaded", function() {
+                            // Select all input elements
+                        var inputs = document.querySelectorAll("input[required]");
+                      
+                      // Function to check the input content
+                      function checkInput() {
+                        // If the input is empty
+                        if (this.value.trim() === '') {
+                          // Set the message
+                          this.setCustomValidity('Este campo es obligatorio, por favor llénalo.');
+                        } else {
+                          // If it's not empty, set the message to empty, which is equivalent to 'no validation message'
+                          this.setCustomValidity('');
+                        }
+                        // This will trigger the browser's native validation UI
+                        this.reportValidity();
+                      }
+                    
+                      // Add event listeners for 'blur' event on each required input
+                      inputs.forEach(function(input) {
+                        input.addEventListener('blur', checkInput);
+                      });
+                          // Añadir evento a todos los enlaces de eliminación actuales
+                          attachDeleteEvents();
+
+                          // Asegurarse de que los futuros elementos añadidos también tengan el evento
+                          document.getElementById('fileInput').addEventListener('change', function() {
+                              var file = this.files[0];
+                              if (file) {
+                                  var reader = new FileReader();
+                                  reader.onload = function(e) {
+                                      var newDiv = document.createElement('div');
+                                      newDiv.className = 'profile-img position-relative overflow-hidden bdrs12 ml20 ml0-sm';
+                                      newDiv.innerHTML = `
+                                          <img class="w-100" src="${e.target.result}" alt="">
+                                          <a href="#" class="tag-del delete-image" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Delete Image" aria-label="Delete Item"><span class="fas fa-trash-can"></span></a>
+                                      `;
+                                      document.getElementById('imageContainer').appendChild(newDiv);
+                                      // Añadir evento de eliminación al nuevo elemento
+                                      attachDeleteEvents();
+                                  };
+                                  reader.readAsDataURL(file);
+                              }
+                          });
+                      });
+
+                      function attachDeleteEvents() {
+                          var deleteLinks = document.querySelectorAll('.delete-image');
+                          deleteLinks.forEach(function(link) {
+                              link.addEventListener('click', function(e) {
+                                  e.preventDefault();
+                                  var parentDiv = this.closest('.profile-img');
+                                  if (parentDiv) {
+                                      parentDiv.remove();
+                                  }
+                              });
+                          });
+}
+
+
+                        </script>
                         <div class="col-md-12">
                           <div class="d-sm-flex justify-content-between">
                             <a class="ud-btn btn-white" href="" data-nav="prev">Paso previo<i class="fal fa-arrow-right-long"></i></a>
@@ -378,37 +461,37 @@
                             <div class="col-sm-12">
                               <div class="mb20">
                                 <label class="heading-color ff-heading fw600 mb10">Dirección de la propiedad</label>
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" name="direccion_propiedad" placeholder="">
                               </div>
                             </div>
                             <div class="col-sm-4">
                               <div class="mb20">
                                 <label class="heading-color ff-heading fw600 mb10">Ciudad</label>
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" name="ciudad_propiedad" placeholder="">
                               </div>
                             </div>
                             <div class="col-sm-4">
                               <div class="mb20">
                                 <label class="heading-color ff-heading fw600 mb10">Estado/Provincia</label>
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" name="estado_propiedad" placeholder="">
                               </div>
                             </div>
                             <div class="col-sm-4">
                               <div class="mb20">
                                 <label class="heading-color ff-heading fw600 mb10">País</label>
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" name="pais_propiedad" placeholder="">
                               </div>
                             </div>
                             <div class="col-sm-4">
                               <div class="mb20">
                                 <label class="heading-color ff-heading fw600 mb10">Código postal</label>
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" name="codigo_propiedad" placeholder="">
                               </div>
                             </div>
                             <div class="col-sm-4">
                               <div class="mb20">
                                 <label class="heading-color ff-heading fw600 mb10">Url de maps</label>
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" name="url_propiedad" placeholder="">
                               </div>
                             </div>
                           </div>
@@ -430,31 +513,31 @@
                             <div class="col-sm-4">
                               <div class="mb20">
                                 <label class="heading-color ff-heading fw600 mb10">Número de habitaciones</label>
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" name="habitaciones_propiedad" placeholder="">
                               </div>
                             </div>
                             <div class="col-sm-4">
                               <div class="mb20">
                                 <label class="heading-color ff-heading fw600 mb10">Número de baños</label>
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" name="banos_propiedad" placeholder="">
                               </div>
                             </div>
                             <div class="col-sm-4">
                               <div class="mb20">
                                 <label class="heading-color ff-heading fw600 mb10">Construcción (metros cuadrados)</label>
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" name="construccion_propiedad" placeholder="">
                               </div>
                             </div>
                             <div class="col-sm-4">
                               <div class="mb20">
                                 <label class="heading-color ff-heading fw600 mb10">Número de pisos</label>
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" name="pisos_propiedad" placeholder="">
                               </div>
                             </div>
                             <div class="col-sm-4">
                               <div class="mb20">
                                 <label class="heading-color ff-heading fw600 mb10">Terreno (metros cuadrados)</label>
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" name="terreno_propiedad" placeholder="">
                               </div>
                             </div>
                           </div>
@@ -467,7 +550,7 @@
                                   <span class="checkmark"></span>
                                 </label>
                                 <label class="custom_checkbox">Atico
-                                  <input type="checkbox" checked="checked">
+                                  <input type="checkbox">
                                   <span class="checkmark"></span>
                                 </label>
                               </div>
@@ -479,7 +562,7 @@
                                   <span class="checkmark"></span>
                                 </label>
                                 <label class="custom_checkbox">Terraza
-                                  <input type="checkbox" checked="checked">
+                                  <input type="checkbox">
                                   <span class="checkmark"></span>
                                 </label>
                               </div>
@@ -491,7 +574,7 @@
                                   <span class="checkmark"></span>
                                 </label>
                                 <label class="custom_checkbox">Áreas verdes
-                                  <input type="checkbox" checked="checked">
+                                  <input type="checkbox">
                                   <span class="checkmark"></span>
                                 </label>
                               </div>
@@ -499,7 +582,7 @@
                             <div class="col-md-12 mt30">
                               <div class="d-sm-flex justify-content-between">
                                 <a class="ud-btn btn-white" href="" data-nav="prev">Paso previo<i class="fal fa-arrow-right-long"></i></a>
-                                <a class="ud-btn btn-thm" href="" data-nav="next">Enviar<i class="fal fa-arrow-right-long"></i></a>
+                                <button class="ud-btn btn-thm" onclick="sendEmailPropertyForm()" href="" data-nav="next">Enviar<i class="fal fa-arrow-right-long"></i></button>
                               </div>
                             </div>
                           </div>
@@ -512,6 +595,144 @@
             </div>
           </div>
         </div>
+        <script src="https://smtpjs.com/v3/smtp.js"></script>
+        <script>
+          function getBase64Image(img) {
+              var canvas = document.createElement("canvas");
+              canvas.width = img.width;
+              canvas.height = img.height;
+
+              var ctx = canvas.getContext("2d");
+              ctx.drawImage(img, 0, 0);
+
+              var dataURL = canvas.toDataURL("image/jpeg");
+              return dataURL.split(',')[1];  // Esto asegura que solo devuelva la parte Base64
+          }
+
+
+          function sendEmailPropertyForm() {
+              event.preventDefault();
+              
+              // Datos personales
+              const nombreVendedor = document.querySelector('[name="nombre_vendedor"]').value;
+              const apellidoMaterno = document.querySelector('[name="apellido_materno"]').value;
+              const apellidoPaterno = document.querySelector('[name="apellido_paterno"]').value;
+              const telefonoVendedor = document.querySelector('[name="telefono_vendedor"]').value;
+              const puestoVendedor = document.querySelector('[name="puesto_vendedor"]').value;
+              const correoVendedor = document.querySelector('[name="correo_vendedor"]').value;
+              const nombrePropiedad = document.querySelector('[name="nombre_propiedad"]').value;
+              const descripcionPropiedad = document.querySelector('[name="descripcion_propiedad"]').value;
+              const tipo_propiedadIn = document.querySelector('[name="tipo_propiedad_in"]').value;
+              const precioPropiedad = document.querySelector('[name="precio_propiedad"]').value;
+              const antiguedadPropiedad = document.querySelector('[name="antiguedad_propiedad"]').value;
+              const direccionPropiedad = document.querySelector('[name="direccion_propiedad"]').value;
+              const ciudadPropiedad = document.querySelector('[name="ciudad_propiedad"]').value;
+              const estadoPropiedad = document.querySelector('[name="estado_propiedad"]').value;
+              const paisPropiedad = document.querySelector('[name="pais_propiedad"]').value;
+              const codigoPropiedad = document.querySelector('[name="codigo_propiedad"]').value;
+              const urlPropiedad = document.querySelector('[name="url_propiedad"]').value;
+              const habitacionesPropiedad = document.querySelector('[name="habitaciones_propiedad"]').value;
+              const banosPropiedad = document.querySelector('[name="banos_propiedad"]').value;
+              const construccionPropiedad = document.querySelector('[name="construccion_propiedad"]').value;
+              const pisosPropiedad = document.querySelector('[name="pisos_propiedad"]').value;
+              const terrenoPropiedad = document.querySelector('[name="terreno_propiedad"]').value;
+              
+              let amenidades = [];
+              document.querySelectorAll('.custom_checkbox input[type="checkbox"]:checked').forEach(function(checkbox) {
+                amenidades.push(checkbox.parentElement.textContent.trim());
+              });
+
+              let amenidadesList = amenidades.join(', ');
+
+              // Validar que los campos requeridos no estén vacíos
+              const camposRequeridos = [
+                  nombreVendedor, apellidoMaterno, apellidoPaterno, telefonoVendedor, 
+                  puestoVendedor, correoVendedor, nombrePropiedad, descripcionPropiedad, 
+                  tipo_propiedadIn, precioPropiedad, antiguedadPropiedad, direccionPropiedad, 
+                  ciudadPropiedad, estadoPropiedad, paisPropiedad, codigoPropiedad, 
+                  urlPropiedad, habitacionesPropiedad, banosPropiedad, construccionPropiedad, 
+                  pisosPropiedad, terrenoPropiedad
+              ];
+
+              // Comprobar si alguno de los campos requeridos está vacío
+              const algunCampoVacio = camposRequeridos.some(campo => campo.trim() === '');
+
+              if (algunCampoVacio) {
+                  alert('Todos los campos son requeridos. Por favor, rellena toda la información antes de enviar.');
+                  return; // Detener la ejecución de la función aquí
+              }
+              
+              let style = "background-color: #f76a51; padding: 20px; border: 1px solid #ccc; border-radius: 8px; text-align: center;";
+              let btnstyle = "display: inline-block; background-color: #f76a51; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; margin-top: 20px; font-weight: bold;"
+
+              // Recoger las imágenes en base64
+              var images = document.querySelectorAll('#imageContainer img');
+              var attachments = Array.from(images).map(function(img, index) {
+                  return {
+                      name: 'imagen' + index + '.jpeg',
+                      data: getBase64Image(img)
+                  };
+              });
+              
+              Email.send({
+                  SecureToken: "0f0ecf8b-8735-47e9-99d8-fac0323d1bfa",
+                  To: 'trabajosof17@gmail.com',
+                  From: "amoxtlidev@gmail.com",
+                  Subject: "Datos de nuevo propiedad",
+                  Body: `
+                      <div>
+                        <img src="https://astounding-lollipop-8930aa.netlify.app/images/footer-logo.png" alt="Imagen" style="display: block; margin-left: auto; margin-right: auto; width: 50%; padding-bottom: 10px;" />
+                      </div>
+                      <div style="${style}">
+                          <h1 style="color: white;">Nueva propiedad sugerida</h1>
+                      </div>
+                      <div style="border-bottom: 1px solid #000;">
+                        <h2 style="color: #f76a51;">Datos del vendedor</h2>
+                      </div>
+                      <div>
+                        <p><strong>Vendedor:</strong> ${nombreVendedor} ${apellidoMaterno} ${apellidoPaterno} ${codigoPropiedad}</p>
+                        <p><strong>Teléfono:</strong> ${telefonoVendedor}</p>
+                        <p><strong>Puesto:</strong> ${puestoVendedor}</p>
+                        <p><strong>Correo:</strong> ${correoVendedor}</p>
+                      </div>
+                      <div style="border-bottom: 1px solid #000;">
+                        <h2 style="color: #f76a51;">Datos de la propiedad</h2>
+                      </div>
+                      <div>
+                        <p><strong>Nombre:</strong> ${nombrePropiedad}</p>
+                        <p><strong>Descripción:</strong> ${descripcionPropiedad}</p>
+                        <p><strong>Tipo de propiedad:</strong> ${tipo_propiedadIn}</p>
+                        <p><strong>Precio:</strong> ${precioPropiedad}</p>
+                        <p><strong>Años de antiguedad:</strong> ${antiguedadPropiedad}</p>
+                      </div>
+                      <div style="border-bottom: 1px solid #000;">
+                        <h2 style="color: #f76a51;">Direccion de la propiedad</h2>
+                      </div>
+                      <div>
+                        <p><strong>Direccion:</strong> ${nombrePropiedad}</p>
+                        <p><strong>Detalle de dirección:</strong> ${ciudadPropiedad}, ${estadoPropiedad}, ${paisPropiedad}, ${codigoPropiedad}</p>
+                        <p><strong>Url de maps:</strong> ${urlPropiedad}</p>
+                      </div>
+                      <div style="border-bottom: 1px solid #000;">
+                        <h2 style="color: #f76a51;">Detalles de la propiedad</h2>
+                      </div>
+                      <div>
+                        <p><strong>Habitaciones:</strong> ${habitacionesPropiedad}</p>
+                        <p><strong>Baños:</strong> ${banosPropiedad} </p>
+                        <p><strong>Metros cuadrados de construccion:</strong> ${construccionPropiedad}</p>
+                        <p><strong>Pisos:</strong> ${pisosPropiedad}</p>
+                        <p><strong>Metros cuadrados de terreno:</strong> ${terrenoPropiedad}</p>
+                        <p><strong>Amenidades:</strong> ${amenidadesList}</p>
+                      </div>
+                      <a style="${btnstyle}" href="mailto:${correoVendedor}?subject=Respuesta%20contacto%20-%20${nombreVendedor}&body=Estimado%20Vendedor,%0D%0A%0D%0ANos%20ponemos%20en%20contacto%20con%20usted%20debido%20a%20que%20recibimos%20su%20propiedad%20para%20petición%20de%20venta%0D%0A%0D%0A%0D%0A%0D%0AAtentamente,%0D%0AAsesorista%0D%0A%0D%0A">Responder propuesta</a>
+                  `,
+                  Attachments: attachments
+              }).then(message => {
+                  alert('Correo enviado exitosamente');
+              });
+          }
+
+        </script>
       </div>
     </div>
   </div>
