@@ -37,6 +37,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+<link href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet">
 
 </head>
 <body>
@@ -108,6 +109,7 @@
   <div class="hiddenbar-body-ovelay"></div>
 
   <!-- Mobile Nav  -->
+  <!-- Mobile Nav  -->
   <div id="page" class="mobilie_header_nav stylehome1">
     <div class="mobile-menu">
       <div class="header innerpage-style">
@@ -118,12 +120,9 @@
             <a class="menubar" href="#menu"
               ><img src="images/mobile-dark-nav-icon.svg" alt=""
             /></a>
-            <a class="mobile_logo" href="#"
-              ><img src="images/header-logo2.svg" alt=""
+            <a style="text-align: end" class="mobile_logo" href="#"
+              ><img style="max-width: 8%" src="images/favicon.png" alt=""
             /></a>
-            <a href="page-login.html"
-              ><span class="icon fz18 far fa-user-circle"></span
-            ></a>
           </div>
         </div>
       </div>
@@ -138,10 +137,10 @@
           <a href="page-about.html"><span class="title">Nosotros</span></a>
         </li>
         <li>
-          <a href="#"><span class="title">Comprar</span></a>
+          <a href="page-property-3-col.html"><span class="title">Comprar</span></a>
         </li>
         <li>
-          <a href="#"><span class="title">Crédito</span></a>
+          <a href="credito.html"><span class="title">Crédito</span></a>
         </li>
         <li>
           <a href="page-contact.html"
@@ -220,8 +219,8 @@
                       <div class="col-lg-12">
                         <div class="ui-content mb40">
                           <div class="form-style1">
-                            <label class="form-label fw600 dark-color">Porcentaje a financiar (%)</label>
-                            <input type="number" id="porcentajeFinanciar" class="form-control" placeholder="Introduce el porcentaje del enganche">
+                            <label class="form-label fw600 dark-color">Porcentaje de enganche (%)</label>
+                            <input type="number" id="porcentajeEnganche" class="form-control" placeholder="Introduce el porcentaje del enganche">
                           </div>
                         </div>
                       </div>
@@ -624,6 +623,30 @@
         </div>
       </section>        
     </section>
+    <style>
+      .float{
+        position:fixed;
+        width:60px;
+        height:60px;
+        bottom:40px;
+        right:40px;
+        background-color:#25d366;
+        color:#FFF;
+        border-radius:50px;
+        text-align:center;
+        font-size:30px;
+        box-shadow: 2px 2px 3px #999;
+        z-index:100;
+      }
+
+      .my-float{
+        margin-top:16px;
+      }
+    </style>
+    <a href="https://wa.me/tunúmero" class="float" target="_blank">
+      <i class="fab fa-whatsapp my-float"></i>
+    </a>
+    
     <script>
 
 function calcularCambioHipoteca() {
@@ -644,10 +667,10 @@ function calcularCambioHipoteca() {
       document.getElementById('pasoscredito').style.display = 'none';
       document.getElementById('opcionescredito').style.display = 'none';
 
-      document.getElementById('resultadoMensualidadCambio').innerText = `$${cuotaMensual.toFixed(2)}`;
+      document.getElementById('resultadoMensualidadCambio').innerText = `$${cuotaMensual.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
       document.getElementById('resultadoPlazosCambio').innerText = `${totalPagos} meses`;
-      document.getElementById('resultadoPagoTotalCambio').innerText = `$${saldoPendiente.toFixed(2)}`;
-      document.getElementById('valorPropiedadresultadoCambio').innerText = `$${valorPropiedad.toFixed(2)}`;
+      document.getElementById('resultadoPagoTotalCambio').innerText = `$${saldoPendiente.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
+      document.getElementById('valorPropiedadresultadoCambio').innerText = `$${valorPropiedad.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
 
       // Asumiendo que los valores de seguro y comisión son conocidos o calculados
       var seguroVida = 0; // Definir o recuperar este valor
@@ -683,10 +706,10 @@ function calcularCreditoHipotecario() {
       document.getElementById('pasoscredito').style.display = 'none';
       document.getElementById('opcionescredito').style.display = 'none';
 
-      document.getElementById('resultadoMensualidadNecesita').innerText = `$${pagoMensual.toFixed(2)}`;
+      document.getElementById('resultadoMensualidadNecesita').innerText = `$${pagoMensual.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
       document.getElementById('resultadoPlazosNecesita').innerText = `${totalPagos} meses`;
-      document.getElementById('resultadoPagoTotalNecesita').innerText = `$${principal.toFixed(2)}`;
-      document.getElementById('valorPropiedadresultadoNecesita').innerText = `$${costoPropiedad.toFixed(2)}`;
+      document.getElementById('resultadoPagoTotalNecesita').innerText = `$${principal.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
+      document.getElementById('valorPropiedadresultadoNecesita').innerText = `$${costoPropiedad.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
 
       // Asumiendo que los valores de seguro y comisión son conocidos o calculados
       var seguroVida = 0; // Debes definir o recuperar este valor
@@ -701,11 +724,11 @@ function calcularCreditoHipotecario() {
     }
 }
 
-
 function calcularCuota() {
     var valorCasa = parseFloat(document.getElementById('valorCasa').value);
-    var porcentajeFinanciar = parseFloat(document.getElementById('porcentajeFinanciar').value) / 100;
-    var monto = valorCasa * porcentajeFinanciar;
+    var porcentajeEnganche = parseFloat(document.getElementById('porcentajeEnganche').value) / 100;
+    var enganche = valorCasa * porcentajeEnganche;
+    var monto = valorCasa - enganche; // Monto a financiar después de restar el enganche
     var tasaInteresAnual = parseFloat(document.getElementById('interes').value);
     var plazoAnos = parseInt(document.getElementById('plazo').value);
     var plazoMeses = plazoAnos * 12;
@@ -732,10 +755,10 @@ function calcularCuota() {
         document.getElementById('opcionescredito').style.display = 'none';
 
         // Actualizar el HTML con los resultados
-        document.getElementById('resultadoMensualidad').innerText = `$${cuota.toFixed(2)}`;
+        document.getElementById('resultadoMensualidad').innerText = `$${cuota.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
         document.getElementById('resultadoPlazos').innerText = `${plazoMeses} meses`;
-        document.getElementById('resultadoPagoTotal').innerText = `$${monto.toFixed(2)}`;
-        document.getElementById('valorPropiedadresultado').innerText = `$${valorCasa.toFixed(2)}`;
+        document.getElementById('resultadoPagoTotal').innerText = `$${monto.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
+        document.getElementById('valorPropiedadresultado').innerText = `$${valorCasa.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
 
         // Generar tabla de amortización
         var tablaAmortizacion = generarTablaAmortizacion(monto, tasaInteresAnual, plazoMeses, seguroVida, seguroDanios, comisionAdmin);
@@ -784,7 +807,7 @@ function calcularCuota() {
               
               Object.values(pago).forEach(function(valor, indice) {
                   var celda = fila.insertCell(indice);
-                  celda.textContent = typeof valor === 'number' ? valor.toFixed(2) : valor;
+                  celda.textContent = typeof valor === 'number' ? valor.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') : valor;
               });
           });
       }
@@ -797,7 +820,7 @@ function calcularCuota() {
               
               Object.values(pago).forEach(function(valor, indice) {
                   var celda = fila.insertCell(indice);
-                  celda.textContent = typeof valor === 'number' ? valor.toFixed(2) : valor;
+                  celda.textContent = typeof valor === 'number' ? valor.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') : valor;
               });
           });
       }
@@ -811,7 +834,7 @@ function calcularCuota() {
 
         Object.values(pago).forEach(function(valor, indice) {
             var celda = fila.insertCell(indice);
-            celda.textContent = typeof valor === 'number' ? valor.toFixed(2) : valor;
+            celda.textContent = typeof valor === 'number' ? valor.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') : valor;
         });
     });
 }
