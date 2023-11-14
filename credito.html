@@ -37,6 +37,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+<link href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet">
 
 </head>
 <body>
@@ -108,6 +109,7 @@
   <div class="hiddenbar-body-ovelay"></div>
 
   <!-- Mobile Nav  -->
+  <!-- Mobile Nav  -->
   <div id="page" class="mobilie_header_nav stylehome1">
     <div class="mobile-menu">
       <div class="header innerpage-style">
@@ -118,12 +120,9 @@
             <a class="menubar" href="#menu"
               ><img src="images/mobile-dark-nav-icon.svg" alt=""
             /></a>
-            <a class="mobile_logo" href="#"
-              ><img src="images/header-logo2.svg" alt=""
+            <a style="text-align: end" class="mobile_logo" href="#"
+              ><img style="max-width: 8%" src="images/favicon.png" alt=""
             /></a>
-            <a href="page-login.html"
-              ><span class="icon fz18 far fa-user-circle"></span
-            ></a>
           </div>
         </div>
       </div>
@@ -138,10 +137,10 @@
           <a href="page-about.html"><span class="title">Nosotros</span></a>
         </li>
         <li>
-          <a href="#"><span class="title">Comprar</span></a>
+          <a href="page-property-3-col.html"><span class="title">Comprar</span></a>
         </li>
         <li>
-          <a href="#"><span class="title">Crédito</span></a>
+          <a href="credito.html"><span class="title">Crédito</span></a>
         </li>
         <li>
           <a href="page-contact.html"
@@ -182,142 +181,664 @@
         </div>
     </section>
 
-    <!-- Property All Lists -->
-    <section class="pt0 pb0 bgc-f7">
+    <section class="pt0 pb0 bgc-f7" id="opcionescredito">
       <div class="container">
         <div class="row">
             <h4 class="title pt-5">Escoge el tipo de simulación</h4>
             <div class="col-12 pt-5">
               <ul class="nav nav-pills nav-fill flex-column flex-sm-row mb30" id="pills-tab" role="tablist">
                 <li class="nav-item" role="presentation">
-                  <a id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" class="ud-btn btn-thm me-0 me-sm-4 active fw500">Por valor de la vivienda</a>
+                  <a id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="false" class="ud-btn btn-thm me-0 me-sm-4 active fw500">Valor de la casa</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                  <a id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" class="ud-btn btn-thm me-0 me-sm-4 fw500">Por monto del crédito y <br> valor de la vivienda</a>
+                  <a id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" class="ud-btn btn-thm me-0 me-sm-4 fw500">Cantida que necesita</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                  <a id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false" class="ud-btn btn-thm me-0 me-sm-4 fw500">Por ingresos del cliente</a>
+                  <a id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false" class="ud-btn btn-thm me-0 me-sm-4 fw500">Cambiar mi hipoteca</a>
                 </li>
               </ul>
             </div>
         </div>               
       </div>
     </section>
-    <section class="pt0 pb90 bgc-f7" style="background-color: white;">
-        <div class="container">
-          <div class="row">
-              <div class="col-12 pt-5">
-                <div class="tab-content" id="pills-tabContent">
-                  <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                    <div class="row">
-                        <div class="col-lg-6">
-                          <div class="ui-content mb40">
-                            <div class="form-style1">
-                              <label class="form-label fw600 dark-color">Valor de la vivienda</label>
-                              <input type="text" class="form-control" placeholder="">
-                            </div>
+    <section class="pt0 pb90 bgc-f7" style="background-color: white;" id="pasoscredito">
+      <div class="container">
+        <div class="row">
+            <div class="col-12 pt-5">
+              <div class="tab-content">
+                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <div class="ui-content mb40">
+                          <div class="form-style1">
+                            <label class="form-label fw600 dark-color">Valor de la casa</label>
+                            <input type="number" id="valorCasa" class="form-control" placeholder="Introduce el valor de la casa">
                           </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="ui-content mb40">
-                                <div class="form-style1">
-                                  <label class="form-label fw600 dark-color">Plazo solicitado (años)</label>
-                                  <input type="text" class="form-control" placeholder="">
-                                </div>
+                      </div>
+                      <div class="col-lg-12">
+                        <div class="ui-content mb40">
+                          <div class="form-style1">
+                            <label class="form-label fw600 dark-color">Porcentaje de enganche (%)</label>
+                            <input type="number" id="porcentajeEnganche" class="form-control" placeholder="Introduce el porcentaje del enganche">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-12">
+                        <div class="ui-content mb40">
+                          <div class="form-style1">
+                            <label class="form-label fw600 dark-color">Tasa de interés (% anual)</label>
+                            <input type="number" id="interes" class="form-control" placeholder="Introduce los años a pagar">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-12">
+                        <div class="ui-content mb40">
+                          <div class="form-style1">
+                            <label class="form-label fw600 dark-color">Plazo (años)</label>
+                            <input type="number" id="plazo" class="form-control" placeholder="Introduce los años a pagar">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <section class="pt0 pb90 bgc-f7" style="background-color: white;">
+                      <div class="container">
+                        <div class="row">
+                          <div class="col-12 d-flex justify-content-center">
+                            <button class="btn ud-btn btn-thm me-0 me-sm-4 active fw500" onclick="calcularCuota()">Calcular</button>
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+                </div>
+                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                  <div class="row">
+                      <div class="col-lg-12">
+                          <div class="ui-content mb40">
+                              <div class="form-style1">
+                                  <label class="form-label fw600 dark-color">Cantidad que necesita</label>
+                                  <input type="number" id="cantidadNecesita" class="form-control" placeholder="Introduce la cantidad que necesitas">
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-lg-12">
+                        <div class="ui-content mb40">
+                          <div class="form-style1">
+                            <label class="form-label fw600 dark-color">Porcentaje de enganche (%)</label>
+                            <input type="number" id="porcentajeFinanciarnecesita" class="form-control" placeholder="Introduce el porcentaje del enganche">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-12">
+                        <div class="ui-content mb40">
+                            <div class="form-style1">
+                                <label class="form-label fw600 dark-color">Tasa de interés (% anual)</label>
+                                <input type="number" id="tasaInteres" class="form-control" placeholder="Introduce la cantidad que necesitas">
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="ui-content mb40">
-                                <div class="form-style1">
-                                  <label class="form-label fw600 dark-color">Ingreso mensual neto*</label>
-                                  <input type="text" class="form-control" placeholder="">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="ui-content mb40">
-                                <div class="form-style1">
-                                  <label class="form-label fw600 dark-color">Engance adicional</label>
-                                  <input type="text" class="form-control" placeholder="">
-                                </div>
+                      </div>
+                      <div class="col-lg-12">
+                        <div class="ui-content mb40">
+                            <div class="form-style1">
+                                <label class="form-label fw600 dark-color">Plazo (años)</label>
+                                <input type="number" id="plazoNecesita" class="form-control" placeholder="Introduce la cantidad que necesitas">
                             </div>
                         </div>
                       </div>
                   </div>
-                  <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">2 Pharetra nulla ullamcorper sit lectus. Fermentum mauris pellentesque nec nibh sed et, vel diam, massa. Placerat quis vel fames interdum urna lobortis sagittis sed pretium. Aliquam eget posuere sit enim elementum.</div>
-                  <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">3 Pharetra nulla ullamcorper sit lectus. Fermentum mauris pellentesque nec nibh sed et, vel diam, massa. Placerat quis vel fames interdum urna lobortis sagittis sed pretium. Aliquam eget posuere sit enim elementum.</div>
-                </div>
-              </div>
-          </div>               
-        </div>
-    </section>
-
-    <section class="pt0 pb0 bgc-f7">
-        <div class="container">
-          <div class="row">
-              <h4 class="title pt-5">Escoge el tipo de producto</h4>
-              <div class="col-12 pt-5">
-                <ul class="nav nav-pills nav-fill flex-column flex-sm-row mb30" id="pills-tab" role="tablist">
-                  <li class="nav-item" role="presentation">
-                    <a id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" class="ud-btn btn-thm me-0 me-sm-4 active fw500">Adquisición</a>
-                  </li>
-                  <li class="nav-item" role="presentation">
-                    <a id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" class="ud-btn btn-thm me-0 me-sm-4 fw500">Exclusiva</a>
-                  </li>
-                  <li class="nav-item" role="presentation">
-                    <a id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false" class="ud-btn btn-thm me-0 me-sm-4 fw500">Liquidez</a>
-                  </li>
-                  <li class="nav-item" role="presentation">
-                    <a id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" class="ud-btn btn-thm me-0 me-sm-4 active fw500">Pago de hipoteca</a>
-                  </li>
-                </ul>
-              </div>
-          </div>               
-        </div>
-    </section>
-
-    <section class="pt0 pb90 bgc-f7" style="background-color: white;">
-        <div class="container">
-          <div class="row">
-              <div class="col-12 pt-5">
-                <div class="tab-content" id="pills-tabContent">
-                  <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                    <div class="row">
-                        <div class="col-lg-6">
-                          <div class="ui-content mb40">
-                            <div class="form-style1">
-                              <label class="form-label fw600 dark-color">Tipo de programa</label>
-                              <input type="text" class="form-control" placeholder="">
-                            </div>
-                          </div>
+                  <section class="pt0 pb90 bgc-f7" style="background-color: white;">
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-12 d-flex justify-content-center">
+                          <button class="btn ud-btn btn-thm me-0 me-sm-4 active fw500" onclick="calcularCreditoHipotecario()">Calcular</button>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="ui-content mb40">
-                                <div class="form-style1">
-                                  <label class="form-label fw600 dark-color">Tasa de interés</label>
-                                  <input type="text" class="form-control" placeholder="">
-                                </div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+                <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                  <div class="row">
+                      <div class="col-lg-12">
+                        <div class="ui-content mb40">
+                            <div class="form-style1">
+                                <label class="form-label fw600 dark-color">Valor de la propiedad</label>
+                                <input type="number" id="CambioValorPropiedad" class="form-control" placeholder="Introduce el valor de la propiedad">
                             </div>
                         </div>
                       </div>
+                      <div class="col-lg-12">
+                          <div class="ui-content mb40">
+                              <div class="form-style1">
+                                  <label class="form-label fw600 dark-color">Saldo pendiente de la hipoteca actual</label>
+                                  <input type="number" id="saldoPendiente" class="form-control" placeholder="Introduce el saldo pendiente">
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-lg-12">
+                          <div class="ui-content mb40">
+                              <div class="form-style1">
+                                  <label class="form-label fw600 dark-color">Tasa de interés actual (% anual)</label>
+                                  <input type="number" id="tasaInteresActual" class="form-control" placeholder="Introduce la tasa de interés actual">
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-lg-12">
+                          <div class="ui-content mb40">
+                              <div class="form-style1">
+                                  <label class="form-label fw600 dark-color">Plazo restante (años)</label>
+                                  <input type="number" id="plazoRestante" class="form-control" placeholder="Introduce el plazo restante">
+                              </div>
+                          </div>
+                      </div>
+                      <!-- Botón para realizar el cálculo -->
+                      <div class="col-12 d-flex justify-content-center">
+                          <button class="btn ud-btn btn-thm me-0 me-sm-4 active fw500" onclick="calcularCambioHipoteca()">Calcular</button>
+                      </div>
                   </div>
-                  <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">2 Pharetra nulla ullamcorper sit lectus. Fermentum mauris pellentesque nec nibh sed et, vel diam, massa. Placerat quis vel fames interdum urna lobortis sagittis sed pretium. Aliquam eget posuere sit enim elementum.</div>
-                  <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">3 Pharetra nulla ullamcorper sit lectus. Fermentum mauris pellentesque nec nibh sed et, vel diam, massa. Placerat quis vel fames interdum urna lobortis sagittis sed pretium. Aliquam eget posuere sit enim elementum.</div>
+                </div>              
+              </div>
+            </div>
+        </div>               
+      </div>
+    </section>
+    <div class="container mt-5 pt-5" id="resultadoCredito" style="display: none;">
+      <div class="row">
+        <div class="col-md-4 bgc-f7 d-flex pb-5 flex-column align-items-center justify-content-center">
+          <h4 class="title pt-5">Tu crédito hipotecario</h4>
+          <div class="pt-3">
+            <p class="text-center" style="font-size: 20px;">Guíate con</p>
+            <img class="img-fluid mb-3" src="images/footer-logo.png" alt="Header Logo" style="display: block; margin: 0 auto; width: 50%;"/>
+          </div>
+          <div class="pt-3 text-center">
+            <button type="button" class="btn ud-btn btn-thm active fw500">Agendar asesoría de crédito</button>
+          </div>
+        </div>        
+        <div class="col-md-8 pt-5">
+          <div class="row" style="padding-left: 150px;">
+            <div class="col-md-6 pt10-sm">
+              <div class="col-12 col-md d-flex mb-3 mb-md-0">
+                <i class="fa fa-home p-3" aria-hidden="true" style="font-size: 2rem;"></i>
+                <div>
+                  <h5 class="mb-0 title">Valor de la propiedad</h5>
+                  <p class="mb-0" id="valorPropiedadresultado">$0</p>
                 </div>
               </div>
-          </div>               
-        </div>
-    </section>
-    <section class="pt0 pb90 bgc-f7" style="background-color: white;">
-        <div class="container">
-          <div class="row">
-            <div class="col-12 d-flex justify-content-center">
-              <a href="venta.html" class="ud-btn btn-thm">Calcular<i class="fal fa-arrow-right-long"></i></a>
+            </div>
+            <div class="col-md-6 pt10-sm">
+              <div class="col-12 col-md d-flex mb-3 mb-md-0">
+                <i class="fa fa-calculator p-3" aria-hidden="true" style="font-size: 2rem;"></i>
+                <div>
+                  <h5 class="mb-0 title">Pago mensual total</h5>
+                  <p class="mb-0" id="resultadoMensualidad">$0</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" style="padding-left: 150px;">
+            <div class="col-md-6 pt10-sm pt-5">
+              <div class="col-12 col-md d-flex mb-3 mb-md-0">
+                <i class="fa fa-calendar-alt p-3" aria-hidden="true" style="font-size: 2rem;"></i>
+                <div>
+                  <h5 class="mb-0 title">Plazo</h5>
+                  <p class="mb-0" id="resultadoPlazos">0 meses</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 pt10-sm pt-5">
+              <div class="col-12 col-md d-flex mb-3 mb-md-0">
+                <i class="fa fa-dollar-sign p-3" aria-hidden="true" style="font-size: 2rem;"></i>
+                <div>
+                  <h5 class="mb-0 title">Préstamo</h5>
+                  <p class="mb-0" id="resultadoPagoTotal">$0</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+    <style>
+      .orange-bg-white-text {
+        background-color: #eb6753;
+        color: white;
+      }
+    </style>
+    <section class="pt0 pb0" id="resultadoCreditoTabla" style="display: none; background-color: white;">
+      <div class="container pt-5">
+        <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+          <table id="tablaAmortizacion" class="table">
+            <thead class="orange-bg-white-text">
+              <tr>
+                <th class="orange-bg-white-text">Pago/Periodo</th>
+                <th class="orange-bg-white-text">Saldo Inicial</th>
+                <th class="orange-bg-white-text">Tasa de Interés</th>
+                <th class="orange-bg-white-text">Pago de Intereses</th>
+                <th class="orange-bg-white-text">Pago a Capital</th>
+                <th class="orange-bg-white-text">Pago Total</th>
+                <th class="orange-bg-white-text">Seguro de Vida</th>
+                <th class="orange-bg-white-text">Seguro de Daños</th>
+                <th class="orange-bg-white-text">Comisión de Admon</th>
+                <th class="orange-bg-white-text">Saldo Restante</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Las filas de la tabla se llenarán con JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </div>   
+      <section class="pt0 pb90 bgc-f7" style="background-color: white;">
+        <div class="container pt-5">
+          <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+              <a href="credito.html">
+                <button class="btn ud-btn btn-thm me-0 me-sm-4 active fw500">Nuevo calculo</button>
+              </a>
+             </div>
+          </div>
+        </div>
+      </section>        
     </section>
+    <div class="container mt-5 pt-5" id="resultadoCantidadNecesita" style="display: none;">
+      <div class="row">
+        <div class="col-md-4 bgc-f7 d-flex pb-5 flex-column align-items-center justify-content-center">
+          <h4 class="title pt-5">Tu crédito hipotecario</h4>
+          <div class="pt-3">
+            <p class="text-center" style="font-size: 20px;">Guíate con</p>
+            <img class="img-fluid mb-3" src="images/footer-logo.png" alt="Header Logo" style="display: block; margin: 0 auto; width: 50%;"/>
+          </div>
+          <div class="pt-3 text-center">
+            <button type="button" class="btn ud-btn btn-thm active fw500">Agendar asesoría de crédito</button>
+          </div>
+        </div>        
+        <div class="col-md-8 pt-5">
+          <div class="row" style="padding-left: 150px;">
+            <div class="col-md-6 pt10-sm">
+              <div class="col-12 col-md d-flex mb-3 mb-md-0">
+                <i class="fa fa-home p-3" aria-hidden="true" style="font-size: 2rem;"></i>
+                <div>
+                  <h5 class="mb-0 title">Valor de la propiedad</h5>
+                  <p class="mb-0" id="valorPropiedadresultadoNecesita">$0</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 pt10-sm">
+              <div class="col-12 col-md d-flex mb-3 mb-md-0">
+                <i class="fa fa-calculator p-3" aria-hidden="true" style="font-size: 2rem;"></i>
+                <div>
+                  <h5 class="mb-0 title">Pago mensual total</h5>
+                  <p class="mb-0" id="resultadoMensualidadNecesita">$0</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" style="padding-left: 150px;">
+            <div class="col-md-6 pt10-sm pt-5">
+              <div class="col-12 col-md d-flex mb-3 mb-md-0">
+                <i class="fa fa-calendar-alt p-3" aria-hidden="true" style="font-size: 2rem;"></i>
+                <div>
+                  <h5 class="mb-0 title">Plazo</h5>
+                  <p class="mb-0" id="resultadoPlazosNecesita">0 meses</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 pt10-sm pt-5">
+              <div class="col-12 col-md d-flex mb-3 mb-md-0">
+                <i class="fa fa-dollar-sign p-3" aria-hidden="true" style="font-size: 2rem;"></i>
+                <div>
+                  <h5 class="mb-0 title">Préstamo</h5>
+                  <p class="mb-0" id="resultadoPagoTotalNecesita">$0</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <section class="pt0 pb0" id="tablaAmortizacionNecesita" style="display: none; background-color: white;">
+      <div class="container pt-5">
+        <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+          <table id="tablaAmortizacion" class="table">
+            <thead class="orange-bg-white-text">
+              <tr>
+                <th class="orange-bg-white-text">Pago/Periodo</th>
+                <th class="orange-bg-white-text">Saldo Inicial</th>
+                <th class="orange-bg-white-text">Tasa de Interés</th>
+                <th class="orange-bg-white-text">Pago de Intereses</th>
+                <th class="orange-bg-white-text">Pago a Capital</th>
+                <th class="orange-bg-white-text">Pago Total</th>
+                <th class="orange-bg-white-text">Seguro de Vida</th>
+                <th class="orange-bg-white-text">Seguro de Daños</th>
+                <th class="orange-bg-white-text">Comisión de Admon</th>
+                <th class="orange-bg-white-text">Saldo Restante</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Las filas de la tabla se llenarán con JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </div>   
+      <section class="pt0 pb90 bgc-f7" style="background-color: white;">
+        <div class="container pt-5">
+          <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+              <a href="credito.html">
+                <button class="btn ud-btn btn-thm me-0 me-sm-4 active fw500">Nuevo calculo</button>
+              </a>
+             </div>
+          </div>
+        </div>
+      </section>        
+    </section>
+    <div class="container mt-5 pt-5" id="resultadoCambioHipoteca" style="display: none;">
+      <div class="row">
+        <div class="col-md-4 bgc-f7 d-flex pb-5 flex-column align-items-center justify-content-center">
+          <h4 class="title pt-5">Tu crédito hipotecario</h4>
+          <div class="pt-3">
+            <p class="text-center" style="font-size: 20px;">Guíate con</p>
+            <img class="img-fluid mb-3" src="images/footer-logo.png" alt="Header Logo" style="display: block; margin: 0 auto; width: 50%;"/>
+          </div>
+          <div class="pt-3 text-center">
+            <button type="button" class="btn ud-btn btn-thm active fw500">Agendar asesoría de crédito</button>
+          </div>
+        </div>        
+        <div class="col-md-8 pt-5">
+          <div class="row" style="padding-left: 150px;">
+            <div class="col-md-6 pt10-sm">
+              <div class="col-12 col-md d-flex mb-3 mb-md-0">
+                <i class="fa fa-home p-3" aria-hidden="true" style="font-size: 2rem;"></i>
+                <div>
+                  <h5 class="mb-0 title">Valor de la propiedad</h5>
+                  <p class="mb-0" id="valorPropiedadresultadoCambio">$0</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 pt10-sm">
+              <div class="col-12 col-md d-flex mb-3 mb-md-0">
+                <i class="fa fa-calculator p-3" aria-hidden="true" style="font-size: 2rem;"></i>
+                <div>
+                  <h5 class="mb-0 title">Pago mensual total</h5>
+                  <p class="mb-0" id="resultadoMensualidadCambio">$0</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" style="padding-left: 150px;">
+            <div class="col-md-6 pt10-sm pt-5">
+              <div class="col-12 col-md d-flex mb-3 mb-md-0">
+                <i class="fa fa-calendar-alt p-3" aria-hidden="true" style="font-size: 2rem;"></i>
+                <div>
+                  <h5 class="mb-0 title">Plazo</h5>
+                  <p class="mb-0" id="resultadoPlazosCambio">0 meses</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 pt10-sm pt-5">
+              <div class="col-12 col-md d-flex mb-3 mb-md-0">
+                <i class="fa fa-dollar-sign p-3" aria-hidden="true" style="font-size: 2rem;"></i>
+                <div>
+                  <h5 class="mb-0 title">Préstamo</h5>
+                  <p class="mb-0" id="resultadoPagoTotalCambio">$0</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <section class="pt0 pb0" id="tablaAmortizacionCambiar" style="display: none; background-color: white;">
+      <div class="container pt-5">
+        <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+          <table id="tablaAmortizacion" class="table">
+            <thead class="orange-bg-white-text">
+              <tr>
+                <th class="orange-bg-white-text">Pago/Periodo</th>
+                <th class="orange-bg-white-text">Saldo Inicial</th>
+                <th class="orange-bg-white-text">Tasa de Interés</th>
+                <th class="orange-bg-white-text">Pago de Intereses</th>
+                <th class="orange-bg-white-text">Pago a Capital</th>
+                <th class="orange-bg-white-text">Pago Total</th>
+                <th class="orange-bg-white-text">Seguro de Vida</th>
+                <th class="orange-bg-white-text">Seguro de Daños</th>
+                <th class="orange-bg-white-text">Comisión de Admon</th>
+                <th class="orange-bg-white-text">Saldo Restante</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Las filas de la tabla se llenarán con JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </div>   
+      <section class="pt0 pb90 bgc-f7" style="background-color: white;">
+        <div class="container pt-5">
+          <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+              <a href="credito.html">
+                <button class="btn ud-btn btn-thm me-0 me-sm-4 active fw500">Nuevo calculo</button>
+              </a>
+             </div>
+          </div>
+        </div>
+      </section>        
+    </section>
+    <style>
+      .float{
+        position:fixed;
+        width:60px;
+        height:60px;
+        bottom:40px;
+        right:40px;
+        background-color:#25d366;
+        color:#FFF;
+        border-radius:50px;
+        text-align:center;
+        font-size:30px;
+        box-shadow: 2px 2px 3px #999;
+        z-index:100;
+      }
+
+      .my-float{
+        margin-top:16px;
+      }
+    </style>
+    <a href="https://wa.me/tunúmero" class="float" target="_blank">
+      <i class="fab fa-whatsapp my-float"></i>
+    </a>
     
+    <script>
+
+function calcularCambioHipoteca() {
+    var valorPropiedad = parseFloat(document.getElementById('CambioValorPropiedad').value);
+    var saldoPendiente = parseFloat(document.getElementById('saldoPendiente').value);
+    var tasaInteresActual = parseFloat(document.getElementById('tasaInteresActual').value);
+    var plazoRestante = parseInt(document.getElementById('plazoRestante').value);
+
+    var tasaInteresMensual = tasaInteresActual / 100 / 12;
+    var totalPagos = plazoRestante * 12;
+
+    var cuotaMensual = (saldoPendiente * tasaInteresMensual) / (1 - Math.pow(1 + tasaInteresMensual, -totalPagos));
+    var totalAPagar = cuotaMensual * totalPagos;
+
+    if (!isNaN(cuotaMensual) && cuotaMensual != Infinity && cuotaMensual != -Infinity) {
+      document.getElementById('resultadoCambioHipoteca').style.display = 'block';
+      document.getElementById('tablaAmortizacionCambiar').style.display = 'block';
+      document.getElementById('pasoscredito').style.display = 'none';
+      document.getElementById('opcionescredito').style.display = 'none';
+
+      document.getElementById('resultadoMensualidadCambio').innerText = `$${cuotaMensual.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
+      document.getElementById('resultadoPlazosCambio').innerText = `${totalPagos} meses`;
+      document.getElementById('resultadoPagoTotalCambio').innerText = `$${saldoPendiente.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
+      document.getElementById('valorPropiedadresultadoCambio').innerText = `$${valorPropiedad.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
+
+      // Asumiendo que los valores de seguro y comisión son conocidos o calculados
+      var seguroVida = 0; // Definir o recuperar este valor
+      var seguroDanios = 0; // Definir o recuperar este valor
+      var comisionAdmin = 0; // Definir o recuperar este valor
+
+      var tablaAmortizacion = generarTablaAmortizacion(saldoPendiente, tasaInteresActual, totalPagos, seguroVida, seguroDanios, comisionAdmin);
+      insertarTablaEnHTMLCambiar(tablaAmortizacion);
+
+    } else {
+        document.getElementById('resultadoCambioHipoteca').innerHTML = "Por favor, introduzca valores válidos.";
+    }
+}
+
+
+
+function calcularCreditoHipotecario() {
+    var principal = parseFloat(document.getElementById("cantidadNecesita").value);
+    var tasaAnual = parseFloat(document.getElementById("tasaInteres").value);
+    var plazoAnos = parseInt(document.getElementById("plazoNecesita").value);
+    var porcentajeFinanciamiento = parseFloat(document.getElementById('porcentajeFinanciarnecesita').value) / 100;
+    var costoPropiedad = principal / (40/100);
+
+    var tasaMensual = tasaAnual / 100 / 12;
+    var totalPagos = plazoAnos * 12;
+
+    var pagoMensual = (principal * tasaMensual) / (1 - Math.pow(1 + tasaMensual, -totalPagos));
+    var totalAPagar = pagoMensual * totalPagos;
+
+    if (!isNaN(pagoMensual) && pagoMensual != Infinity && pagoMensual != -Infinity) {
+      document.getElementById('resultadoCantidadNecesita').style.display = 'block';
+      document.getElementById('tablaAmortizacionNecesita').style.display = 'block';
+      document.getElementById('pasoscredito').style.display = 'none';
+      document.getElementById('opcionescredito').style.display = 'none';
+
+      document.getElementById('resultadoMensualidadNecesita').innerText = `$${pagoMensual.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
+      document.getElementById('resultadoPlazosNecesita').innerText = `${totalPagos} meses`;
+      document.getElementById('resultadoPagoTotalNecesita').innerText = `$${principal.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
+      document.getElementById('valorPropiedadresultadoNecesita').innerText = `$${costoPropiedad.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
+
+      // Asumiendo que los valores de seguro y comisión son conocidos o calculados
+      var seguroVida = 0; // Debes definir o recuperar este valor
+      var seguroDanios = 0; // Debes definir o recuperar este valor
+      var comisionAdmin = 0; // Debes definir o recuperar este valor
+
+      var tablaAmortizacion = generarTablaAmortizacion(principal, tasaAnual, totalPagos, seguroVida, seguroDanios, comisionAdmin);
+      insertarTablaEnHTMLNecesita(tablaAmortizacion);
+
+    } else {
+        document.getElementById("resultadoCantidadNecesita").innerHTML = "Por favor, introduzca valores válidos.";
+    }
+}
+
+function calcularCuota() {
+    var valorCasa = parseFloat(document.getElementById('valorCasa').value);
+    var porcentajeEnganche = parseFloat(document.getElementById('porcentajeEnganche').value) / 100;
+    var enganche = valorCasa * porcentajeEnganche;
+    var monto = valorCasa - enganche; // Monto a financiar después de restar el enganche
+    var tasaInteresAnual = parseFloat(document.getElementById('interes').value);
+    var plazoAnos = parseInt(document.getElementById('plazo').value);
+    var plazoMeses = plazoAnos * 12;
+
+    // Asumiendo valores fijos o cálculos para los seguros y comisiones, podrías añadirlos aquí.
+    var seguroVida = 0; 
+    var seguroDanios = 0; 
+    var comisionAdmin = 0; 
+
+    // Calcular la cuota
+    var tasaInteresMensual = tasaInteresAnual / 12 / 100;
+    var cuota = monto * tasaInteresMensual * Math.pow(1 + tasaInteresMensual, plazoMeses) / (Math.pow(1 + tasaInteresMensual, plazoMeses) - 1);
+    
+    // Aquí puedes sumar los seguros y comisiones a la cuota si es necesario.
+    cuota += seguroVida + seguroDanios + comisionAdmin;
+
+    // Calcular el total a pagar
+    var totalAPagar = cuota * plazoMeses;
+
+    if (!isNaN(cuota) && cuota != Infinity && cuota != -Infinity && cuota > 0) {
+        document.getElementById('resultadoCredito').style.display = 'block';
+        document.getElementById('resultadoCreditoTabla').style.display = 'block';
+        document.getElementById('pasoscredito').style.display = 'none';
+        document.getElementById('opcionescredito').style.display = 'none';
+
+        // Actualizar el HTML con los resultados
+        document.getElementById('resultadoMensualidad').innerText = `$${cuota.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
+        document.getElementById('resultadoPlazos').innerText = `${plazoMeses} meses`;
+        document.getElementById('resultadoPagoTotal').innerText = `$${monto.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
+        document.getElementById('valorPropiedadresultado').innerText = `$${valorCasa.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
+
+        // Generar tabla de amortización
+        var tablaAmortizacion = generarTablaAmortizacion(monto, tasaInteresAnual, plazoMeses, seguroVida, seguroDanios, comisionAdmin);
+        insertarTablaEnHTML(tablaAmortizacion);
+    } else {
+        // Manejo de errores: mostrar mensaje de error o realizar acciones pertinentes.
+    }
+}
+
+
+
+      function generarTablaAmortizacion(monto, tasaInteresAnual, plazo, seguroVida, seguroDanios, comisionAdmin) {
+          var saldo = monto;
+          var tasaInteresMensual = tasaInteresAnual / 12 / 100;
+          var cuota = monto * tasaInteresMensual * Math.pow(1 + tasaInteresMensual, plazo) / (Math.pow(1 + tasaInteresMensual, plazo) - 1);
+          var tabla = [];
+          
+          for (var periodo = 1; periodo <= plazo; periodo++) {
+              var pagoInteres = saldo * tasaInteresMensual;
+              var pagoCapital = cuota - pagoInteres;
+              var pagoTotal = cuota + seguroVida + seguroDanios + comisionAdmin;
+              saldo -= pagoCapital;
+
+              tabla.push({
+                  periodo: periodo,
+                  saldoInicial: saldo + pagoCapital,
+                  tasaInteres: tasaInteresAnual,
+                  pagoInteres: pagoInteres,
+                  pagoCapital: pagoCapital,
+                  pagoTotal: pagoTotal,
+                  seguroVida: seguroVida,
+                  seguroDanios: seguroDanios,
+                  comisionAdmin: comisionAdmin,
+                  saldoRestante: saldo
+              });
+          }
+          
+          return tabla;
+      }
+
+      function insertarTablaEnHTML(tablaAmortizacion) {
+          var tablaBody = document.getElementById('tablaAmortizacion').getElementsByTagName('tbody')[0];
+          
+          tablaAmortizacion.forEach(function(pago) {
+              var fila = tablaBody.insertRow();
+              
+              Object.values(pago).forEach(function(valor, indice) {
+                  var celda = fila.insertCell(indice);
+                  celda.textContent = typeof valor === 'number' ? valor.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') : valor;
+              });
+          });
+      }
+
+      function insertarTablaEnHTMLNecesita(tablaAmortizacion) {
+          var tablaBody = document.getElementById('tablaAmortizacionNecesita').getElementsByTagName('tbody')[0];
+          
+          tablaAmortizacion.forEach(function(pago) {
+              var fila = tablaBody.insertRow();
+              
+              Object.values(pago).forEach(function(valor, indice) {
+                  var celda = fila.insertCell(indice);
+                  celda.textContent = typeof valor === 'number' ? valor.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') : valor;
+              });
+          });
+      }
+
+      function insertarTablaEnHTMLCambiar(tablaAmortizacion) {
+    var tablaBody = document.getElementById('tablaAmortizacionCambiar').getElementsByTagName('tbody')[0];
+    tablaBody.innerHTML = ''; // Limpiar tabla antes de agregar nuevos datos
+
+    tablaAmortizacion.forEach(function(pago) {
+        var fila = tablaBody.insertRow();
+
+        Object.values(pago).forEach(function(valor, indice) {
+            var celda = fila.insertCell(indice);
+            celda.textContent = typeof valor === 'number' ? valor.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') : valor;
+        });
+    });
+}
+    </script>
     <!-- Our Footer -->
     <section class="footer-style1 at-home4 pt60 pb-0">
       <div class="container">
