@@ -533,31 +533,60 @@
                                   <label class="heading-color ff-heading fw600 mb10">Número de pisos</label>
                                   <input type="text" class="form-control" name="pisos_propiedad" placeholder="">
                               </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="mb20">
-                                    <label class="heading-color ff-heading fw600 mb10">Cargar imagen por piso</label>
-                                    <div id="imagenesPorPiso"></div>
-                                    <button type="button" onclick="agregarCampoImagen()">Añadir Imagen</button>
-                                </div>
-                            </div>
+                          </div>
+                          <div class="col-sm-12">
+                              <div class="mb20">
+                                  <label class="heading-color ff-heading fw600 mb10">Detalles por piso</label>
+                                  <div id="detallesPorPiso"></div>
+                                  <button type="button" onclick="agregarCamposPorPiso()">Añadir Detalles</button>
+                              </div>
+                          </div>
 
-                            <script>
-                              function agregarCampoImagen() {
-                                  var numeroPisos = document.getElementsByName("pisos_propiedad")[0].value;
-                                  var contenedor = document.getElementById("imagenesPorPiso");
-                                  contenedor.innerHTML = ''; // Limpiar campos existentes
-
-                                  for (var i = 0; i < numeroPisos; i++) {
-                                      var input = document.createElement("input");
-                                      input.type = "file";
-                                      input.name = "imagenPiso_" + (i + 1);
-                                      input.classList.add("form-control");
-                                      contenedor.appendChild(input);
-                                  }
-                              }
-
-                            </script>
+                          <script>
+                            function agregarCamposPorPiso() {
+                                var numeroPisos = document.getElementsByName("pisos_propiedad")[0].value;
+                                var contenedor = document.getElementById("detallesPorPiso");
+                                contenedor.innerHTML = ''; // Limpiar campos existentes
+                          
+                                for (var i = 0; i < numeroPisos; i++) {
+                                    var pisoContenedor = document.createElement("div");
+                                    pisoContenedor.classList.add("piso-detalle");
+                          
+                                    // Crear y añadir campo 'Size'
+                                    var inputSize = document.createElement("input");
+                                    inputSize.type = "text";
+                                    inputSize.name = "sizePiso_" + (i + 1);
+                                    inputSize.placeholder = "Metros cuadrados";
+                                    inputSize.classList.add("form-control");
+                                    pisoContenedor.appendChild(inputSize);
+                          
+                                    // Crear y añadir campo 'Bedrooms'
+                                    var inputBedrooms = document.createElement("input");
+                                    inputBedrooms.type = "number";
+                                    inputBedrooms.name = "bedroomsPiso_" + (i + 1);
+                                    inputBedrooms.placeholder = "Habitaciones";
+                                    inputBedrooms.classList.add("form-control");
+                                    pisoContenedor.appendChild(inputBedrooms);
+                          
+                                    // Crear y añadir campo 'Bathrooms'
+                                    var inputBathrooms = document.createElement("input");
+                                    inputBathrooms.type = "number";
+                                    inputBathrooms.name = "bathroomsPiso_" + (i + 1);
+                                    inputBathrooms.placeholder = "Baños";
+                                    inputBathrooms.classList.add("form-control");
+                                    pisoContenedor.appendChild(inputBathrooms);
+                          
+                                    // Crear y añadir campo 'Imagen'
+                                    var inputImagen = document.createElement("input");
+                                    inputImagen.type = "file";
+                                    inputImagen.name = "imagenPiso_" + (i + 1);
+                                    inputImagen.classList.add("form-control");
+                                    pisoContenedor.appendChild(inputImagen);
+                          
+                                    contenedor.appendChild(pisoContenedor);
+                                }
+                            }
+                          </script>
                             <div class="col-sm-4">
                               <div class="mb20">
                                 <label class="heading-color ff-heading fw600 mb10">Terreno (metros cuadrados)</label>
@@ -658,7 +687,7 @@
                   reader.onerror = error => reject(error);
               });
           }
-
+          
           async function sendEmailPropertyForm() {
               event.preventDefault();
               
@@ -693,6 +722,28 @@
 
               let amenidadesList = amenidades.join(', ');
 
+              let detallesPisos = [];
+              for (let i = 0; i < pisosPropiedad; i++) {
+                let piso = {
+                  size: document.querySelector(`[name="sizePiso_${i + 1}"]`).value,
+                  bedrooms: document.querySelector(`[name="bedroomsPiso_${i + 1}"]`).value,
+                  bathrooms: document.querySelector(`[name="bathroomsPiso_${i + 1}"]`).value,
+                  // asumimos que ya se ha recogido la imagen en la parte de attachments
+                };
+                detallesPisos.push(piso);
+              }
+
+              let detallesPisosHTML = detallesPisos.map((piso, index) => `
+                <div style="border-bottom: 1px solid #000;">
+                  <h2 style="color: #f76a51;">Detalles del Piso ${index + 1}</h2>
+                </div>
+                <div>
+                  <p><strong>Metros cuadrados:</strong> ${piso.size}</p>
+                  <p><strong>Habitaciones:</strong> ${piso.bedrooms}</p>
+                  <p><strong>Baños:</strong> ${piso.bathrooms}</p>
+                </div>
+              `).join('');
+
               // Validar que los campos requeridos no estén vacíos
               const camposRequeridos = [
                   nombreVendedor, apellidoMaterno, apellidoPaterno, telefonoVendedor, 
@@ -716,7 +767,7 @@
 
               // Recoger las imágenes en base64
               let attachments = [];
-              let imageInputs = document.querySelectorAll('#imagenesPorPiso input[type="file"]');
+              let imageInputs = document.querySelectorAll('#detallesPorPiso input[type="file"]');
 
               for (let i = 0; i < imageInputs.length; i++) {
                   if (imageInputs[i].files[0]) {
@@ -789,6 +840,7 @@
                         <p><strong>Pisos:</strong> ${pisosPropiedad}</p>
                         <p><strong>Metros cuadrados de terreno:</strong> ${terrenoPropiedad}</p>
                         <p><strong>Amenidades:</strong> ${amenidadesList}</p>
+                        <p><strong>Detalles de pisos:</strong> ${detallesPisosHTML}</p>
                       </div>
                       <a style="${btnstyle}" href="mailto:${correoVendedor}?subject=Respuesta%20contacto%20-%20${nombreVendedor}&body=Estimado%20Vendedor,%0D%0A%0D%0ANos%20ponemos%20en%20contacto%20con%20usted%20debido%20a%20que%20recibimos%20su%20propiedad%20para%20petición%20de%20venta%0D%0A%0D%0A%0D%0A%0D%0AAtentamente,%0D%0AAsesorista%0D%0A%0D%0A">Responder propuesta</a>
                   `,

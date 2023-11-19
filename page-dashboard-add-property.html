@@ -505,7 +505,7 @@
                           const habitacionesIn = document.querySelector('[name="habitaciones_in"]').value;
                           const banosIn = document.querySelector('[name="banos_in"]').value;
                           const construccionIn = document.querySelector('[name="construccion_in"]').value;
-                          const pisosIn = document.querySelector('[name="pisos_in"]').value;
+                          const pisosIn = document.querySelector('[name="pisos_propiedad"]').value;
                           const terrenoIn = document.querySelector('[name="terreno_in"]').value;
 
 
@@ -544,7 +544,7 @@
 
                                 for (let i = 0; i < selectedImages.length; i++) {
                                   const file = selectedImages[i];
-                                  const filePath = `uploads/${propiedadId}/${file.name}`;
+                                  const filePath = `uploads/${propiedadId}/propiedad/${file.name}`;
 
                                   // Usa Supabase para subir el archivo
                                   const { error } = await _supabase.storage.from('Images_propiedades').upload(filePath, file);
@@ -559,33 +559,76 @@
                                 selectedImages = [];
                               }
                               
-                              async function subirImagenesPorPiso(propiedadId) {
-                                  for (let input of imagenesPorPiso) {
-                                      if (input.files.length > 0) {
-                                          const file = input.files[0];
-                                          const filePath = `uploads/${propiedadId}/pisos/${file.name}`;
+                              async function subirImagenesPorPiso(propiedadId, numeroPisos) {
+    // Asegúrate de que 'imagenesPorPiso' sea una colección de los elementos de entrada de archivos.
+    let imagenesPorPiso = document.querySelectorAll('[name^="imagenPiso_"]'); // Selecciona todos los elementos que su nombre comience con 'imagenPiso_'
 
-                                          const { error } = await _supabase.storage.from('Images_propiedades').upload(filePath, file);
-                                          if (error) {
-                                              console.error("Error al subir la imagen:", error);
-                                          } else {
-                                              console.log("Imagen subida exitosamente a", filePath);
-                                          }
-                                      }
-                                  }
-                              }
+    for (let i = 0; i < numeroPisos; i++) {
+        let input = imagenesPorPiso[i]; // Obtiene el input correspondiente al piso
 
-                              if (errorPropiedad) {
-                                  console.error('Error inserting propiedad:', errorPropiedad);
-                              } else {
-                                  console.log('Inserted propiedad:', dataPropiedad);
-                                  const propiedadId = dataPropiedad[0].id; // Accede al ID de la propiedad
+        if (input && input.files.length > 0) {
+            const file = input.files[0];
+            const filePath = `uploads/${propiedadId}/pisos/${file.name}`;
 
-                              // Luego, puedes realizar otras operaciones con la propiedad, como subir imágenes
-                              await uploadSelectedImages(propiedadId);
-                              await subirImagenesPorPiso(propiedadId);
-                              location.reload()
-                              }
+            const { error } = await _supabase.storage.from('Images_propiedades').upload(filePath, file);
+            if (error) {
+                console.error("Error al subir la imagen del piso " + (i+1) + ":", error);
+            } else {
+                console.log("Imagen del piso " + (i+1) + " subida exitosamente a", filePath);
+            }
+        }
+    }
+}
+
+                              async function agregarDetallesPisos(propiedadId, numeroPisos) {
+  for (let i = 0; i < numeroPisos; i++) {
+    let metrosCuadrados = document.querySelector(`[name="sizePiso_${i + 1}"]`).value;
+    let habitaciones = document.querySelector(`[name="bedroomsPiso_${i + 1}"]`).value;
+    let banos = document.querySelector(`[name="bathroomsPiso_${i + 1}"]`).value;
+
+    // Asegúrate de convertir los valores a los tipos correctos si es necesario
+    metrosCuadrados = parseFloat(metrosCuadrados);
+    habitaciones = parseInt(habitaciones);
+    banos = parseInt(banos);
+
+    const { data, error } = await _supabase
+      .from('detalles_pisos')
+      .insert([
+        {
+          propiedad_id: propiedadId,
+          piso_numero: i + 1,
+          metros_cuadrados: metrosCuadrados,
+          habitaciones: habitaciones,
+          banos: banos
+        }
+      ]);
+
+    if (error) {
+      console.error('Error al insertar detalles de piso:', error);
+    } else {
+      console.log('Detalles de piso insertados:', data);
+    }
+  }
+}
+
+if (errorPropiedad) {
+    console.error('Error inserting propiedad:', errorPropiedad);
+} else {
+    console.log('Inserted propiedad:', dataPropiedad);
+    const propiedadId = dataPropiedad[0].id; // Accede al ID de la propiedad
+    const numeroPisos = parseInt(document.querySelector('[name="pisos_propiedad"]').value);
+
+    // Llamar a la función para agregar los detalles de los pisos
+    await agregarDetallesPisos(propiedadId, numeroPisos);
+
+    // Llamar a la función para subir las imágenes por piso
+    await subirImagenesPorPiso(propiedadId, numeroPisos);
+
+// Luego, puedes realizar otras operaciones con la propiedad, como subir imágenes
+await uploadSelectedImages(propiedadId);
+
+    location.reload();
+}
                               
 
                               
@@ -638,6 +681,7 @@
                                 $('#uploadButton').click(function() {
                                   uploadSelectedImages(propiedadId);
                                   subirImagenesPorPiso(propiedadId);
+                                  agregarDetallesPisos(propiedadId, numeroPisos);
                                 });
                               });
 
@@ -768,36 +812,62 @@
                             </div>
                             <div class="col-sm-4">
                               <div class="mb20">
-                                <label class="heading-color ff-heading fw600 mb10">Número de pisos</label>
-                                <input type="text" class="form-control" name="pisos_in" placeholder="">
+                                  <label class="heading-color ff-heading fw600 mb10">Número de pisos</label>
+                                  <input type="text" class="form-control" name="pisos_propiedad" placeholder="">
                               </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="mb20">
-                                    <label class="heading-color ff-heading fw600 mb10">Cargar imagen por piso</label>
-                                    <div id="imagenesPorPiso"></div>
-                                    <button type="button" onclick="agregarCampoImagen()">Añadir Imagen</button>
-                                </div>
-                            </div>
+                          </div>
+                          <div class="col-sm-12">
+                              <div class="mb20">
+                                  <label class="heading-color ff-heading fw600 mb10">Detalles por piso</label>
+                                  <div id="detallesPorPiso"></div>
+                                  <button type="button" onclick="agregarCamposPorPiso()">Añadir Detalles</button>
+                              </div>
+                          </div>
 
                             <script>
-                              let imagenesPorPiso = [];
-                              function agregarCampoImagen() {
-                                  var numeroPisos = document.getElementsByName("pisos_in")[0].value;
-                                  var contenedor = document.getElementById("imagenesPorPiso");
+                              function agregarCamposPorPiso() {
+                                  var numeroPisos = document.getElementsByName("pisos_propiedad")[0].value;
+                                  var contenedor = document.getElementById("detallesPorPiso");
                                   contenedor.innerHTML = ''; // Limpiar campos existentes
-
-                                  imagenesPorPiso = []; // Inicializar como array vacío
+                            
                                   for (var i = 0; i < numeroPisos; i++) {
-                                      var input = document.createElement("input");
-                                      input.type = "file";
-                                      input.name = "imagenPiso_" + (i + 1);
-                                      input.classList.add("form-control");
-                                      contenedor.appendChild(input);
-                                      imagenesPorPiso.push(input);
+                                      var pisoContenedor = document.createElement("div");
+                                      pisoContenedor.classList.add("piso-detalle");
+                            
+                                      // Crear y añadir campo 'Size'
+                                      var inputSize = document.createElement("input");
+                                      inputSize.type = "text";
+                                      inputSize.name = "sizePiso_" + (i + 1);
+                                      inputSize.placeholder = "Size (Sqft)";
+                                      inputSize.classList.add("form-control");
+                                      pisoContenedor.appendChild(inputSize);
+                            
+                                      // Crear y añadir campo 'Bedrooms'
+                                      var inputBedrooms = document.createElement("input");
+                                      inputBedrooms.type = "number";
+                                      inputBedrooms.name = "bedroomsPiso_" + (i + 1);
+                                      inputBedrooms.placeholder = "Bedrooms";
+                                      inputBedrooms.classList.add("form-control");
+                                      pisoContenedor.appendChild(inputBedrooms);
+                            
+                                      // Crear y añadir campo 'Bathrooms'
+                                      var inputBathrooms = document.createElement("input");
+                                      inputBathrooms.type = "number";
+                                      inputBathrooms.name = "bathroomsPiso_" + (i + 1);
+                                      inputBathrooms.placeholder = "Bathrooms";
+                                      inputBathrooms.classList.add("form-control");
+                                      pisoContenedor.appendChild(inputBathrooms);
+                            
+                                      // Crear y añadir campo 'Imagen'
+                                      var inputImagen = document.createElement("input");
+                                      inputImagen.type = "file";
+                                      inputImagen.name = "imagenPiso_" + (i + 1);
+                                      inputImagen.classList.add("form-control");
+                                      pisoContenedor.appendChild(inputImagen);
+                            
+                                      contenedor.appendChild(pisoContenedor);
                                   }
                               }
-
                             </script>
                             <div class="col-sm-4">
                               <div class="mb20">

@@ -108,7 +108,7 @@ let currentPage = 1;
 const propertiesPerPage = 9;
 
 async function getFirstImageURL(propertyId) {
-    const { data, error } = await _supabase.storage.from('Images_propiedades').list('uploads/' + propertyId + '/');
+    const { data, error } = await _supabase.storage.from('Images_propiedades').list('uploads/' + propertyId + '/propiedad/');
     if (error) {
         console.error("Error al obtener la lista de imágenes:", error);
         return "images/listings/g3-1.jpg";  // URL por defecto si hay un error
@@ -116,7 +116,7 @@ async function getFirstImageURL(propertyId) {
 
     if (data && data.length) {
         const image = data[0];
-        const { publicURL, error } = await _supabase.storage.from('Images_propiedades').getPublicUrl('uploads/' + propertyId + '/' + image.name);
+        const { publicURL, error } = await _supabase.storage.from('Images_propiedades').getPublicUrl('uploads/' + propertyId + '/propiedad/' + image.name);
         if (error) {
             console.error("Error al obtener la URL pública:", error);
             return "images/listings/g3-1.jpg";  // URL por defecto si hay un error

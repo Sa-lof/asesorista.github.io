@@ -275,7 +275,7 @@
               const urlParams = new URLSearchParams(window.location.search);
               const propertyId = urlParams.get('id');
               
-              const { data, error } = await _supabase.storage.from('Images_propiedades').list('uploads/' + propertyId + '/');
+              const { data, error } = await _supabase.storage.from('Images_propiedades').list('uploads/' + propertyId + '/propiedad/');
               if (error) {
                   console.error("Error al obtener la lista de imágenes:", error);
                   return;
@@ -284,7 +284,7 @@
               if (data && data.length) {
                   for (let i = 0; i < data.length; i++) {
                       const image = data[i];
-                      const { publicURL, error } = await _supabase.storage.from('Images_propiedades').getPublicUrl('uploads/' + propertyId + '/' + image.name);
+                      const { publicURL, error } = await _supabase.storage.from('Images_propiedades').getPublicUrl('uploads/' + propertyId + '/propiedad/' + image.name);
                       if (error) {
                           console.error("Error al obtener la URL pública:", error);
                           continue;
@@ -304,10 +304,109 @@
               }
           }
 
+          async function fetchImagesForFloors(propertyId) {
+              let imagesData = [];
+              const { data, error } = await _supabase.storage.from('Images_propiedades').list(`uploads/${propertyId}/pisos`);
 
+              if (error) {
+                  console.error("Error al obtener las imágenes:", error);
+                  return imagesData;
+              }
+
+              for (const image of data) {
+                  const { publicURL, error } = await _supabase.storage.from('Images_propiedades').getPublicUrl('uploads/' + propertyId + '/pisos/' + image.name);
+                  if (!error) {
+                      imagesData.push({ name: image.name, url: publicURL });
+                  }
+              }
+
+              return imagesData;
+          }
+
+          async function fetchFloorDetails(propertyId) {
+              const { data, error } = await _supabase
+                  .from('detalles_pisos')
+                  .select('*')
+                  .eq('propiedad_id', propertyId);
+
+              if (error) {
+                  console.error('Error al consultar los detalles de los pisos:', error);
+                  return;
+              }
+
+              return data;
+          }
+
+          async function createAccordionItems() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const propertyId = urlParams.get('id');
+    
+    // Obtener detalles de los pisos y las imágenes.
+    const [{ data: pisosData, error: pisosError }, imagesData] = await Promise.all([
+        _supabase
+            .from('detalles_pisos')
+            .select('*')
+            .eq('propiedad_id', propertyId),
+        fetchImagesForFloors(propertyId)
+    ]);
+
+    if (pisosError) {
+        console.error("Error al obtener detalles de los pisos:", pisosError);
+        return;
+    }
+
+    const accordionContainer = document.getElementById('accordionExample');
+    accordionContainer.innerHTML = ''; // Limpiar el contenedor antes de añadir nuevos elementos.
+
+    pisosData.forEach((piso, index) => {
+        // Construye el encabezado del acordeón.
+        let accordionItemHTML =   `
+                      <div class="accordion-item">
+                          <h2 class="accordion-header" id="headingFloor${piso.piso_numero}">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFloor${piso.piso_numero}" aria-expanded="false" aria-controls="collapseFloor${piso.piso_numero}">
+                                  <span>Piso ${piso.piso_numero}</span>
+                                  <span class="ms-auto d-md-flex align-items-center justify-content-end">
+                                    <span class="me-2 me-md-4">
+                                      <span class="fw600">Size:</span>
+                                      <span class="text">${piso.metros_cuadrados || 'N/A'} Sqft</span>
+                                    </span>
+                                    <span class="me-2 me-md-4">
+                                      <span class="fw600">Bedrooms</span>
+                                      <span class="text">${piso.habitaciones || 'N/A'}</span>
+                                    </span>
+                                    <span class="me-2 me-md-4">
+                                      <span class="fw600">Bathrooms</span>
+                                      <span class="text">${piso.banos || 'N/A'}</span>
+                                    </span>
+                                  </span>
+                              </button>
+                          </h2>
+                  `;
+
+                  // Añade el cuerpo del acordeón solo si hay una imagen disponible.
+                  const imageInfo = imagesData[index]; // Asume que imagesData está en el mismo orden que pisosData
+                  if (imageInfo) {
+                      accordionItemHTML += `
+                          <div id="collapseFloor${piso.piso_numero}" class="accordion-collapse collapse" aria-labelledby="headingFloor${piso.piso_numero}" data-parent="#accordionExample">
+                              <div class="accordion-body text-center">
+                                  <img src="${imageInfo.url}" alt="Imagen del Piso ${piso.piso_numero}" style="max-width: 100%; height: auto;">
+                                  <!-- Otros detalles del piso aquí -->
+                              </div>
+                          </div>
+                      `;
+                  }
+
+                  // Cierra el div del elemento acordeón.
+                  accordionItemHTML += `</div>`;
+
+                  // Añade el HTML al contenedor del acordeón.
+                  accordionContainer.innerHTML += accordionItemHTML;
+              });
+          }
 
           $(document).ready(function() {
               fetchAndDisplayImages();
+              createAccordionItems();
           });
 
       }
@@ -531,96 +630,6 @@
                 <div class="col-md-12">
                   <div class="accordion-style1 style2">
                     <div class="accordion" id="accordionExample">
-                      <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingFirst">
-                          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFirst" aria-expanded="true" aria-controls="collapseFirst">
-                            <span class="w-100 d-md-flex align-items-center">
-                              <span class="mr10-sm">First Floor</span>
-                              <span class="ms-auto d-md-flex align-items-center justify-content-end">
-                                <span class="me-2 me-md-4">
-                                  <span class="fw600">Size:</span>
-                                  <span class="text">1267 Sqft</span>
-                                </span>
-                                <span class="me-2 me-md-4">
-                                  <span class="fw600">Bedrooms</span>
-                                  <span class="text">2</span>
-                                </span>
-                                <span class="me-2 me-md-4">
-                                  <span class="fw600">Bathrooms</span>
-                                  <span class="text">2</span>
-                                </span>
-                                <span>
-                                  <span class="fw600">Price</span>
-                                  <span class="text">$920,99</span>
-                                </span>
-                              </span>
-                            </span>
-                          </button>
-                        </h2>
-                        <div id="collapseFirst" class="accordion-collapse collapse" aria-labelledby="headingFirst" data-parent="#accordionExample">
-                          <div class="accordion-body text-center"><img class="w-100" src="images/listings/listing-single-1.png" alt=""></div>
-                        </div>
-                      </div>
-                      <div class="accordion-item active">
-                        <h2 class="accordion-header" id="headingSecond">
-                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSecond" aria-expanded="false" aria-controls="collapseSecond">
-                            <span class="w-100 d-md-flex align-items-center">
-                              <span class="mr10-sm">Second Floor</span>
-                              <span class="ms-auto d-md-flex align-items-center justify-content-end">
-                                <span class="me-2 me-md-4">
-                                  <span class="fw600">Size:</span>
-                                  <span class="text">1267 Sqft</span>
-                                </span>
-                                <span class="me-2 me-md-4">
-                                  <span class="fw600">Bedrooms</span>
-                                  <span class="text">2</span>
-                                </span>
-                                <span class="me-2 me-md-4">
-                                  <span class="fw600">Bathrooms</span>
-                                  <span class="text">2</span>
-                                </span>
-                                <span>
-                                  <span class="fw600">Price</span>
-                                  <span class="text">$920,99</span>
-                                </span>
-                              </span>
-                            </span>
-                          </button>
-                        </h2>
-                        <div id="collapseSecond" class="accordion-collapse collapse show" aria-labelledby="headingSecond" data-parent="#accordionExample">
-                          <div class="accordion-body text-center"><img class="w-100" src="images/listings/listing-single-1.png" alt=""></div>
-                        </div>
-                      </div>
-                      <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingThird">
-                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThird" aria-expanded="false" aria-controls="collapseThird">
-                            <span class="w-100 d-md-flex align-items-center">
-                              <span class="mr10-sm">Third Floor</span>
-                              <span class="ms-auto d-md-flex align-items-center justify-content-end">
-                                <span class="me-4">
-                                  <span class="fw600">Size:</span>
-                                  <span class="text">1267 Sqft</span>
-                                </span>
-                                <span class="me-4">
-                                  <span class="fw600">Bedrooms</span>
-                                  <span class="text">2</span>
-                                </span>
-                                <span class="me-4">
-                                  <span class="fw600">Bathrooms</span>
-                                  <span class="text">2</span>
-                                </span>
-                                <span>
-                                  <span class="fw600">Price</span>
-                                  <span class="text">$920,99</span>
-                                </span>
-                              </span>
-                            </span>
-                          </button>
-                        </h2>
-                        <div id="collapseThird" class="accordion-collapse collapse" aria-labelledby="headingThird" data-parent="#accordionExample">
-                          <div class="accordion-body text-center"><img class="w-100" src="images/listings/listing-single-1.png" alt=""></div>
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -674,105 +683,105 @@
                 </div>
               </div>
               <script src="https://smtpjs.com/v3/smtp.js"></script>
-                                    <script>
-                                      let h2Element = "";
-                                      let pElement = "";
+              <script>
+                let h2Element = "";
+                let pElement = "";
 
-                                      async function loadPropertyDetails2(id) {
-                                          const urlParams = new URLSearchParams(window.location.search);
-                                          const propertyId = urlParams.get('id');
-                                          const { data, error } = await _supabase
-                                              .from('propiedades')
-                                              .select('*')
-                                              .eq('id', id)
-                                              .single();
+                async function loadPropertyDetails2(id) {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const propertyId = urlParams.get('id');
+                    const { data, error } = await _supabase
+                        .from('propiedades')
+                        .select('*')
+                        .eq('id', id)
+                        .single();
 
-                                          if (error) {
-                                              console.error('Error al consultar la base de datos:', error);
-                                              return;
-                                          }
+                    if (error) {
+                        console.error('Error al consultar la base de datos:', error);
+                        return;
+                    }
 
-                                          const property = data;
-                                          h2Element = property.nombre || "Nombre no disponible";
-                                          pElement = `${property.direccion} ${property.ciudad} ${property.estado} ${property.pais}`;
-                                      }
+                    const property = data;
+                    h2Element = property.nombre || "Nombre no disponible";
+                    pElement = `${property.direccion} ${property.ciudad} ${property.estado} ${property.pais}`;
+                }
 
-                                      async function sendEmailContacForm() {
-                                            event.preventDefault();
-                                            
-                                            const hora = document.getElementById("hora_info").value;
-                                            const nombre = document.getElementById("nombre_info").value;
-                                            const celular = document.getElementById("tel_info").value;
-                                            const email = document.getElementById("email_info").value;
-                                            const mensaje = document.getElementById("mensaje_info").value;
-                                            const urlParams = new URLSearchParams(window.location.search);
-                                            const propertyId = urlParams.get('id');
-                                            await loadPropertyDetails2(propertyId); 
-                                            // Estilos CSS en línea
-                                            let style = "background-color: #f76a51; padding: 20px; border: 1px solid #ccc; border-radius: 8px; text-align: center;";
+                async function sendEmailContacForm() {
+                      event.preventDefault();
+                      
+                      const hora = document.getElementById("hora_info").value;
+                      const nombre = document.getElementById("nombre_info").value;
+                      const celular = document.getElementById("tel_info").value;
+                      const email = document.getElementById("email_info").value;
+                      const mensaje = document.getElementById("mensaje_info").value;
+                      const urlParams = new URLSearchParams(window.location.search);
+                      const propertyId = urlParams.get('id');
+                      await loadPropertyDetails2(propertyId); 
+                      // Estilos CSS en línea
+                      let style = "background-color: #f76a51; padding: 20px; border: 1px solid #ccc; border-radius: 8px; text-align: center;";
 
-                                            const style2 = `
-                                                color: white;
-                                            `
-                                            const thstyle = `
-                                                background-color: #EF502E;
-                                                color: white;
-                                                font-weight: bold;
-                                                padding: 8px;
-                                                text-align: left;
-                                            `
+                      const style2 = `
+                          color: white;
+                      `
+                      const thstyle = `
+                          background-color: #EF502E;
+                          color: white;
+                          font-weight: bold;
+                          padding: 8px;
+                          text-align: left;
+                      `
 
-                                            const tdstyle = `
-                                                border: 1px solid #ccc;
-                                                padding: 8px;
-                                            `
+                      const tdstyle = `
+                          border: 1px solid #ccc;
+                          padding: 8px;
+                      `
 
-                                            const btnstyle = `
-                                                display: inline-block;
-                                                background-color: #EF502E;
-                                                color: white;
-                                                padding: 8px 16px;
-                                                text-decoration: none;
-                                                border-radius: 4px;
-                                                margin-top: 20px;
-                                            `
+                      const btnstyle = `
+                          display: inline-block;
+                          background-color: #EF502E;
+                          color: white;
+                          padding: 8px 16px;
+                          text-decoration: none;
+                          border-radius: 4px;
+                          margin-top: 20px;
+                      `
 
-                                            Email.send({
-                                                SecureToken: "930b93e0-1c4b-4721-aeb1-7cec58708874",
-                                                To: 'trabajosof17@gmail.com',
-                                                From: "sof.db@outlook.com",
-                                                Subject: "Informes",
-                                                Body: `
-                                                    <div>
-                                                      <img src="https://astounding-lollipop-8930aa.netlify.app/images/footer-logo.png" alt="Imagen" style="display: block; margin-left: auto; margin-right: auto; width: 50%; padding-bottom: 10px;" />
-                                                    </div>
-                                                    <div style="${style}">
-                                                        <h1 style="color: white;">Informes de propiedad</h1>
-                                                    </div>
-                                                    <div>
-                                                        <h2>Información del cliente</h2>
-                                                        <p><strong">Nombre:</strong> ${nombre}</p>
-                                                        <p><strong">Email:</strong> ${email}</p>
-                                                        <p><strong">Celular:</strong> ${celular}</p>
-                                                        <p><strong">Mensaje:</strong> ${mensaje}</p>
-                                                        <h2>Información de la propiedad </h2>
-                                                        <p><strong>Hora del recorrido:</strong> ${hora}</p>
-                                                        <p><strong>Propiedad:</strong> ${h2Element}</p>
-                                                        <p><strong>Direccion:</strong> ${pElement}</p>
-                                                    </div>
-                                                    <a style="${btnstyle}" href="mailto:${email}?subject=Respuesta%20contacto%20-%20${nombre}&body=Estimado%20Cliente,%0D%0A%0D%0ANos%20ponemos%20en%20contacto%20con%20usted%20debido%20al%20siguiente%20mensaje%20recibido%20para%20informes:%0D%0A%0D%0A${mensaje}%0D%0A%0D%0AAtentamente,%0D%0AAsesorista%0D%0A%0D%0A">Responder cita</a>
-                                                `
-                                            }).then(message => {
-                                                var modalBody = document.querySelector('.modal-body');
-                                                $('#emailModal').modal('show');
-                                                document.getElementById("hora_info").value = "";
-                                                document.getElementById("nombre_info").value = "";
-                                                document.getElementById("tel_info").value = "";
-                                                document.getElementById("email_info").value = "";
-                                                document.getElementById("mensaje_info").value = "";
-                                            });
-                                        }
-                                    </script>
+                      Email.send({
+                          SecureToken: "930b93e0-1c4b-4721-aeb1-7cec58708874",
+                          To: 'trabajosof17@gmail.com',
+                          From: "sof.db@outlook.com",
+                          Subject: "Informes",
+                          Body: `
+                              <div>
+                                <img src="https://astounding-lollipop-8930aa.netlify.app/images/footer-logo.png" alt="Imagen" style="display: block; margin-left: auto; margin-right: auto; width: 50%; padding-bottom: 10px;" />
+                              </div>
+                              <div style="${style}">
+                                  <h1 style="color: white;">Informes de propiedad</h1>
+                              </div>
+                              <div>
+                                  <h2>Información del cliente</h2>
+                                  <p><strong">Nombre:</strong> ${nombre}</p>
+                                  <p><strong">Email:</strong> ${email}</p>
+                                  <p><strong">Celular:</strong> ${celular}</p>
+                                  <p><strong">Mensaje:</strong> ${mensaje}</p>
+                                  <h2>Información de la propiedad </h2>
+                                  <p><strong>Hora del recorrido:</strong> ${hora}</p>
+                                  <p><strong>Propiedad:</strong> ${h2Element}</p>
+                                  <p><strong>Direccion:</strong> ${pElement}</p>
+                              </div>
+                              <a style="${btnstyle}" href="mailto:${email}?subject=Respuesta%20contacto%20-%20${nombre}&body=Estimado%20Cliente,%0D%0A%0D%0ANos%20ponemos%20en%20contacto%20con%20usted%20debido%20al%20siguiente%20mensaje%20recibido%20para%20informes:%0D%0A%0D%0A${mensaje}%0D%0A%0D%0AAtentamente,%0D%0AAsesorista%0D%0A%0D%0A">Responder cita</a>
+                          `
+                      }).then(message => {
+                          var modalBody = document.querySelector('.modal-body');
+                          $('#emailModal').modal('show');
+                          document.getElementById("hora_info").value = "";
+                          document.getElementById("nombre_info").value = "";
+                          document.getElementById("tel_info").value = "";
+                          document.getElementById("email_info").value = "";
+                          document.getElementById("mensaje_info").value = "";
+                      });
+                  }
+              </script>
               <div class="agen-personal-info position-relative bgc-white default-box-shadow1 bdrs12 p30 mt30">
                 <div class="widget-wrapper mb-0">
                   <h6 class="title fz17 mb30">Obtener más información</h6>
