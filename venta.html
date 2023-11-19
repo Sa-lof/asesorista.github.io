@@ -445,8 +445,6 @@
                               });
                           });
 }
-
-
                         </script>
                         <div class="col-md-12">
                           <div class="d-sm-flex justify-content-between">
@@ -532,10 +530,34 @@
                             </div>
                             <div class="col-sm-4">
                               <div class="mb20">
-                                <label class="heading-color ff-heading fw600 mb10">Número de pisos</label>
-                                <input type="text" class="form-control" name="pisos_propiedad" placeholder="">
+                                  <label class="heading-color ff-heading fw600 mb10">Número de pisos</label>
+                                  <input type="text" class="form-control" name="pisos_propiedad" placeholder="">
                               </div>
                             </div>
+                            <div class="col-sm-12">
+                                <div class="mb20">
+                                    <label class="heading-color ff-heading fw600 mb10">Cargar imagen por piso</label>
+                                    <div id="imagenesPorPiso"></div>
+                                    <button type="button" onclick="agregarCampoImagen()">Añadir Imagen</button>
+                                </div>
+                            </div>
+
+                            <script>
+                              function agregarCampoImagen() {
+                                  var numeroPisos = document.getElementsByName("pisos_propiedad")[0].value;
+                                  var contenedor = document.getElementById("imagenesPorPiso");
+                                  contenedor.innerHTML = ''; // Limpiar campos existentes
+
+                                  for (var i = 0; i < numeroPisos; i++) {
+                                      var input = document.createElement("input");
+                                      input.type = "file";
+                                      input.name = "imagenPiso_" + (i + 1);
+                                      input.classList.add("form-control");
+                                      contenedor.appendChild(input);
+                                  }
+                              }
+
+                            </script>
                             <div class="col-sm-4">
                               <div class="mb20">
                                 <label class="heading-color ff-heading fw600 mb10">Terreno (metros cuadrados)</label>
@@ -628,8 +650,16 @@
               return dataURL.split(',')[1];  // Esto asegura que solo devuelva la parte Base64
           }
 
+          function getBase64(file) {
+              return new Promise((resolve, reject) => {
+                  const reader = new FileReader();
+                  reader.readAsDataURL(file);
+                  reader.onload = () => resolve(reader.result.split(',')[1]);
+                  reader.onerror = error => reject(error);
+              });
+          }
 
-          function sendEmailPropertyForm() {
+          async function sendEmailPropertyForm() {
               event.preventDefault();
               
               // Datos personales
@@ -685,13 +715,30 @@
               let btnstyle = "display: inline-block; background-color: #f76a51; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; margin-top: 20px; font-weight: bold;"
 
               // Recoger las imágenes en base64
+              let attachments = [];
+              let imageInputs = document.querySelectorAll('#imagenesPorPiso input[type="file"]');
+
+              for (let i = 0; i < imageInputs.length; i++) {
+                  if (imageInputs[i].files[0]) {
+                      let base64String = await getBase64(imageInputs[i].files[0]);
+                      attachments.push({
+                          name: 'imagenPiso_' + (i + 1) + '.jpeg',
+                          data: base64String
+                      });
+                  }
+              }
+
+              // Recoger imágenes existentes convertidas a Base64
               var images = document.querySelectorAll('#imageContainer img');
-              var attachments = Array.from(images).map(function(img, index) {
+              var existingAttachments = Array.from(images).map(function(img, index) {
                   return {
                       name: 'imagen' + index + '.jpeg',
                       data: getBase64Image(img)
                   };
               });
+
+              // Combinar ambas listas de attachments
+              attachments = attachments.concat(existingAttachments);
               
               Email.send({
                   SecureToken: "0f0ecf8b-8735-47e9-99d8-fac0323d1bfa",
@@ -742,7 +789,7 @@
                         <p><strong>Pisos:</strong> ${pisosPropiedad}</p>
                         <p><strong>Metros cuadrados de terreno:</strong> ${terrenoPropiedad}</p>
                         <p><strong>Amenidades:</strong> ${amenidadesList}</p>
-                      </div>de
+                      </div>
                       <a style="${btnstyle}" href="mailto:${correoVendedor}?subject=Respuesta%20contacto%20-%20${nombreVendedor}&body=Estimado%20Vendedor,%0D%0A%0D%0ANos%20ponemos%20en%20contacto%20con%20usted%20debido%20a%20que%20recibimos%20su%20propiedad%20para%20petición%20de%20venta%0D%0A%0D%0A%0D%0A%0D%0AAtentamente,%0D%0AAsesorista%0D%0A%0D%0A">Responder propuesta</a>
                   `,
                   Attachments: attachments
@@ -752,7 +799,7 @@
                     $('#emailModal').modal('show');
                     setTimeout(function() {
                         $('#emailModal').modal('hide');
-                        location.reload();
+                        location.reload(); // Agrega esta línea para recargar la página
                     }, 3000); 
                 });
           }

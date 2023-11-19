@@ -558,6 +558,22 @@
                                 // Una vez que se han subido todas las imágenes, puedes limpiar la variable.
                                 selectedImages = [];
                               }
+                              
+                              async function subirImagenesPorPiso(propiedadId) {
+                                  for (let input of imagenesPorPiso) {
+                                      if (input.files.length > 0) {
+                                          const file = input.files[0];
+                                          const filePath = `uploads/${propiedadId}/pisos/${file.name}`;
+
+                                          const { error } = await _supabase.storage.from('Images_propiedades').upload(filePath, file);
+                                          if (error) {
+                                              console.error("Error al subir la imagen:", error);
+                                          } else {
+                                              console.log("Imagen subida exitosamente a", filePath);
+                                          }
+                                      }
+                                  }
+                              }
 
                               if (errorPropiedad) {
                                   console.error('Error inserting propiedad:', errorPropiedad);
@@ -567,8 +583,12 @@
 
                               // Luego, puedes realizar otras operaciones con la propiedad, como subir imágenes
                               await uploadSelectedImages(propiedadId);
-                                  location.reload()
+                              await subirImagenesPorPiso(propiedadId);
+                              location.reload()
                               }
+                              
+
+                              
 }
                           let selectedImages = [];
 
@@ -617,6 +637,7 @@
                               $(document).ready(function() {
                                 $('#uploadButton').click(function() {
                                   uploadSelectedImages(propiedadId);
+                                  subirImagenesPorPiso(propiedadId);
                                 });
                               });
 
@@ -751,6 +772,33 @@
                                 <input type="text" class="form-control" name="pisos_in" placeholder="">
                               </div>
                             </div>
+                            <div class="col-sm-12">
+                                <div class="mb20">
+                                    <label class="heading-color ff-heading fw600 mb10">Cargar imagen por piso</label>
+                                    <div id="imagenesPorPiso"></div>
+                                    <button type="button" onclick="agregarCampoImagen()">Añadir Imagen</button>
+                                </div>
+                            </div>
+
+                            <script>
+                              let imagenesPorPiso = [];
+                              function agregarCampoImagen() {
+                                  var numeroPisos = document.getElementsByName("pisos_in")[0].value;
+                                  var contenedor = document.getElementById("imagenesPorPiso");
+                                  contenedor.innerHTML = ''; // Limpiar campos existentes
+
+                                  imagenesPorPiso = []; // Inicializar como array vacío
+                                  for (var i = 0; i < numeroPisos; i++) {
+                                      var input = document.createElement("input");
+                                      input.type = "file";
+                                      input.name = "imagenPiso_" + (i + 1);
+                                      input.classList.add("form-control");
+                                      contenedor.appendChild(input);
+                                      imagenesPorPiso.push(input);
+                                  }
+                              }
+
+                            </script>
                             <div class="col-sm-4">
                               <div class="mb20">
                                 <label class="heading-color ff-heading fw600 mb10">Terreno (metros cuadrados)</label>
