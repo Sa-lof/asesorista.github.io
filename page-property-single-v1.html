@@ -117,12 +117,9 @@
             <a class="menubar" href="#menu"
               ><img src="images/mobile-dark-nav-icon.svg" alt=""
             /></a>
-            <a class="mobile_logo" href="#"
-              ><img src="images/header-logo2.svg" alt=""
+            <a style="text-align: end" class="mobile_logo" href="#"
+              ><img style="max-width: 8%" src="images/favicon.png" alt=""
             /></a>
-            <a href="page-login.html"
-              ><span class="icon fz18 far fa-user-circle"></span
-            ></a>
           </div>
         </div>
       </div>
@@ -137,10 +134,10 @@
           <a href="page-about.html"><span class="title">Nosotros</span></a>
         </li>
         <li>
-          <a href="#"><span class="title">Comprar</span></a>
+          <a href="page-property-3-col.html"><span class="title">Comprar</span></a>
         </li>
         <li>
-          <a href="#"><span class="title">Crédito</span></a>
+          <a href="credito.html"><span class="title">Crédito</span></a>
         </li>
         <li>
           <a href="page-contact.html"
@@ -149,7 +146,7 @@
         </li>
         <li class="px-3 mobile-menu-btn">
           <a
-            href="venta.html"
+            href="#"
             class="ud-btn btn-thm text-white"
             >Vende con Asesorista<i class="fal fa-arrow-right-long"></i
           ></a>
@@ -392,7 +389,7 @@
               <div class="row">
                 <div class="col-sm-6 col-lg-4">
                   <div class="overview-element mb25 d-flex align-items-center">
-                    <span class="icon flaticon-bed"></span>
+                    <span class="icon flaticon-shower"></span>
                     <div class="ml15">
                       <h6 class="mb-0">Baños</h6>
                       <p class="text mb-0 fz15 banosgeneral">3</p>
@@ -401,7 +398,7 @@
                 </div>
                 <div class="col-sm-6 col-lg-4">
                   <div class="overview-element mb25 d-flex align-items-center">
-                    <span class="icon flaticon-shower"></span>
+                    <span class="icon flaticon-bed"></span>
                     <div class="ml15">
                       <h6 class="mb-0">Habitaciones</h6>
                       <p class="text mb-0 fz15 habitacionesgeneral">2</p>
@@ -633,41 +630,41 @@
           <div class="col-lg-4">
             <div class="column">
               <div class="default-box-shadow1 bdrs12 bdr1 p30 mb30-md bgc-white position-relative">
-                <h4 class="form-title mb5">Agendar un recorrido</h4>
+                <h4 class="form-title mb5">Agendar una sesión de informes</h4>
                 <p class="text">Elija su horario preferido</p>
                 <div class="ps-navtab">
                   <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-inperson" role="tabpanel" aria-labelledby="pills-inperson-tab">
-                      <form class="form-style1">
+                      <form  method="post" class="form-style1">
                         <div class="row">
                           <div class="col-md-12">
                             <div class="mb20">
-                              <input type="text" class="form-control" placeholder="Hora" />
+                              <input id="hora_info" type="time" class="form-control" placeholder="Hora" />
+                            </div>
+                          </div>                          
+                          <div class="col-lg-12">
+                            <div class="mb20">
+                              <input id="nombre_info" type="text" class="form-control" placeholder="Nombre">
                             </div>
                           </div>
                           <div class="col-lg-12">
                             <div class="mb20">
-                              <input type="text" class="form-control" placeholder="Nombre">
+                              <input id="tel_info" type="tel" class="form-control" placeholder="Teléfono" pattern="[0-9]{10}">
                             </div>
-                          </div>
-                          <div class="col-lg-12">
-                            <div class="mb20">
-                              <input type="text" class="form-control" placeholder="Teléfono">
-                            </div>
-                          </div>
+                          </div>                          
                           <div class="col-md-12">
                             <div class="mb20">
-                              <input type="email" class="form-control" placeholder="Email">
+                              <input id="email_info" type="email" class="form-control" placeholder="Email">
                             </div>
                           </div>
                           <div class="col-md-12">
                             <div class="mb10">
-                              <textarea cols="30" rows="4" placeholder="Deje un mensaje si lo desea"></textarea>
+                              <textarea id="mensaje_info" cols="30" rows="4" placeholder="Deje un mensaje si lo desea"></textarea>
                             </div>
                           </div>
                           <div class="col-md-12">
                             <div class="d-grid">
-                              <a class="ud-btn btn-thm" href="page-contact.html">Enviar solicitud<i class="fal fa-arrow-right-long"></i></a>
+                              <button class="ud-btn btn-thm" type="submit" onclick="sendEmailContacForm()">Agendar</button>
                             </div>
                           </div>
                         </div>
@@ -676,12 +673,112 @@
                   </div>
                 </div>
               </div>
+              <script src="https://smtpjs.com/v3/smtp.js"></script>
+                                    <script>
+                                      let h2Element = "";
+                                      let pElement = "";
+
+                                      async function loadPropertyDetails2(id) {
+                                          const urlParams = new URLSearchParams(window.location.search);
+                                          const propertyId = urlParams.get('id');
+                                          const { data, error } = await _supabase
+                                              .from('propiedades')
+                                              .select('*')
+                                              .eq('id', id)
+                                              .single();
+
+                                          if (error) {
+                                              console.error('Error al consultar la base de datos:', error);
+                                              return;
+                                          }
+
+                                          const property = data;
+                                          h2Element = property.nombre || "Nombre no disponible";
+                                          pElement = `${property.direccion} ${property.ciudad} ${property.estado} ${property.pais}`;
+                                      }
+
+                                      async function sendEmailContacForm() {
+                                            event.preventDefault();
+                                            
+                                            const hora = document.getElementById("hora_info").value;
+                                            const nombre = document.getElementById("nombre_info").value;
+                                            const celular = document.getElementById("tel_info").value;
+                                            const email = document.getElementById("email_info").value;
+                                            const mensaje = document.getElementById("mensaje_info").value;
+                                            const urlParams = new URLSearchParams(window.location.search);
+                                            const propertyId = urlParams.get('id');
+                                            await loadPropertyDetails2(propertyId); 
+                                            // Estilos CSS en línea
+                                            let style = "background-color: #f76a51; padding: 20px; border: 1px solid #ccc; border-radius: 8px; text-align: center;";
+
+                                            const style2 = `
+                                                color: white;
+                                            `
+                                            const thstyle = `
+                                                background-color: #EF502E;
+                                                color: white;
+                                                font-weight: bold;
+                                                padding: 8px;
+                                                text-align: left;
+                                            `
+
+                                            const tdstyle = `
+                                                border: 1px solid #ccc;
+                                                padding: 8px;
+                                            `
+
+                                            const btnstyle = `
+                                                display: inline-block;
+                                                background-color: #EF502E;
+                                                color: white;
+                                                padding: 8px 16px;
+                                                text-decoration: none;
+                                                border-radius: 4px;
+                                                margin-top: 20px;
+                                            `
+
+                                            Email.send({
+                                                SecureToken: "930b93e0-1c4b-4721-aeb1-7cec58708874",
+                                                To: 'trabajosof17@gmail.com',
+                                                From: "sof.db@outlook.com",
+                                                Subject: "Informes",
+                                                Body: `
+                                                    <div>
+                                                      <img src="https://astounding-lollipop-8930aa.netlify.app/images/footer-logo.png" alt="Imagen" style="display: block; margin-left: auto; margin-right: auto; width: 50%; padding-bottom: 10px;" />
+                                                    </div>
+                                                    <div style="${style}">
+                                                        <h1 style="color: white;">Informes de propiedad</h1>
+                                                    </div>
+                                                    <div>
+                                                        <h2>Información del cliente</h2>
+                                                        <p><strong">Nombre:</strong> ${nombre}</p>
+                                                        <p><strong">Email:</strong> ${email}</p>
+                                                        <p><strong">Celular:</strong> ${celular}</p>
+                                                        <p><strong">Mensaje:</strong> ${mensaje}</p>
+                                                        <h2>Información de la propiedad </h2>
+                                                        <p><strong>Hora del recorrido:</strong> ${hora}</p>
+                                                        <p><strong>Propiedad:</strong> ${h2Element}</p>
+                                                        <p><strong>Direccion:</strong> ${pElement}</p>
+                                                    </div>
+                                                    <a style="${btnstyle}" href="mailto:${email}?subject=Respuesta%20contacto%20-%20${nombre}&body=Estimado%20Cliente,%0D%0A%0D%0ANos%20ponemos%20en%20contacto%20con%20usted%20debido%20al%20siguiente%20mensaje%20recibido%20para%20informes:%0D%0A%0D%0A${mensaje}%0D%0A%0D%0AAtentamente,%0D%0AAsesorista%0D%0A%0D%0A">Responder cita</a>
+                                                `
+                                            }).then(message => {
+                                                var modalBody = document.querySelector('.modal-body');
+                                                $('#emailModal').modal('show');
+                                                document.getElementById("hora_info").value = "";
+                                                document.getElementById("nombre_info").value = "";
+                                                document.getElementById("tel_info").value = "";
+                                                document.getElementById("email_info").value = "";
+                                                document.getElementById("mensaje_info").value = "";
+                                            });
+                                        }
+                                    </script>
               <div class="agen-personal-info position-relative bgc-white default-box-shadow1 bdrs12 p30 mt30">
                 <div class="widget-wrapper mb-0">
                   <h6 class="title fz17 mb30">Obtener más información</h6>
                   <div class="agent-single d-sm-flex align-items-center pb25">
                     <div class="single-img mb30-sm">
-                      <img class="w90" src="images/team/agent-3.png" alt="">
+                      <img class="w90" src="images/favicon.png" alt="">
                     </div>
                     <div class="single-contant ml20 ml0-xs">
                       <h6 class="title mb-1">Asesorista</h6>

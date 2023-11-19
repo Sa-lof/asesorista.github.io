@@ -146,9 +146,18 @@ function createPropertyDiv(propiedad) {
     clonedDiv.querySelector('.list-price').appendChild(span);
     clonedDiv.querySelector('.list-title a').href = `page-property-single-v1.html?id=${propiedad.id}`;
     clonedDiv.querySelector('.list-text').textContent = `${propiedad.ciudad}, ${propiedad.estado}, ${propiedad.pais}`;
-    clonedDiv.querySelector('.list-meta a:nth-child(1)').textContent = `${propiedad.habitaciones} habitaciones`;
-    clonedDiv.querySelector('.list-meta a:nth-child(2)').textContent = `${propiedad.banos} baños`;
-    clonedDiv.querySelector('.list-meta a:nth-child(3)').textContent = `${propiedad.metros_construccion} mts`;
+    // Actualizar metadatos de la propiedad
+    const metadataElements = clonedDiv.querySelectorAll('.list-meta a');
+    metadataElements[0].innerHTML = `<span><i class="fal fa-bed" style="font-size: 15px"></i></span>${propiedad.habitaciones} habitaciones`;
+    metadataElements[1].innerHTML = `<span><i class="fal fa-bath" style="font-size: 15px"></i></span>${propiedad.banos} baños`;
+    metadataElements[2].innerHTML = `<span><i class="fal fa-expand-arrows" style="font-size: 15px"></i></span>${propiedad.metros_construccion} m²`;
+
+    const botonCotizar = clonedDiv.querySelector('.orange-button');
+    if (botonCotizar) {
+        botonCotizar.addEventListener('click', function() {
+            window.location.href = `page-property-single-v1.html?id=${propiedad.id}`;
+        });
+    }
 
     clonedDiv.style.display = "block";
 
