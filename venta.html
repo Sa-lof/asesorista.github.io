@@ -533,66 +533,82 @@
                                   <label class="heading-color ff-heading fw600 mb10">Número de pisos</label>
                                   <input type="text" class="form-control" name="pisos_propiedad" placeholder="">
                               </div>
-                          </div>
-                          <div class="col-sm-12">
-                              <div class="mb20">
-                                  <label class="heading-color ff-heading fw600 mb10">Detalles por piso</label>
-                                  <div id="detallesPorPiso"></div>
-                                  <button type="button" onclick="agregarCamposPorPiso()">Añadir Detalles</button>
-                              </div>
-                          </div>
-
-                          <script>
-                            function agregarCamposPorPiso() {
-                                var numeroPisos = document.getElementsByName("pisos_propiedad")[0].value;
-                                var contenedor = document.getElementById("detallesPorPiso");
-                                contenedor.innerHTML = ''; // Limpiar campos existentes
-                          
-                                for (var i = 0; i < numeroPisos; i++) {
-                                    var pisoContenedor = document.createElement("div");
-                                    pisoContenedor.classList.add("piso-detalle");
-                          
-                                    // Crear y añadir campo 'Size'
-                                    var inputSize = document.createElement("input");
-                                    inputSize.type = "text";
-                                    inputSize.name = "sizePiso_" + (i + 1);
-                                    inputSize.placeholder = "Metros cuadrados";
-                                    inputSize.classList.add("form-control");
-                                    pisoContenedor.appendChild(inputSize);
-                          
-                                    // Crear y añadir campo 'Bedrooms'
-                                    var inputBedrooms = document.createElement("input");
-                                    inputBedrooms.type = "number";
-                                    inputBedrooms.name = "bedroomsPiso_" + (i + 1);
-                                    inputBedrooms.placeholder = "Habitaciones";
-                                    inputBedrooms.classList.add("form-control");
-                                    pisoContenedor.appendChild(inputBedrooms);
-                          
-                                    // Crear y añadir campo 'Bathrooms'
-                                    var inputBathrooms = document.createElement("input");
-                                    inputBathrooms.type = "number";
-                                    inputBathrooms.name = "bathroomsPiso_" + (i + 1);
-                                    inputBathrooms.placeholder = "Baños";
-                                    inputBathrooms.classList.add("form-control");
-                                    pisoContenedor.appendChild(inputBathrooms);
-                          
-                                    // Crear y añadir campo 'Imagen'
-                                    var inputImagen = document.createElement("input");
-                                    inputImagen.type = "file";
-                                    inputImagen.name = "imagenPiso_" + (i + 1);
-                                    inputImagen.classList.add("form-control");
-                                    pisoContenedor.appendChild(inputImagen);
-                          
-                                    contenedor.appendChild(pisoContenedor);
-                                }
-                            }
-                          </script>
+                            </div>
                             <div class="col-sm-4">
                               <div class="mb20">
                                 <label class="heading-color ff-heading fw600 mb10">Terreno (metros cuadrados)</label>
                                 <input type="text" class="form-control" name="terreno_propiedad" placeholder="">
                               </div>
                             </div>
+                            <style>
+                              .orange-button {
+                                display: inline-flex;
+                                align-items: center;
+                                justify-content: center; 
+                                padding: 5px 20px; 
+                                background-color: #F76B51;
+                                color: white;
+                                border: none;
+                                border-radius: 50px; 
+                                font-size: 14px; 
+                                text-decoration: none;
+                                height: 30px; 
+                                font-weight: bold;
+                              }
+                            </style>
+                            <div class="col-sm-12">
+                                <div class="mb20">
+                                    <label class="heading-color ff-heading fw600 mb10">Detalles por piso</label>
+                                    <div id="detallesPorPiso"></div>
+                                    <button class="orange-button" type="button" onclick="agregarCamposPorPiso()">Añadir Detalles</button>
+                                </div>
+                            </div>
+  
+                            <script>
+                              function agregarCamposPorPiso() {
+                                  var numeroPisos = document.getElementsByName("pisos_propiedad")[0].value;
+                                  var contenedor = document.getElementById("detallesPorPiso");
+                                  contenedor.innerHTML = ''; // Limpiar campos existentes
+                            
+                                  for (var i = 0; i < numeroPisos; i++) {
+                                      var pisoContenedor = document.createElement("div");
+                                      pisoContenedor.classList.add("piso-detalle");
+                            
+                                      // Crear y añadir campo 'Size'
+                                      var inputSize = document.createElement("input");
+                                      inputSize.type = "text";
+                                      inputSize.name = "sizePiso_" + (i + 1);
+                                      inputSize.placeholder = "Metros cuadrados";
+                                      inputSize.classList.add("form-control");
+                                      pisoContenedor.appendChild(inputSize);
+                            
+                                      // Crear y añadir campo 'Bedrooms'
+                                      var inputBedrooms = document.createElement("input");
+                                      inputBedrooms.type = "number";
+                                      inputBedrooms.name = "bedroomsPiso_" + (i + 1);
+                                      inputBedrooms.placeholder = "Habitaciones";
+                                      inputBedrooms.classList.add("form-control");
+                                      pisoContenedor.appendChild(inputBedrooms);
+                            
+                                      // Crear y añadir campo 'Bathrooms'
+                                      var inputBathrooms = document.createElement("input");
+                                      inputBathrooms.type = "number";
+                                      inputBathrooms.name = "bathroomsPiso_" + (i + 1);
+                                      inputBathrooms.placeholder = "Baños";
+                                      inputBathrooms.classList.add("form-control");
+                                      pisoContenedor.appendChild(inputBathrooms);
+                            
+                                      // Crear y añadir campo 'Imagen'
+                                      var inputImagen = document.createElement("input");
+                                      inputImagen.type = "file";
+                                      inputImagen.name = "imagenPiso_" + (i + 1);
+                                      inputImagen.classList.add("form-control");
+                                      pisoContenedor.appendChild(inputImagen);
+                            
+                                      contenedor.appendChild(pisoContenedor);
+                                  }
+                              }
+                            </script>
                           </div>
                           
                           <div class="row">

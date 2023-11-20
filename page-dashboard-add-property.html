@@ -53,7 +53,7 @@
           <div class="col-6 col-lg-auto">
             <div class="text-center text-lg-start d-flex align-items-center">
               <div class="dashboard_header_logo position-relative me-2 me-xl-5">
-                <a href="index.html" class="logo"><img src="images/footer-logo.png" alt="" style="width: 180px;"></a>
+                <a href="index.html" class="logo"><img src="images/main-logo.png" alt="" style="width: 180px;"></a>
               </div>
               <div class="fz20 ms-2 ms-xl-5">
                 <a href="#" class="dashboard_sidebar_toggle_icon text-thm1 vam"><img src="images/dark-nav-icon.svg" alt=""></a>
@@ -79,9 +79,22 @@
                         <a class="dropdown-item active" href="page-dashboard-add-property.html"><i class="flaticon-new-tab mr10"></i>Agregar propiedad</a>
                         <a class="dropdown-item" href="page-dashboard-properties.html"><i class="flaticon-home mr10"></i>Mis propiedades</a>
                         <p class="fz15 fw400 ff-heading mt30">MANAGE ACCOUNT</p>
-                        <a class="dropdown-item" href="administrador.html"><i class="flaticon-exit mr10"></i>Logout</a>
+                        <a class="dropdown-item"  href="javascript:void(0);" onclick="logout()"><i class="flaticon-exit mr10"></i>Logout</a>
                       </div>
                     </div>
+                    <script>
+                        function logout() {
+                            // Eliminar cookies/session aquí
+                            document.cookie = "session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                            
+                            // Redirigir al usuario
+                            redirectToAdmin();
+                        }
+
+                        function redirectToAdmin() {
+                            window.location.replace('administrador.html');
+                        }
+                    </script>
                   </div>
                 </li>
               </ul>
@@ -147,7 +160,7 @@
       <div class="header innerpage-style">
         <div class="menu_and_widgets">
           <div class="mobile_menu_bar d-flex justify-content-between align-items-center">
-            <a href="index.html" class="logo"><img src="images/footer-logo.png" alt="" style="width: 180px;"></a>
+            <a href="index.html" class="logo"><img src="images/main-logo.png" alt="" style="width: 180px;"></a>
             <li class=" user_setting">
               <div class="dropdown">
                 <a class="btn" href="#" data-bs-toggle="dropdown">
@@ -159,7 +172,7 @@
                     <a class="dropdown-item" href="page-dashboard-add-property.html"><i class="flaticon-new-tab mr10"></i>Agregar propiedad</a>
                     <a class="dropdown-item" href="page-dashboard-order.html"><i class="flaticon-home mr10"></i>Mis propiedades</a>
                     <p class="fz15 fw400 ff-heading mt30">MANAGE ACCOUNT</p>
-                    <a class="dropdown-item" href="administrador.html"><i class="flaticon-exit mr10"></i>Logout</a>
+                    <a class="dropdown-item" href="javascript:void(0);" onclick="logout()"><i class="flaticon-exit mr10"></i>Logout</a>
                   </div>
                 </div>
               </div>
@@ -183,7 +196,7 @@
           </div>
           <p class="fz15 fw400 ff-heading mt30">MANAGE ACCOUNT</p>
           <div class="sidebar_list_item ">
-            <a href="administrador.html" class="items-center"><i class="flaticon-logout mr15"></i>Logout</a>
+            <a href="javascript:void(0);" onclick="logout()" class="items-center"><i class="flaticon-logout mr15"></i>Logout</a>
           </div>
         </div>
       </div>
@@ -196,10 +209,10 @@
                   <button onclick="myFunction()" class="dropbtn"><i class="fa fa-bars pr10"></i> Dashboard Navigation</button>
                   <ul id="myDropdown" class="dropdown-content">
                     <li><p class="fz15 fw400 ff-heading mt30 pl30">MANAGE LISTINGS</p></li>
-                    <li><a href="page-dashboard-add-property.html"><i class="flaticon-new-tab mr10"></i>Agregar propiedad</a></li>
-                    <li class="active"><a href="page-dashboard-properties.html"><i class="flaticon-home mr10"></i>Mis propiedades</a></li>
+                    <li class="active"><a href="page-dashboard-add-property.html"><i class="flaticon-new-tab mr10"></i>Agregar propiedad</a></li>
+                    <li><a href="page-dashboard-properties.html"><i class="flaticon-home mr10"></i>Mis propiedades</a></li>
                     <li><p class="fz15 fw400 ff-heading mt30 pl30">MANAGE ACCOUNT</p></li>
-                    <li><a class="" href="administrador.html"><i class="flaticon-exit mr10"></i>Logout</a></li>
+                    <li><a class="" href="javascript:void(0);" onclick="logout()"><i class="flaticon-exit mr10"></i>Logout</a></li>
                   </ul>
                 </div>
               </div>
