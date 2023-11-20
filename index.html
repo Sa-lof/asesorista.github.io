@@ -51,7 +51,7 @@
                 <div class="d-flex align-items-center justify-content-between">
                   <img
                     class="main-logo"
-                    src="images/logo.png"
+                    src="images/main-logo.png"
                     alt="Header Logo"
                   />
 
@@ -132,10 +132,10 @@
               <a href="page-about.html"><span class="title">Nosotros</span></a>
             </li>
             <li>
-              <a href="#"><span class="title">Comprar</span></a>
+              <a href="page-property-3-col.html"><span class="title">Comprar</span></a>
             </li>
             <li>
-              <a href="#"><span class="title">Crédito</span></a>
+              <a href="credito.html"><span class="title">Crédito</span></a>
             </li>
             <li>
               <a href="page-contact.html"
@@ -174,7 +174,7 @@
                       <div class="row align-items-center">
                         <div class="col-lg-7 col-xl-6 wow fadeInLeft">
                           <a
-                            href="page-property-single-v1.html"
+                            href="page-property-3-col.html"
                             class="ud-btn btn-dark"
                             >Buscar inmueble<i
                               class="fal fa-search"
@@ -187,7 +187,7 @@
                           data-wow-delay="300ms"
                         >
                           <a
-                            href="page-property-single-v1.html"
+                            href="credito.html"
                             class="ud-btn btn-dark"
                             >Calcular crédito<i class="fal fa-arrow-up-long"></i
                           ></a>
@@ -227,7 +227,7 @@
                       maximus ultricies auctor.
                     </p>
                     <a
-                      href="page-property-single-v1.html"
+                      href="page-property-3-col.html"
                       class="ud-btn btn-white2"
                       >Encuentra tu hogar<i class="fal fa-arrow-right-long"></i
                     ></a>
@@ -249,7 +249,7 @@
                       maximus ultricies auctor.
                     </p>
                     <a
-                      href="page-property-single-v1.html"
+                      href="venta.html"
                       class="ud-btn btn-white2"
                       >Anuncia tu inmueble<i class="fal fa-arrow-right-long"></i
                     ></a>
@@ -271,7 +271,7 @@
                       maximus ultricies auctor.
                     </p>
                     <a
-                      href="page-property-single-v1.html"
+                      href="credito.html"
                       class="ud-btn btn-white2"
                       >Calcular ahora<i class="fal fa-arrow-right-long"></i
                     ></a>
@@ -567,7 +567,7 @@
               </div>
               <div class="col-lg-3">
                 <div class="text-start text-lg-end mb-3">
-                  <a class="ud-btn2" href=""
+                  <a class="ud-btn2" href="page-property-3-col.html"
                     >Ver todas<i class="fal fa-arrow-right-long"></i
                   ></a>
                 </div>
@@ -627,9 +627,16 @@
 
                           // Actualizar metadatos de la propiedad
                           const metadataElements = clonedDiv.querySelectorAll('.list-meta a');
-                          metadataElements[0].innerHTML = `<span><i class="fal fa-bed" style="font-size: 15px"></i></span>${propiedad.habitaciones} camas`;
+                          metadataElements[0].innerHTML = `<span><i class="fal fa-bed" style="font-size: 15px"></i></span>${propiedad.habitaciones} habitaciones`;
                           metadataElements[1].innerHTML = `<span><i class="fal fa-bath" style="font-size: 15px"></i></span>${propiedad.banos} baños`;
                           metadataElements[2].innerHTML = `<span><i class="fal fa-expand-arrows" style="font-size: 15px"></i></span>${propiedad.metros_construccion} m²`;
+
+                          const botonCotizar = clonedDiv.querySelector('.orange-button');
+                          if (botonCotizar) {
+                              botonCotizar.addEventListener('click', function() {
+                                  window.location.href = `page-property-single-v1.html?id=${propiedad.id}`;
+                              });
+                          }
 
                           // Mostrar el div clonado
                           clonedDiv.style.display = "block";
@@ -666,6 +673,35 @@
                 <div
                   class="feature-listing-slider navi_pagi_bottom_center slider-dib-sm slider-3-grid owl-carousel owl-theme"
                 >
+                <style>
+                  .list-thumb {
+                      position: relative; 
+                      overflow: hidden; /* Esto recorta cualquier parte de la imagen que exceda el contenedor */
+                      height: 220px; /* Ajusta este valor según lo que necesites */
+                  }
+      
+                  .list-thumb img {
+                      height: 100%; 
+                      width: 100%; 
+                      object-fit: cover; /* Esto hace que la imagen cubra todo el espacio disponible, recortándola si es necesario */
+                      display: block;
+                  }
+
+                  .orange-button {
+                      display: inline-flex;
+                      align-items: center;
+                      justify-content: center; 
+                      padding: 5px 20px; 
+                      background-color: #F76B51;
+                      color: white;
+                      border: none;
+                      border-radius: 50px; 
+                      font-size: 14px; 
+                      text-decoration: none;
+                      height: 30px; 
+                      font-weight: bold;
+                    }
+                </style>
                   <div class="item" id="propertyTemplate" style="display:none">
                     <div class="listing-style1">
                       <div class="list-thumb">
@@ -690,7 +726,7 @@
                                 class="fal fa-bed"
                                 style="font-size: 15px"
                               ></i></span
-                            >3 camas</a
+                            >3 habitaciones</a
                           >
                           <a
                             ><span
@@ -715,11 +751,7 @@
                         >
                           <span class="for-what">En venta</span>
                           <div class="icons d-flex align-items-center">
-                            <a
-                              href="page-property-single-v1.html"
-                              class="ud-btn btn-dark"
-                              >Cotizar ahora</a
-                            >
+                            <button class="orange-button">Cotizar</button>
                           </div>
                         </div>
                       </div>

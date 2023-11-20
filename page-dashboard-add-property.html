@@ -53,7 +53,7 @@
           <div class="col-6 col-lg-auto">
             <div class="text-center text-lg-start d-flex align-items-center">
               <div class="dashboard_header_logo position-relative me-2 me-xl-5">
-                <a href="index.html" class="logo"><img src="images/footer-logo.png" alt="" style="width: 180px;"></a>
+                <a href="index.html" class="logo"><img src="images/main-logo.png" alt="" style="width: 180px;"></a>
               </div>
               <div class="fz20 ms-2 ms-xl-5">
                 <a href="#" class="dashboard_sidebar_toggle_icon text-thm1 vam"><img src="images/dark-nav-icon.svg" alt=""></a>
@@ -79,10 +79,22 @@
                         <a class="dropdown-item active" href="page-dashboard-add-property.html"><i class="flaticon-new-tab mr10"></i>Agregar propiedad</a>
                         <a class="dropdown-item" href="page-dashboard-properties.html"><i class="flaticon-home mr10"></i>Mis propiedades</a>
                         <p class="fz15 fw400 ff-heading mt30">MANAGE ACCOUNT</p>
-                        <a class="dropdown-item" href="page-dashboard-profile.html"><i class="flaticon-user mr10"></i>Mi perfil</a>
-                        <a class="dropdown-item" href="administrador.html"><i class="flaticon-exit mr10"></i>Logout</a>
+                        <a class="dropdown-item"  href="javascript:void(0);" onclick="logout()"><i class="flaticon-exit mr10"></i>Logout</a>
                       </div>
                     </div>
+                    <script>
+                        function logout() {
+                            // Eliminar cookies/session aquí
+                            document.cookie = "session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                            
+                            // Redirigir al usuario
+                            redirectToAdmin();
+                        }
+
+                        function redirectToAdmin() {
+                            window.location.replace('administrador.html');
+                        }
+                    </script>
                   </div>
                 </li>
               </ul>
@@ -148,7 +160,7 @@
       <div class="header innerpage-style">
         <div class="menu_and_widgets">
           <div class="mobile_menu_bar d-flex justify-content-between align-items-center">
-            <a href="index.html" class="logo"><img src="images/footer-logo.png" alt="" style="width: 180px;"></a>
+            <a href="index.html" class="logo"><img src="images/main-logo.png" alt="" style="width: 180px;"></a>
             <li class=" user_setting">
               <div class="dropdown">
                 <a class="btn" href="#" data-bs-toggle="dropdown">
@@ -160,8 +172,7 @@
                     <a class="dropdown-item" href="page-dashboard-add-property.html"><i class="flaticon-new-tab mr10"></i>Agregar propiedad</a>
                     <a class="dropdown-item" href="page-dashboard-order.html"><i class="flaticon-home mr10"></i>Mis propiedades</a>
                     <p class="fz15 fw400 ff-heading mt30">MANAGE ACCOUNT</p>
-                    <a class="dropdown-item" href="page-dashboard-profile.html"><i class="flaticon-user mr10"></i>Mi perfil</a>
-                    <a class="dropdown-item" href="administrador.html"><i class="flaticon-exit mr10"></i>Logout</a>
+                    <a class="dropdown-item" href="javascript:void(0);" onclick="logout()"><i class="flaticon-exit mr10"></i>Logout</a>
                   </div>
                 </div>
               </div>
@@ -185,10 +196,7 @@
           </div>
           <p class="fz15 fw400 ff-heading mt30">MANAGE ACCOUNT</p>
           <div class="sidebar_list_item ">
-            <a href="page-dashboard-profile.html" class="items-center"><i class="flaticon-user mr15"></i>Mi perfil</a>
-          </div>
-          <div class="sidebar_list_item ">
-            <a href="administrador.html" class="items-center"><i class="flaticon-logout mr15"></i>Logout</a>
+            <a href="javascript:void(0);" onclick="logout()" class="items-center"><i class="flaticon-logout mr15"></i>Logout</a>
           </div>
         </div>
       </div>
@@ -201,11 +209,10 @@
                   <button onclick="myFunction()" class="dropbtn"><i class="fa fa-bars pr10"></i> Dashboard Navigation</button>
                   <ul id="myDropdown" class="dropdown-content">
                     <li><p class="fz15 fw400 ff-heading mt30 pl30">MANAGE LISTINGS</p></li>
-                    <li><a href="page-dashboard-add-property.html"><i class="flaticon-new-tab mr10"></i>Agregar propiedad</a></li>
-                    <li class="active"><a href="page-dashboard-properties.html"><i class="flaticon-home mr10"></i>Mis propiedades</a></li>
+                    <li class="active"><a href="page-dashboard-add-property.html"><i class="flaticon-new-tab mr10"></i>Agregar propiedad</a></li>
+                    <li><a href="page-dashboard-properties.html"><i class="flaticon-home mr10"></i>Mis propiedades</a></li>
                     <li><p class="fz15 fw400 ff-heading mt30 pl30">MANAGE ACCOUNT</p></li>
-                    <li><a href="page-dashboard-profile.html"><i class="flaticon-user mr10"></i>Mi perfil</a></li>
-                    <li><a class="" href="page-login.html"><i class="flaticon-exit mr10"></i>Logout</a></li>
+                    <li><a class="" href="javascript:void(0);" onclick="logout()"><i class="flaticon-exit mr10"></i>Logout</a></li>
                   </ul>
                 </div>
               </div>
@@ -511,7 +518,7 @@
                           const habitacionesIn = document.querySelector('[name="habitaciones_in"]').value;
                           const banosIn = document.querySelector('[name="banos_in"]').value;
                           const construccionIn = document.querySelector('[name="construccion_in"]').value;
-                          const pisosIn = document.querySelector('[name="pisos_in"]').value;
+                          const pisosIn = document.querySelector('[name="pisos_propiedad"]').value;
                           const terrenoIn = document.querySelector('[name="terreno_in"]').value;
 
 
@@ -550,7 +557,7 @@
 
                                 for (let i = 0; i < selectedImages.length; i++) {
                                   const file = selectedImages[i];
-                                  const filePath = `uploads/${propiedadId}/${file.name}`;
+                                  const filePath = `uploads/${propiedadId}/propiedad/${file.name}`;
 
                                   // Usa Supabase para subir el archivo
                                   const { error } = await _supabase.storage.from('Images_propiedades').upload(filePath, file);
@@ -564,17 +571,80 @@
                                 // Una vez que se han subido todas las imágenes, puedes limpiar la variable.
                                 selectedImages = [];
                               }
+                              
+                              async function subirImagenesPorPiso(propiedadId, numeroPisos) {
+    // Asegúrate de que 'imagenesPorPiso' sea una colección de los elementos de entrada de archivos.
+    let imagenesPorPiso = document.querySelectorAll('[name^="imagenPiso_"]'); // Selecciona todos los elementos que su nombre comience con 'imagenPiso_'
 
-                              if (errorPropiedad) {
-                                  console.error('Error inserting propiedad:', errorPropiedad);
-                              } else {
-                                  console.log('Inserted propiedad:', dataPropiedad);
-                                  const propiedadId = dataPropiedad[0].id; // Accede al ID de la propiedad
+    for (let i = 0; i < numeroPisos; i++) {
+        let input = imagenesPorPiso[i]; // Obtiene el input correspondiente al piso
 
-                              // Luego, puedes realizar otras operaciones con la propiedad, como subir imágenes
-                              await uploadSelectedImages(propiedadId);
-                                  location.reload()
-                              }
+        if (input && input.files.length > 0) {
+            const file = input.files[0];
+            const filePath = `uploads/${propiedadId}/pisos/${file.name}`;
+
+            const { error } = await _supabase.storage.from('Images_propiedades').upload(filePath, file);
+            if (error) {
+                console.error("Error al subir la imagen del piso " + (i+1) + ":", error);
+            } else {
+                console.log("Imagen del piso " + (i+1) + " subida exitosamente a", filePath);
+            }
+        }
+    }
+}
+
+                              async function agregarDetallesPisos(propiedadId, numeroPisos) {
+  for (let i = 0; i < numeroPisos; i++) {
+    let metrosCuadrados = document.querySelector(`[name="sizePiso_${i + 1}"]`).value;
+    let habitaciones = document.querySelector(`[name="bedroomsPiso_${i + 1}"]`).value;
+    let banos = document.querySelector(`[name="bathroomsPiso_${i + 1}"]`).value;
+
+    // Asegúrate de convertir los valores a los tipos correctos si es necesario
+    metrosCuadrados = parseFloat(metrosCuadrados);
+    habitaciones = parseInt(habitaciones);
+    banos = parseInt(banos);
+
+    const { data, error } = await _supabase
+      .from('detalles_pisos')
+      .insert([
+        {
+          propiedad_id: propiedadId,
+          piso_numero: i + 1,
+          metros_cuadrados: metrosCuadrados,
+          habitaciones: habitaciones,
+          banos: banos
+        }
+      ]);
+
+    if (error) {
+      console.error('Error al insertar detalles de piso:', error);
+    } else {
+      console.log('Detalles de piso insertados:', data);
+    }
+  }
+}
+
+if (errorPropiedad) {
+    console.error('Error inserting propiedad:', errorPropiedad);
+} else {
+    console.log('Inserted propiedad:', dataPropiedad);
+    const propiedadId = dataPropiedad[0].id; // Accede al ID de la propiedad
+    const numeroPisos = parseInt(document.querySelector('[name="pisos_propiedad"]').value);
+
+    // Llamar a la función para agregar los detalles de los pisos
+    await agregarDetallesPisos(propiedadId, numeroPisos);
+
+    // Llamar a la función para subir las imágenes por piso
+    await subirImagenesPorPiso(propiedadId, numeroPisos);
+
+// Luego, puedes realizar otras operaciones con la propiedad, como subir imágenes
+await uploadSelectedImages(propiedadId);
+
+    location.reload();
+}
+                              
+
+                              
 }
                           let selectedImages = [];
 
@@ -623,6 +693,8 @@
                               $(document).ready(function() {
                                 $('#uploadButton').click(function() {
                                   uploadSelectedImages(propiedadId);
+                                  subirImagenesPorPiso(propiedadId);
+                                  agregarDetallesPisos(propiedadId, numeroPisos);
                                 });
                               });
 
@@ -753,10 +825,63 @@
                             </div>
                             <div class="col-sm-4">
                               <div class="mb20">
-                                <label class="heading-color ff-heading fw600 mb10">Número de pisos</label>
-                                <input type="text" class="form-control" name="pisos_in" placeholder="">
+                                  <label class="heading-color ff-heading fw600 mb10">Número de pisos</label>
+                                  <input type="text" class="form-control" name="pisos_propiedad" placeholder="">
                               </div>
-                            </div>
+                          </div>
+                          <div class="col-sm-12">
+                              <div class="mb20">
+                                  <label class="heading-color ff-heading fw600 mb10">Detalles por piso</label>
+                                  <div id="detallesPorPiso"></div>
+                                  <button type="button" onclick="agregarCamposPorPiso()">Añadir Detalles</button>
+                              </div>
+                          </div>
+
+                            <script>
+                              function agregarCamposPorPiso() {
+                                  var numeroPisos = document.getElementsByName("pisos_propiedad")[0].value;
+                                  var contenedor = document.getElementById("detallesPorPiso");
+                                  contenedor.innerHTML = ''; // Limpiar campos existentes
+                            
+                                  for (var i = 0; i < numeroPisos; i++) {
+                                      var pisoContenedor = document.createElement("div");
+                                      pisoContenedor.classList.add("piso-detalle");
+                            
+                                      // Crear y añadir campo 'Size'
+                                      var inputSize = document.createElement("input");
+                                      inputSize.type = "text";
+                                      inputSize.name = "sizePiso_" + (i + 1);
+                                      inputSize.placeholder = "Size (Sqft)";
+                                      inputSize.classList.add("form-control");
+                                      pisoContenedor.appendChild(inputSize);
+                            
+                                      // Crear y añadir campo 'Bedrooms'
+                                      var inputBedrooms = document.createElement("input");
+                                      inputBedrooms.type = "number";
+                                      inputBedrooms.name = "bedroomsPiso_" + (i + 1);
+                                      inputBedrooms.placeholder = "Bedrooms";
+                                      inputBedrooms.classList.add("form-control");
+                                      pisoContenedor.appendChild(inputBedrooms);
+                            
+                                      // Crear y añadir campo 'Bathrooms'
+                                      var inputBathrooms = document.createElement("input");
+                                      inputBathrooms.type = "number";
+                                      inputBathrooms.name = "bathroomsPiso_" + (i + 1);
+                                      inputBathrooms.placeholder = "Bathrooms";
+                                      inputBathrooms.classList.add("form-control");
+                                      pisoContenedor.appendChild(inputBathrooms);
+                            
+                                      // Crear y añadir campo 'Imagen'
+                                      var inputImagen = document.createElement("input");
+                                      inputImagen.type = "file";
+                                      inputImagen.name = "imagenPiso_" + (i + 1);
+                                      inputImagen.classList.add("form-control");
+                                      pisoContenedor.appendChild(inputImagen);
+                            
+                                      contenedor.appendChild(pisoContenedor);
+                                  }
+                              }
+                            </script>
                             <div class="col-sm-4">
                               <div class="mb20">
                                 <label class="heading-color ff-heading fw600 mb10">Terreno (metros cuadrados)</label>

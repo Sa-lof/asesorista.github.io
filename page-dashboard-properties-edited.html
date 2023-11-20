@@ -53,7 +53,7 @@
           <div class="col-6 col-lg-auto">
             <div class="text-center text-lg-start d-flex align-items-center">
               <div class="dashboard_header_logo position-relative me-2 me-xl-5">
-                <a href="index.html" class="logo"><img src="images/header-logo2.svg" alt=""></a>
+                <a href="index.html" class="logo"><img src="images/main-logo.png" alt="" style="width: 180px;"></a>
               </div>
               <div class="fz20 ms-2 ms-xl-5">
                 <a href="#" class="dashboard_sidebar_toggle_icon text-thm1 vam"><img src="images/dark-nav-icon.svg" alt=""></a>
@@ -71,21 +71,30 @@
                 <li class=" user_setting">
                   <div class="dropdown">
                     <a class="btn" href="#" data-bs-toggle="dropdown">
-                      <img src="images/resource/user.png" alt="user.png"> 
+                      <img src="images/favicon.png" style="width: 40px;" alt="user.png"> 
                     </a>
                     <div class="dropdown-menu">
                       <div class="user_setting_content">
-                        <p class="fz15 fw400 ff-heading mb20">MAIN</p>
-                        <a class="dropdown-item" href="page-dashboard.html"><i class="flaticon-discovery mr10"></i>Dashboard</a>
                         <p class="fz15 fw400 ff-heading mt30">MANAGE LISTINGS</p>
                         <a class="dropdown-item" href="page-dashboard-add-property.html"><i class="flaticon-new-tab mr10"></i>Agregar propiedad</a>
                         <a class="dropdown-item active" href="page-dashboard-properties.html"><i class="flaticon-home mr10"></i>Mis propiedades</a>
-                        <a class="dropdown-item" href="page-dashboard-review.html"><i class="flaticon-review mr10"></i>Reviews</a>
                         <p class="fz15 fw400 ff-heading mt30">MANAGE ACCOUNT</p>
-                        <a class="dropdown-item" href="page-dashboard-profile.html"><i class="flaticon-user mr10"></i>Mi perfil</a>
-                        <a class="dropdown-item" href="page-login.html"><i class="flaticon-exit mr10"></i>Logout</a>
+                        <a class="dropdown-item" href="javascript:void(0);" onclick="logout()"><i class="flaticon-exit mr10"></i>Logout</a>
                       </div>
                     </div>
+                    <script>
+                      function logout() {
+                          // Eliminar cookies/session aquí
+                          document.cookie = "session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                          
+                          // Redirigir al usuario
+                          redirectToAdmin();
+                      }
+
+                      function redirectToAdmin() {
+                          window.location.replace('administrador.html');
+                      }
+                  </script>
                   </div>
                 </li>
               </ul>
@@ -151,23 +160,19 @@
       <div class="header innerpage-style">
         <div class="menu_and_widgets">
           <div class="mobile_menu_bar d-flex justify-content-between align-items-center">
-            <a class="mobile_logo" href="#"><img src="images/header-logo2.svg" alt=""></a>
+            <a href="index.html" class="logo"><img src="images/main-logo.png" alt="" style="width: 180px;"></a>
             <li class=" user_setting">
               <div class="dropdown">
                 <a class="btn" href="#" data-bs-toggle="dropdown">
-                  <img src="images/resource/user.png" alt="user.png"> 
+                  <img src="images/favicon.png" style="width: 40px;" alt="user.png"> 
                 </a>
                 <div class="dropdown-menu">
                   <div class="user_setting_content">
-                    <p class="fz15 fw400 ff-heading mb20">MAIN</p>
-                    <a class="dropdown-item active" href="page-dashboard.html"><i class="flaticon-discovery mr10"></i>Dashboard</a>
                     <p class="fz15 fw400 ff-heading mt30">MANAGE LISTINGS</p>
                     <a class="dropdown-item" href="page-dashboard-add-property.html"><i class="flaticon-new-tab mr10"></i>Agregar propiedad</a>
                     <a class="dropdown-item" href="page-dashboard-order.html"><i class="flaticon-home mr10"></i>Mis propiedades</a>
-                    <a class="dropdown-item" href="page-dashboard-review.html"><i class="flaticon-review mr10"></i>Reviews</a>
                     <p class="fz15 fw400 ff-heading mt30">MANAGE ACCOUNT</p>
-                    <a class="dropdown-item" href="page-dashboard-profile.html"><i class="flaticon-user mr10"></i>Mi perfil</a>
-                    <a class="dropdown-item" href="page-login.html"><i class="flaticon-exit mr10"></i>Logout</a>
+                    <a class="dropdown-item" href="javascript:void(0);" onclick="logout()"><i class="flaticon-exit mr10"></i>Logout</a>
                   </div>
                 </div>
               </div>
@@ -182,25 +187,16 @@
     <div class="dashboard dashboard_wrapper pr30 pr0-md">
       <div class="dashboard__sidebar d-none d-lg-block">
         <div class="dashboard_sidebar_list">
-          <div class="sidebar_list_item">
-            <a href="page-dashboard.html" class="items-center"><i class="flaticon-discovery mr15"></i>Dashboard</a>
-          </div>
-          <p class="fz15 fw400 ff-heading mt30">MANAGE LISTINGS</p>
+          <p class="fz15 fw400 ff-heading">MANAGE LISTINGS</p>
           <div class="sidebar_list_item ">
             <a href="page-dashboard-add-property.html" class="items-center"><i class="flaticon-new-tab mr15"></i>Agregar propiedad</a>
           </div>
           <div class="sidebar_list_item ">
             <a href="page-dashboard-properties.html" class="items-center -is-active"><i class="flaticon-home mr15"></i>Mis propiedades</a>
           </div>
-          <div class="sidebar_list_item ">
-            <a href="page-dashboard-review.html" class="items-center"><i class="flaticon-review mr15"></i>Reviews</a>
-          </div>
           <p class="fz15 fw400 ff-heading mt30">MANAGE ACCOUNT</p>
           <div class="sidebar_list_item ">
-            <a href="page-dashboard-profile.html" class="items-center"><i class="flaticon-user mr15"></i>Mi perfil</a>
-          </div>
-          <div class="sidebar_list_item ">
-            <a href="page-login.html" class="items-center"><i class="flaticon-logout mr15"></i>Logout</a>
+            <a href="javascript:void(0);" onclick="logout()" class="items-center"><i class="flaticon-logout mr15"></i>Logout</a>
           </div>
         </div>
       </div>
@@ -212,14 +208,11 @@
                 <div class="dropdown">
                   <button onclick="myFunction()" class="dropbtn"><i class="fa fa-bars pr10"></i> Dashboard Navigation</button>
                   <ul id="myDropdown" class="dropdown-content">
-                    <li><a href="page-dashboard.html"><i class="flaticon-discovery mr10"></i>Dashboard</a></li>
                     <li><p class="fz15 fw400 ff-heading mt30 pl30">MANAGE LISTINGS</p></li>
                     <li><a href="page-dashboard-add-property.html"><i class="flaticon-new-tab mr10"></i>Agregar propiedad</a></li>
                     <li class="active"><a href="page-dashboard-properties.html"><i class="flaticon-home mr10"></i>Mis propiedades</a></li>
-                    <li><a href="page-dashboard-review.html"><i class="flaticon-review mr10"></i>Reviews</a></li>
                     <li><p class="fz15 fw400 ff-heading mt30 pl30">MANAGE ACCOUNT</p></li>
-                    <li><a href="page-dashboard-profile.html"><i class="flaticon-user mr10"></i>Mi perfil</a></li>
-                    <li><a class="" href="page-login.html"><i class="flaticon-exit mr10"></i>Logout</a></li>
+                    <li><a class="" href="javascript:void(0);" onclick="logout()"><i class="flaticon-exit mr10"></i>Logout</a></li>
                   </ul>
                 </div>
               </div>
@@ -363,10 +356,111 @@
               <div class="ui-content mb40">
                 <div class="form-style1">
                   <label class="form-label fw600 dark-color">Número de pisos</label>
-                  <input type="text" class="form-control" id="property-pisos" placeholder="">
+                  <input type="text" class="form-control" name="property-pisos" id="property-pisos" placeholder="">
                 </div>
               </div>
             </div>
+            <style>
+              .orange-button {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center; 
+                padding: 5px 20px; 
+                background-color: #F76B51;
+                color: white;
+                border: none;
+                border-radius: 50px; 
+                font-size: 14px; 
+                text-decoration: none;
+                height: 30px; 
+                font-weight: bold;
+              }
+            </style>
+            <div class="col-lg-4">
+              <div class="mb20">
+                  <label class="heading-color ff-heading fw600 mb10">Detalles por piso</label>
+                  <div id="detallesPorPiso"></div>
+                  <button class="orange-button" type="button" onclick="agregarCamposPorPiso()">Editar Detalles</button>
+              </div>
+          </div>
+          <script>
+            async function loadFloorsDetails(id, i) {
+                const { data, error } = await _supabase
+                    .from('detalles_pisos')
+                    .select('*')
+                    .eq('propiedad_id', id);
+
+                console.log(data);
+                if (error) {
+                    console.error('Error al consultar la base de datos:', error);
+                    return;
+                }
+
+                // Asegúrate de que 'i' esté dentro de los límites del arreglo 'data'
+                if (i < data.length) {
+                    const floor = data[i];
+
+                    // Establecer los valores de los detalles del piso en los campos de entrada correspondientes
+                    document.getElementById("sizePiso_" + (i + 1)).value = floor.metros_cuadrados;
+                    document.getElementById("bedroomsPiso_" + (i + 1)).value = floor.habitaciones;
+                    document.getElementById("bathroomsPiso_" + (i + 1)).value = floor.banos;
+                } else {
+                    console.warn('No se encontraron resultados para el id:', id, 'en el piso:', i);
+                }
+            }
+
+            function agregarCamposPorPiso() {
+                var numeroPisos = document.getElementById("property-pisos").value;
+                var contenedor = document.getElementById("detallesPorPiso");
+                contenedor.innerHTML = ''; // Limpiar campos existentes
+        
+                const urlParams = new URLSearchParams(window.location.search);
+                const propertyId = urlParams.get('id');
+        
+                if (propertyId && numeroPisos && !isNaN(numeroPisos)) {
+                    for (var i = 0; i < numeroPisos; i++) {
+                        loadFloorsDetails(propertyId, i);
+                    }
+        
+                    for (var i = 0; i < numeroPisos; i++) {
+                        var pisoContenedor = document.createElement("div");
+                        pisoContenedor.classList.add("piso-detalle");
+        
+                        // Crear y añadir campo 'Size'
+                        var inputSize = document.createElement("input");
+                        inputSize.type = "text";
+                        inputSize.name = "sizePiso_" + (i + 1);
+                        inputSize.id = "sizePiso_" + (i + 1);
+                        inputSize.placeholder = "Size (Sqft)";
+                        inputSize.classList.add("form-control");
+                        pisoContenedor.appendChild(inputSize);
+        
+                        // Crear y añadir campo 'Bedrooms'
+                        var inputBedrooms = document.createElement("input");
+                        inputBedrooms.type = "number";
+                        inputBedrooms.name = "bedroomsPiso_" + (i + 1);
+                        inputBedrooms.id = "bedroomsPiso_" + (i + 1);
+                        inputBedrooms.placeholder = "Bedrooms";
+                        inputBedrooms.classList.add("form-control");
+                        pisoContenedor.appendChild(inputBedrooms);
+        
+                        // Crear y añadir campo 'Bathrooms'
+                        var inputBathrooms = document.createElement("input");
+                        inputBathrooms.type = "number";
+                        inputBathrooms.name = "bathroomsPiso_" + (i + 1);
+                        inputBathrooms.id = "bathroomsPiso_" + (i + 1);
+                        inputBathrooms.placeholder = "Bathrooms";
+                        inputBathrooms.classList.add("form-control");
+                        pisoContenedor.appendChild(inputBathrooms);
+        
+                        contenedor.appendChild(pisoContenedor);
+                    }
+                } else {
+                    console.error('Número de pisos no válido o faltante.');
+                }
+            }
+        </script>
+
             <div class="col-lg-4">
               <div class="ui-content mb40">
                 <div class="form-style1">
@@ -504,7 +598,7 @@
           $('.selectpicker').selectpicker('refresh');
 
       }
-        
+
       document.getElementById('guardar-btn').addEventListener('click', updatePropertyDetails);
       async function updatePropertyDetails() {
             // Obtener el ID de la propiedad
@@ -536,22 +630,67 @@
                 areas_verdes: document.getElementById('atico-areas').checked,
             };
 
-            // Actualizar datos en Supabase
-            const { data, error } = await _supabase
-                .from('propiedades')
-                .update(updatedData)
-                .eq('id', propertyId);
+            // Actualizar datos en Supabase para la propiedad
+    const { data: propertyData, error: propertyError } = await _supabase
+        .from('propiedades')
+        .update(updatedData)
+        .eq('id', propertyId);
 
-            // Comprobar si hubo un error
-            if (error) {
-                console.error('Error al actualizar los datos:', error);
-                alert('Error al actualizar los datos.');
+    if (propertyError) {
+        console.error('Error al actualizar los datos de la propiedad:', propertyError);
+        alert('Error al actualizar los datos de la propiedad.');
+        return;
+    }
+
+    // Recopilar y actualizar los datos de los pisos
+    const numberOfFloors = parseInt(document.getElementById('property-pisos').value);
+    for (let i = 0; i < numberOfFloors; i++) {
+        let floorData = {
+            propiedad_id: propertyId,  // Asegúrate de que esta es la clave foránea correcta
+            piso_numero: i + 1,
+            metros_cuadrados: document.getElementById(`sizePiso_${i + 1}`).value,
+            habitaciones: document.getElementById(`bedroomsPiso_${i + 1}`).value,
+            banos: document.getElementById(`bathroomsPiso_${i + 1}`).value,
+            // Añade aquí más detalles si los hay
+        };
+
+        // Determinar si es una actualización o inserción
+        const existingFloorData = await _supabase
+            .from('detalles_pisos')
+            .select('id')
+            .eq('propiedad_id', propertyId)
+            .eq('piso_numero', i + 1)
+            .single();
+
+        if (existingFloorData.data) {
+            // Actualizar el piso existente
+            const { error: updateError } = await _supabase
+                .from('detalles_pisos')
+                .update(floorData)
+                .eq('id', existingFloorData.data.id);
+
+            if (updateError) {
+                console.error('Error al actualizar los detalles del piso:', updateError);
+                alert(`Error al actualizar los detalles del piso ${i + 1}.`);
                 return;
             }
+        } else {
+            // Insertar nuevo piso
+            const { error: insertError } = await _supabase
+                .from('detalles_pisos')
+                .insert([floorData]);
 
-             // Muestra el modal de éxito
-              const successModal = new bootstrap.Modal(document.getElementById('successModal'));
-              successModal.show();
+            if (insertError) {
+                console.error('Error al insertar los detalles del piso:', insertError);
+                alert(`Error al insertar los detalles del piso ${i + 1}.`);
+                return;
+            }
+        }
+    }
+
+    // Muestra el modal de éxito
+    const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+    successModal.show();
       }
 
 

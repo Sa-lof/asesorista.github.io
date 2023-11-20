@@ -54,7 +54,7 @@
             <div class="d-flex align-items-center justify-content-between">
               <img
                 class="main-logo"
-                src="images/footer-logo.png"
+                src="images/main-logo.png"
                 alt="Header Logo"
               />
 
@@ -147,7 +147,7 @@
         </li>
         <li class="px-3 mobile-menu-btn">
           <a
-            href="venta.html"
+            href="#"
             class="ud-btn btn-thm text-white"
             >Vende con Asesorista<i class="fal fa-arrow-right-long"></i
           ></a>
@@ -380,9 +380,7 @@
                               object-fit: cover; /* Esto asegura que la imagen cubra el espacio sin distorsionarse */
                           }
                         </style>
-                        <div class="col-lg-12">
-                          <div class="profile-box position-relative d-md-flex align-items-end mb50" id="imageContainer">
-                          </div>
+                        <div class="row" id="imageContainer">
                         </div>
                         <script>
                           document.addEventListener("DOMContentLoaded", function() {
@@ -417,10 +415,14 @@
                                   var reader = new FileReader();
                                   reader.onload = function(e) {
                                       var newDiv = document.createElement('div');
-                                      newDiv.className = 'profile-img position-relative overflow-hidden bdrs12 ml20 ml0-sm';
+                                      newDiv.className = 'col-lg-3';
                                       newDiv.innerHTML = `
-                                          <img class="w-100" src="${e.target.result}" alt="">
-                                          <a href="#" class="tag-del delete-image" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Delete Image" aria-label="Delete Item"><span class="fas fa-trash-can"></span></a>
+                                                  <div class="profile-box position-relative d-md-flex align-items-end mb50">
+                                                      <div class="profile-img position-relative overflow-hidden bdrs12 mb20-sm">
+                                                          <img class="w-100" src="${e.target.result}" alt="Uploaded Image">
+                                                          <a href="#" class="tag-del" data-bs-toggle="tooltip" data-bs-placement="top" title="" aria-label="Delete Item"><span class="fas fa-trash-can"></span></a>
+                                                      </div>
+                                                  </div>
                                       `;
                                       document.getElementById('imageContainer').appendChild(newDiv);
                                       // Añadir evento de eliminación al nuevo elemento
@@ -443,8 +445,6 @@
                               });
                           });
 }
-
-
                         </script>
                         <div class="col-md-12">
                           <div class="d-sm-flex justify-content-between">
@@ -530,8 +530,8 @@
                             </div>
                             <div class="col-sm-4">
                               <div class="mb20">
-                                <label class="heading-color ff-heading fw600 mb10">Número de pisos</label>
-                                <input type="text" class="form-control" name="pisos_propiedad" placeholder="">
+                                  <label class="heading-color ff-heading fw600 mb10">Número de pisos</label>
+                                  <input type="text" class="form-control" name="pisos_propiedad" placeholder="">
                               </div>
                             </div>
                             <div class="col-sm-4">
@@ -540,6 +540,75 @@
                                 <input type="text" class="form-control" name="terreno_propiedad" placeholder="">
                               </div>
                             </div>
+                            <style>
+                              .orange-button {
+                                display: inline-flex;
+                                align-items: center;
+                                justify-content: center; 
+                                padding: 5px 20px; 
+                                background-color: #F76B51;
+                                color: white;
+                                border: none;
+                                border-radius: 50px; 
+                                font-size: 14px; 
+                                text-decoration: none;
+                                height: 30px; 
+                                font-weight: bold;
+                              }
+                            </style>
+                            <div class="col-sm-12">
+                                <div class="mb20">
+                                    <label class="heading-color ff-heading fw600 mb10">Detalles por piso</label>
+                                    <div id="detallesPorPiso"></div>
+                                    <button class="orange-button" type="button" onclick="agregarCamposPorPiso()">Añadir Detalles</button>
+                                </div>
+                            </div>
+  
+                            <script>
+                              function agregarCamposPorPiso() {
+                                  var numeroPisos = document.getElementsByName("pisos_propiedad")[0].value;
+                                  var contenedor = document.getElementById("detallesPorPiso");
+                                  contenedor.innerHTML = ''; // Limpiar campos existentes
+                            
+                                  for (var i = 0; i < numeroPisos; i++) {
+                                      var pisoContenedor = document.createElement("div");
+                                      pisoContenedor.classList.add("piso-detalle");
+                            
+                                      // Crear y añadir campo 'Size'
+                                      var inputSize = document.createElement("input");
+                                      inputSize.type = "text";
+                                      inputSize.name = "sizePiso_" + (i + 1);
+                                      inputSize.placeholder = "Metros cuadrados";
+                                      inputSize.classList.add("form-control");
+                                      pisoContenedor.appendChild(inputSize);
+                            
+                                      // Crear y añadir campo 'Bedrooms'
+                                      var inputBedrooms = document.createElement("input");
+                                      inputBedrooms.type = "number";
+                                      inputBedrooms.name = "bedroomsPiso_" + (i + 1);
+                                      inputBedrooms.placeholder = "Habitaciones";
+                                      inputBedrooms.classList.add("form-control");
+                                      pisoContenedor.appendChild(inputBedrooms);
+                            
+                                      // Crear y añadir campo 'Bathrooms'
+                                      var inputBathrooms = document.createElement("input");
+                                      inputBathrooms.type = "number";
+                                      inputBathrooms.name = "bathroomsPiso_" + (i + 1);
+                                      inputBathrooms.placeholder = "Baños";
+                                      inputBathrooms.classList.add("form-control");
+                                      pisoContenedor.appendChild(inputBathrooms);
+                            
+                                      // Crear y añadir campo 'Imagen'
+                                      var inputImagen = document.createElement("input");
+                                      inputImagen.type = "file";
+                                      inputImagen.name = "imagenPiso_" + (i + 1);
+                                      inputImagen.classList.add("form-control");
+                                      pisoContenedor.appendChild(inputImagen);
+                            
+                                      contenedor.appendChild(pisoContenedor);
+                                  }
+                              }
+                            </script>
                           </div>
                           
                           <div class="row">
@@ -595,6 +664,23 @@
             </div>
           </div>
         </div>
+         <!-- Modal HTML -->
+         <div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              </button>
+              </div>
+              <div class="modal-body">
+                <!-- El mensaje de éxito se insertará aquí -->
+              </div>
+              <div class="modal-footer">
+              </div>
+            </div>
+          </div>
+        </div>
         <script src="https://smtpjs.com/v3/smtp.js"></script>
         <script>
           function getBase64Image(img) {
@@ -609,8 +695,16 @@
               return dataURL.split(',')[1];  // Esto asegura que solo devuelva la parte Base64
           }
 
-
-          function sendEmailPropertyForm() {
+          function getBase64(file) {
+              return new Promise((resolve, reject) => {
+                  const reader = new FileReader();
+                  reader.readAsDataURL(file);
+                  reader.onload = () => resolve(reader.result.split(',')[1]);
+                  reader.onerror = error => reject(error);
+              });
+          }
+          
+          async function sendEmailPropertyForm() {
               event.preventDefault();
               
               // Datos personales
@@ -644,6 +738,28 @@
 
               let amenidadesList = amenidades.join(', ');
 
+              let detallesPisos = [];
+              for (let i = 0; i < pisosPropiedad; i++) {
+                let piso = {
+                  size: document.querySelector(`[name="sizePiso_${i + 1}"]`).value,
+                  bedrooms: document.querySelector(`[name="bedroomsPiso_${i + 1}"]`).value,
+                  bathrooms: document.querySelector(`[name="bathroomsPiso_${i + 1}"]`).value,
+                  // asumimos que ya se ha recogido la imagen en la parte de attachments
+                };
+                detallesPisos.push(piso);
+              }
+
+              let detallesPisosHTML = detallesPisos.map((piso, index) => `
+                <div style="border-bottom: 1px solid #000;">
+                  <h2 style="color: #f76a51;">Detalles del Piso ${index + 1}</h2>
+                </div>
+                <div>
+                  <p><strong>Metros cuadrados:</strong> ${piso.size}</p>
+                  <p><strong>Habitaciones:</strong> ${piso.bedrooms}</p>
+                  <p><strong>Baños:</strong> ${piso.bathrooms}</p>
+                </div>
+              `).join('');
+
               // Validar que los campos requeridos no estén vacíos
               const camposRequeridos = [
                   nombreVendedor, apellidoMaterno, apellidoPaterno, telefonoVendedor, 
@@ -666,13 +782,30 @@
               let btnstyle = "display: inline-block; background-color: #f76a51; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; margin-top: 20px; font-weight: bold;"
 
               // Recoger las imágenes en base64
+              let attachments = [];
+              let imageInputs = document.querySelectorAll('#detallesPorPiso input[type="file"]');
+
+              for (let i = 0; i < imageInputs.length; i++) {
+                  if (imageInputs[i].files[0]) {
+                      let base64String = await getBase64(imageInputs[i].files[0]);
+                      attachments.push({
+                          name: 'imagenPiso_' + (i + 1) + '.jpeg',
+                          data: base64String
+                      });
+                  }
+              }
+
+              // Recoger imágenes existentes convertidas a Base64
               var images = document.querySelectorAll('#imageContainer img');
-              var attachments = Array.from(images).map(function(img, index) {
+              var existingAttachments = Array.from(images).map(function(img, index) {
                   return {
                       name: 'imagen' + index + '.jpeg',
                       data: getBase64Image(img)
                   };
               });
+
+              // Combinar ambas listas de attachments
+              attachments = attachments.concat(existingAttachments);
               
               Email.send({
                   SecureToken: "0f0ecf8b-8735-47e9-99d8-fac0323d1bfa",
@@ -723,13 +856,20 @@
                         <p><strong>Pisos:</strong> ${pisosPropiedad}</p>
                         <p><strong>Metros cuadrados de terreno:</strong> ${terrenoPropiedad}</p>
                         <p><strong>Amenidades:</strong> ${amenidadesList}</p>
+                        <p><strong>Detalles de pisos:</strong> ${detallesPisosHTML}</p>
                       </div>
                       <a style="${btnstyle}" href="mailto:${correoVendedor}?subject=Respuesta%20contacto%20-%20${nombreVendedor}&body=Estimado%20Vendedor,%0D%0A%0D%0ANos%20ponemos%20en%20contacto%20con%20usted%20debido%20a%20que%20recibimos%20su%20propiedad%20para%20petición%20de%20venta%0D%0A%0D%0A%0D%0A%0D%0AAtentamente,%0D%0AAsesorista%0D%0A%0D%0A">Responder propuesta</a>
                   `,
                   Attachments: attachments
-              }).then(message => {
-                  alert('Correo enviado exitosamente');
-              });
+                }).then(message => {
+                    var modalBody = document.querySelector('.modal-body');
+                    modalBody.innerHTML = '<div style="text-align: center;"><img src="https://astounding-lollipop-8930aa.netlify.app/images/footer-logo.png" alt="Imagen" style="display: block; margin-left: auto; margin-right: auto; width: 30%; padding-bottom: 10px;" /><p style="font-family: Arial, sans-serif; font-weight: bold;">¡Gracias, tu mensaje se ha enviado con éxito!</p></div>';
+                    $('#emailModal').modal('show');
+                    setTimeout(function() {
+                        $('#emailModal').modal('hide');
+                        location.reload(); // Agrega esta línea para recargar la página
+                    }, 3000); 
+                });
           }
 
         </script>
@@ -759,7 +899,7 @@
   <a href="https://wa.me/tunúmero" class="float" target="_blank">
     <i class="fab fa-whatsapp my-float"></i>
   </a>
-  
+
   <!-- Our Footer -->
   <section class="footer-style1 at-home4 pt60 pb-0">
     <div class="container">

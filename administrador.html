@@ -49,27 +49,73 @@
           <div class="col-lg-6">
             <div class="log-reg-form signup-modal form-style1 bgc-white p50 p30-sm default-box-shadow2 bdrs12">
               <div class="text-center mb40">
-                <img class="mb25 main-logo" src="images/footer-logo.png" alt="">
+                <img class="mb25 main-logo" src="images/main-logo.png" alt="">
                 <h2>Sign in</h2>
                 <p class="text">Bienvenido, ingrese sus credenciales de administrador</p>
               </div>
               <div class="mb25">
                 <label class="form-label fw600 dark-color">Correo</label>
-                <input type="email" class="form-control" placeholder="Ingrese su correo">
+                <input type="email" id="emailInput" class="form-control" placeholder="Ingrese su correo">
               </div>
               <div class="mb15">
-                <label class="form-label fw600 dark-color">Cotraseña</label>
-                <input type="text" class="form-control" placeholder="Ingrese su contraseña">
+                <label class="form-label fw600 dark-color">Contraseña</label>
+                <input type="password" id="passwordInput" class="form-control" placeholder="Ingrese su contraseña">
               </div>
               <div class="d-grid mb20">
-                <a class="ud-btn btn-thm" href="page-dashboard-add-property.html" type="button">Iniciar sesión <i class="fal fa-arrow-right-long"></i></a>
+                <button id="loginButton" class="ud-btn btn-thm">Iniciar sesión <i class="fal fa-arrow-right-long"></i></button>
               </div>
+              <style>
+                .alert-message {
+                  color: red;
+                  margin-top: 10px;
+                }
+              </style>
+              <div id="messageLabel" class="alert-message"></div>
             </div>
           </div>
         </div>
       </div>
     </section>
     <a class="scrollToHome" href="#"><i class="fas fa-angle-up"></i></a>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.22.2"></script>
+
+    <script>
+      const SUPABASE_URL = 'https://fhowgaxtehxvtcpiziyy.supabase.co'
+      const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZob3dnYXh0ZWh4dnRjcGl6aXl5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTA2OTA1NjQsImV4cCI6MjAwNjI2NjU2NH0.ZOc7XrEmDevg35_FT-s0HUQgA4uvq900D80j31G7R20'
+
+      const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+    </script>
+    <script>
+      async function checkLogin() {
+        const emailInput = document.querySelector('#emailInput').value;
+        const passwordInput = document.querySelector('#passwordInput').value;
+
+        const { data: user, error } = await _supabase
+          .from('administrador')
+          .select('*')
+          .eq('usuario', emailInput)
+          .single();
+
+        if (error) {
+          console.error('Error fetching user data:', error);
+          document.getElementById('messageLabel').textContent = 'Datos de administrador no encontrados';
+          return;
+        }
+
+        const passwordIsValid = passwordInput === user.contrasena;
+
+        if (passwordIsValid) {
+          window.location.href = 'page-dashboard-add-property.html';
+        } else {
+          document.getElementById('messageLabel').textContent = 'Correo electrónico o contraseña inválidos.';
+        }
+      }
+
+      document.querySelector('#loginButton').addEventListener('click', function(event) {
+        event.preventDefault();
+        checkLogin();
+      });
+    </script>
   </div>
 </div>
 <!-- Wrapper End --> 
