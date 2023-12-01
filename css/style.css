@@ -3268,9 +3268,10 @@ h2 {
 
 /* Hero Styles All Type Of */
 .home-banner-style1 {
-  background-image: url(../images/home/home-1.jpg);
+  background-image: url(../images/fondo3.jpeg);
   background-position: center center;
   background-repeat: no-repeat;
+  background-size: cover; /* Añade esta línea */
   position: relative;
 }
 .home-banner-style1 .home-style1 {
@@ -3280,6 +3281,42 @@ h2 {
 }
 @media (max-width: 991.98px) {
   .home-banner-style1 .home-style1 {
+    height: 500px;
+  }
+}
+
+.home-banner-style30 {
+  background-image: url(../images/fondo5.jpeg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover; /* Añade esta línea */
+  position: relative;
+}
+.home-banner-style30 .home-style1 {
+  align-items: center;
+  display: flex;
+  height: 860px;
+}
+@media (max-width: 991.98px) {
+  .home-banner-style30 .home-style1 {
+    height: 500px;
+  }
+}
+
+.home-banner-style20 {
+  background-image: url(../images/fondo4.jpeg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover; /* Añade esta línea */
+  position: relative;
+}
+.home-banner-style20 .home-style1 {
+  align-items: center;
+  display: flex;
+  height: 860px;
+}
+@media (max-width: 991.98px) {
+  .home-banner-style20 .home-style1 {
     height: 500px;
   }
 }
@@ -3607,7 +3644,7 @@ h2 {
 
 /*Home 4 Banner Content*/
 .home-style4 {
-  background-image: url(../images/background/compare-bg.jpg);
+  background-image: url(../images/fondo1.jpeg);
   background-position: center center;
   background-repeat: no-repeat;
   position: relative;
@@ -3617,6 +3654,36 @@ h2 {
 }
 @media (max-width: 991.98px) {
   .home-style4 {
+    height: 620px;
+  }
+}
+
+.home-style30 {
+  background-image: url(../images/fondo5.jpeg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  position: relative;
+  align-items: center;
+  display: flex;
+  height: 660px;
+}
+@media (max-width: 991.98px) {
+  .home-style30 {
+    height: 620px;
+  }
+}
+
+.home-style20 {
+  background-image: url(../images/fondo4.jpeg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  position: relative;
+  align-items: center;
+  display: flex;
+  height: 660px;
+}
+@media (max-width: 991.98px) {
+  .home-style20 {
     height: 620px;
   }
 }
