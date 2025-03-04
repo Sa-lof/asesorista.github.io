@@ -271,6 +271,14 @@
           const pCodElement = document.querySelector(".pcodigo");
           pCodElement.textContent = property.codigo_postal || "codigo";
 
+          // En tu archivo o script JS
+const iframeMaps = document.querySelector(".maps-iframe");
+
+// Si existe property.url_maps, lo usas; de lo contrario, dejas un enlace por defecto
+iframeMaps.src = property.url_maps 
+  ? property.url_maps 
+  : "https://maps.google.com/maps?q=London%20Eye,%20London,%20United%20Kingdom&t=m&z=14&output=embed&iwloc=near";
+
           const pPaisElement = document.querySelector(".ppais");
           pPaisElement.textContent = property.pais || "pais";
 
@@ -753,7 +761,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     </div>
                     <div class="col-lg-12">
                       <iframe
-                        class="position-relative bdrs12 mt30 h250"
+                        class="position-relative bdrs12 mt30 h250 maps-iframe"
                         loading="lazy"
                         src="https://maps.google.com/maps?q=London%20Eye%2C%20London%2C%20United%20Kingdom&amp;t=m&amp;z=14&amp;output=embed&amp;iwloc=near"
                         title="London Eye, London, United Kingdom"
