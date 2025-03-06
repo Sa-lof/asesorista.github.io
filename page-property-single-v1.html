@@ -272,12 +272,12 @@
           pCodElement.textContent = property.codigo_postal || "codigo";
 
           // En tu archivo o script JS
-const iframeMaps = document.querySelector(".maps-iframe");
+          const iframeMaps = document.querySelector(".maps-iframe");
 
-// Si existe property.url_maps, lo usas; de lo contrario, dejas un enlace por defecto
-iframeMaps.src = property.url_maps 
-  ? property.url_maps 
-  : "https://maps.google.com/maps?q=London%20Eye,%20London,%20United%20Kingdom&t=m&z=14&output=embed&iwloc=near";
+          // Si existe property.url_maps, lo usas; de lo contrario, dejas un enlace por defecto
+          iframeMaps.src = property.url_maps 
+            ? property.url_maps 
+            : "https://maps.google.com/maps?q=London%20Eye,%20London,%20United%20Kingdom&t=m&z=14&output=embed&iwloc=near";
 
           const pPaisElement = document.querySelector(".ppais");
           pPaisElement.textContent = property.pais || "pais";
@@ -321,42 +321,45 @@ iframeMaps.src = property.url_maps
     const { data, error } = await _supabase.storage
         .from("Images_propiedades")
         .list("uploads/" + propertyId + "/propiedad/");
+
     if (error) {
         console.error("Error al obtener la lista de imágenes:", error);
         return;
     }
 
+    const container = document.getElementById("image-container");
+    container.classList.add(`grid-${data.length}`); // Agrega la clase del grid dinámico
+
     if (data && data.length) {
-        for (let i = 0; i < data.length; i++) {
-            const image = data[i];
-            const { publicURL, error } = await _supabase.storage
+        data.forEach((image, index) => {
+            const imgIndex = index + 1;
+            const { publicURL, error } = _supabase.storage
                 .from("Images_propiedades")
-                .getPublicUrl(
-                    "uploads/" + propertyId + "/propiedad/" + image.name
-                );
+                .getPublicUrl(`uploads/${propertyId}/propiedad/${image.name}`);
+
             if (error) {
                 console.error("Error al obtener la URL pública:", error);
-                continue;
+                return;
             }
 
-            // Actualizar la imagen y el enlace en el HTML de acuerdo al índice
-            const imgIndex = i + 1; // para que vaya de 1 a 5
+            // Crear la estructura HTML de la imagen
+            const imgWrapper = document.createElement("div");
+            imgWrapper.classList.add("sp-img-content");
 
-            const imgElement = document.querySelector(`img[alt="${imgIndex}.jpg"]`);
-            const linkElement = document.querySelector(`a.preview-img-${imgIndex}.sp-img`);
+            imgWrapper.innerHTML = `
+                <a class="popup-img sp-img preview-img-${imgIndex}" href="${publicURL}">
+                    <img class="w-100" src="${publicURL}" alt="${imgIndex}.jpg" />
+                </a>
+            `;
 
-            if (imgElement && linkElement) {
-                if (publicURL) {
-                    imgElement.src = publicURL;
-                    linkElement.href = publicURL;
-                    linkElement.style.display = "block";
-                } else {
-                    linkElement.style.display = "none"; // Oculta el enlace si no está disponible
-                }
-            }
-        }
+            container.appendChild(imgWrapper);
+        });
     }
 }
+
+// Ejecutar la función cuando cargue la página
+document.addEventListener("DOMContentLoaded", fetchAndDisplayImages);
+
 
 // Llama a la función después de que el DOM esté completamente cargado
 document.addEventListener("DOMContentLoaded", function () {
@@ -494,6 +497,47 @@ document.addEventListener("DOMContentLoaded", function () {
           });
         }
       </script>
+      <style>
+/* Contenedor de imágenes */
+#image-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px; /* Espaciado entre imágenes */
+}
+
+/* Ajuste de imágenes para que sean del mismo tamaño */
+.sp-img-content {
+    width: calc(100% / 3 - 10px); /* Para 3 columnas */
+    height: 250px; /* Ajusta la altura según lo que necesites */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.sp-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Recorta la imagen sin deformarla */
+    border-radius: 8px;
+}
+
+/* Diseño responsivo: en móviles usa 2 columnas */
+@media (max-width: 768px) {
+    .sp-img-content {
+        width: calc(100% / 2 - 10px);
+    }
+}
+
+/* Diseño para pantallas más pequeñas: 1 columna */
+@media (max-width: 480px) {
+    .sp-img-content {
+        width: 100%;
+    }
+}
+      </style>
       <div class="body_content pt100">
         <!-- Property All Lists -->
         <section class="pt60 pb90 bgc-f7">
@@ -540,47 +584,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 </div>
               </div>
             </div>
-            <div class="row mb30 mt30 wow fadeInUp" data-wow-delay="300ms">
-              <div class="col-sm-6 d-flex flex-column">
-                <div class="sp-img-content mb15-md flex-grow-1">
-                  <a class="popup-img preview-img-1 sp-img" href="#" style="display: none;">
-                    <img class="w-100" src="#" alt="1.jpg" style="object-fit: cover; width: 100%; height: 100%;" />
-                  </a>
+            <div class="container">
+              <div class="row mb30 mt30 wow fadeInUp" data-wow-delay="300ms">
+                <!-- Contenedor de imágenes -->
+                <div class="col-12 d-flex flex-wrap justify-content-center" id="image-container">
+                  <!-- Las imágenes se insertarán aquí dinámicamente -->
                 </div>
               </div>
-              <div class="col-sm-6 d-flex flex-column">
-                <div class="row flex-grow-1">
-                  <div class="col-6 ps-sm-0 d-flex mb-3">
-                    <div class="sp-img-content flex-grow-1">
-                      <a class="popup-img preview-img-2 sp-img mb10" href="#" style="display: none;">
-                        <img class="w-100" src="#" alt="2.jpg" style="object-fit: cover; width: 100%; height: 100%;" />
-                      </a>
-                    </div>
-                  </div>
-                  <div class="col-6 ps-sm-0 d-flex mb-3">
-                    <div class="sp-img-content flex-grow-1">
-                      <a class="popup-img preview-img-3 sp-img mb10" href="#" style="display: none;">
-                        <img class="w-100" src="#" alt="3.jpg" style="object-fit: cover; width: 100%; height: 100%;" />
-                      </a>
-                    </div>
-                  </div>
-                  <div class="col-6 ps-sm-0 d-flex">
-                    <div class="sp-img-content flex-grow-1">
-                      <a class="popup-img preview-img-4 sp-img" href="#" style="display: none;">
-                        <img class="w-100" src="#" alt="4.jpg" style="object-fit: cover; width: 100%; height: 100%;" />
-                      </a>
-                    </div>
-                  </div>
-                  <div class="col-6 ps-sm-0 d-flex">
-                    <div class="sp-img-content flex-grow-1">
-                      <a class="popup-img preview-img-5 sp-img" href="#" style="display: none;">
-                        <img class="w-100" src="#" alt="5.jpg" style="object-fit: cover; width: 100%; height: 100%;" />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            </div>            
             <div class="row wrap wow fadeInUp" data-wow-delay="500ms">
               <div class="col-lg-8">
                 <div
